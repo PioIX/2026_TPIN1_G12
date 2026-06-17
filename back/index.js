@@ -38,7 +38,7 @@ app.get ('/saludo', async function (req,res) {
 
 
 //         GETS GENERALES
-app.get('/todoUsuarios', async function(req,res){
+app.get('/todousuarios', async function(req,res){
     let respuesta;
     
     respuesta = await realizarQuery("SELECT * FROM Usuarios");    
@@ -58,6 +58,19 @@ app.get('/todopreguntas', async function(req,res){
     res.send(respuesta);
 })
 
+app.get('/todopartidas', async function(req,res){
+    let respuesta;
+    
+    respuesta = await realizarQuery("SELECT * FROM Partidas");    
+    res.send(respuesta);
+})
+
+app.get('/todoalgo', async function(req,res){
+    let respuesta;
+    
+    respuesta = await realizarQuery("SELECT * FROM AAAAAAA");    
+    res.send(respuesta);
+})
 
 
 //          GETS ESPECIFICOS  (Pasar el parámetro como: localhost:3000/nombreDelPedido?parametro1=valor1)
@@ -93,8 +106,8 @@ app.post('/usernuevo', async function(req,res) {
     
 })
 
-app.post('/palabranueva', async function(req,res) {
-    console.log(req.body) //Los pedidos post reciben los datos del req.body
+app.post('/palabranueva', async function(req,res) { //NO FUNCIONA POR UN ERROR CON RESPUESTA2
+    console.log(req.body)
     let respuesta =  await realizarQuery(`
         Select  *  From Palabras 
         Where id_palabra = ${req.body.id_palabra}
@@ -117,7 +130,23 @@ app.post('/palabranueva', async function(req,res) {
     
 })
 
-
+app.post('/partidanueva', async function(req,res) { //NO FUNCIONA PORQUE NO SE QUE DATOS HAY EN ESTA TABLA
+    console.log(req.body) 
+    let respuesta =  await realizarQuery(`
+        Select  *  From Partidas 
+        Where id_usuario = ${req.body.id_partida}
+        `)
+    if (respuesta.length == 0) {
+        realizarQuery(`
+        INSERT INTO Usuarios(id_usuario, usuario, contraseña, nombre) VALUES 
+        (${req.body.id_usuario},"${req.body.usuario}","${req.body.contraseña}","${req.body.nombre}")
+    `)
+        res.send({mensaje: "Usuario agregado"}) 
+    } else {
+        res.send({mensaje: "Este dato ya existe"})
+    }
+    
+})
 
 
 
