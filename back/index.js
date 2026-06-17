@@ -65,10 +65,10 @@ app.get('/todopartidas', async function(req,res){
     res.send(respuesta);
 })
 
-app.get('/todoalgo', async function(req,res){
+app.get('/todopreguntasporpartida', async function(req,res){
     let respuesta;
     
-    respuesta = await realizarQuery("SELECT * FROM AAAAAAA");    
+    respuesta = await realizarQuery("SELECT * FROM Preguntas_por_partida");    
     res.send(respuesta);
 })
 
@@ -96,8 +96,8 @@ app.post('/usernuevo', async function(req,res) {
         `)
     if (respuesta.length == 0) {
         realizarQuery(`
-        INSERT INTO Usuarios(id_usuario, usuario, contraseña, nombre) VALUES 
-        (${req.body.id_usuario},"${req.body.usuario}","${req.body.contraseña}","${req.body.nombre}")
+        INSERT INTO Usuarios(id_usuario, usuario, contraseña, nombre, es_admin) VALUES 
+        (${req.body.id_usuario},"${req.body.usuario}","${req.body.contraseña}","${req.body.nombre}",${req.body.es_admin})
     `)
         res.send({mensaje: "Usuario agregado"}) 
     } else {
@@ -106,15 +106,15 @@ app.post('/usernuevo', async function(req,res) {
     
 })
 
-app.post('/palabranueva', async function(req,res) { //NO FUNCIONA POR UN ERROR CON RESPUESTA2
+app.post('/palabranueva', async function(req,res) { 
     console.log(req.body)
     let respuesta =  await realizarQuery(`
         Select  *  From Palabras 
         Where id_palabra = ${req.body.id_palabra}
         `)
     let respuesta2 =  await realizarQuery(`
-        Select  *  From Palabras 
-        Where id_palabra = ${req.body.id_palabra}
+        Select  *  From Preguntas 
+        Where id_pregunta = ${req.body.id_pregunta}
         `)
     
     if (respuesta.length == 0 && respuesta2.length != 0 ) {
@@ -130,18 +130,54 @@ app.post('/palabranueva', async function(req,res) { //NO FUNCIONA POR UN ERROR C
     
 })
 
-app.post('/partidanueva', async function(req,res) { //NO FUNCIONA PORQUE NO SE QUE DATOS HAY EN ESTA TABLA
+app.post('/partidanueva', async function(req,res) {
     console.log(req.body) 
     let respuesta =  await realizarQuery(`
         Select  *  From Partidas 
-        Where id_usuario = ${req.body.id_partida}
+        Where id_partida = ${req.body.id_partida}
         `)
     if (respuesta.length == 0) {
         realizarQuery(`
-        INSERT INTO Usuarios(id_usuario, usuario, contraseña, nombre) VALUES 
-        (${req.body.id_usuario},"${req.body.usuario}","${req.body.contraseña}","${req.body.nombre}")
+        INSERT INTO Partidas(id_partida, puntaje_final, id_usuario) VALUES 
+        (${req.body.id_partida},${req.body.puntaje_final},${req.body.id_usuario})
     `)
-        res.send({mensaje: "Usuario agregado"}) 
+        res.send({mensaje: "Partida agregada"}) 
+    } else {
+        res.send({mensaje: "Este dato ya existe"})
+    }
+    
+})
+
+app.post('/preguntanueva', async function(req,res) {
+    console.log(req.body) 
+    let respuesta =  await realizarQuery(`
+        Select  *  From Preguntas 
+        Where id_pregunta = ${req.body.id_pregunta}
+        `)
+    if (respuesta.length == 0) {
+        realizarQuery(`
+        INSERT INTO Preguntas(id_pregunta, nombre) VALUES 
+        (${req.body.id_pregunta},"${req.body.nombre}")
+    `)
+        res.send({mensaje: "Pregunta agregada"}) 
+    } else {
+        res.send({mensaje: "Este dato ya existe"})
+    }
+    
+})
+
+app.post('/preporparnueva', async function(req,res) {
+    console.log(req.body) 
+    let respuesta =  await realizarQuery(`
+        Select  *  From Preguntas_por_partida
+        Where id_por_partida = ${req.body.id_por_partida}
+        `)
+    if (respuesta.length == 0) {
+        realizarQuery(`
+        INSERT INTO Preguntas_por_partida(id_por_partida, id_partida, id_pregunta, puntaje_pregunta) VALUES 
+        (${req.body.id_por_partida},${req.body.id_partida},${req.body.id_pregunta},${req.body.puntaje_pregunta})
+    `)
+        res.send({mensaje: "Pregunta por partida agregada"}) 
     } else {
         res.send({mensaje: "Este dato ya existe"})
     }
@@ -152,27 +188,19 @@ app.post('/partidanueva', async function(req,res) { //NO FUNCIONA PORQUE NO SE Q
 
 
 
-
-
 //     PUTS
-app.put('/editarnombrepais', function(req,res) {
+app.put('/editarusuario', function(req,res) {
     console.log(req.body) 
     realizarQuery(`
-    Update Paises 
-    Set nombre = ${req.body.nombre}
-    Where id_pais = ${req.body.id_pais}
-    `)
-    res.send("Pais editado")
-})
-
-app.put('/editarnombreempresa', function(req,res) {
-    console.log(req.body) 
-    realizarQuery(`
-    Update Empresas 
+    Update Usuarios 
+    Set id_usuario = ${req.body.id_usuario}
+    Set usuario = "${req.body.usuario}"
+    Set contraseña = "${req.body.contraseña}"
     Set nombre = "${req.body.nombre}"
-    Where id_empresa = ${req.body.id_empresa}
+    Set es_admin = ${req.body.es_admin}
+    Where id_usuario = ${req.body.id_usuario}
     `)
-    res.send({respuesta:"Empresa editada"})
+    res.send("Usuario editado")
 })
 
 app.put('/editarnombreempleado', function(req,res) {
