@@ -65,7 +65,7 @@ app.get('/todopartidas', async function(req,res){
     res.send(respuesta);
 })
 
-app.get('/todopreguntasporpartida', async function(req,res){
+app.get('/todopreporpar', async function(req,res){
     let respuesta;
     
     respuesta = await realizarQuery("SELECT * FROM Preguntas_por_partida");    
@@ -107,23 +107,26 @@ app.post('/usernuevo', async function(req,res) {
 })
 
 app.post('/palabranueva', async function(req,res) { 
-    console.log(req.body)
-    let respuesta =  await realizarQuery(`
-        Select  *  From Palabras 
-        Where id_palabra = ${req.body.id_palabra}
+    try{
+        console.log(req.body)
+        let respuesta =  await realizarQuery(`
+            Select  *  From Palabras 
+            Where id_palabra = ${req.body.id_palabra}
+            `)
+        let respuesta2 =  await realizarQuery(`
+            Select  *  From Preguntas 
+            Where id_pregunta = ${req.body.id_pregunta}
+            `)
+        
+        if (respuesta.length == 0 && respuesta2.length != 0 ) {
+            realizarQuery(`
+            INSERT INTO Palabras(id_palabra, palabra, puntaje, id_pregunta) VALUES
+            (${req.body.id_palabra},"${req.body.palabra}",${req.body.puntaje},${req.body.id_pregunta})
         `)
-    let respuesta2 =  await realizarQuery(`
-        Select  *  From Preguntas 
-        Where id_pregunta = ${req.body.id_pregunta}
-        `)
-    
-    if (respuesta.length == 0 && respuesta2.length != 0 ) {
-        realizarQuery(`
-        INSERT INTO Palabras(id_palabra, palabra, puntaje, id_pregunta) VALUES
-        (${req.body.id_palabra},"${req.body.palabra}",${req.body.puntaje},${req.body.id_pregunta})
-    `)
-        res.send({mensaje: "Palabra agregada"}) 
-    } else {
+            res.send({mensaje: "Palabra agregada"}) 
+        }
+    }
+    catch {
         res.send({mensaje: "Este dato ya existe o no hay FK"})
         res.send({respuesta2: respuesta2})
     }
@@ -136,14 +139,19 @@ app.post('/partidanueva', async function(req,res) {
         Select  *  From Partidas 
         Where id_partida = ${req.body.id_partida}
         `)
-    if (respuesta.length == 0) {
+    let respuesta2 =  await realizarQuery(`
+        Select  *  From Usuarios 
+        Where id_usuario = ${req.body.id_usuario}
+        `)
+
+    if (respuesta.length == 0 && respuesta2.length != 0) {
         realizarQuery(`
         INSERT INTO Partidas(id_partida, puntaje_final, id_usuario) VALUES 
         (${req.body.id_partida},${req.body.puntaje_final},${req.body.id_usuario})
     `)
         res.send({mensaje: "Partida agregada"}) 
     } else {
-        res.send({mensaje: "Este dato ya existe"})
+        res.send({mensaje: "Este dato ya existe o no hay FK"})
     }
     
 })
@@ -193,11 +201,10 @@ app.put('/editarusuario', function(req,res) {
     console.log(req.body) 
     realizarQuery(`
     Update Usuarios 
-    Set id_usuario = ${req.body.id_usuario}
-    Set usuario = "${req.body.usuario}"
-    Set contraseña = "${req.body.contraseña}"
-    Set nombre = "${req.body.nombre}"
-    Set es_admin = ${req.body.es_admin}
+    Set usuario = "${req.body.usuario}",
+    contraseña = "${req.body.contraseña}",
+    nombre = "${req.body.nombre}",
+    es_admin = ${req.body.es_admin}
     Where id_usuario = ${req.body.id_usuario}
     `)
     res.send("Usuario editado")
