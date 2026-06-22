@@ -88,7 +88,7 @@ app.get('/usuario', async function(req,res){
 
 
 //       POSTS
-app.post('/usernuevo', async function(req,res) {
+app.post('/usuarionuevo', async function(req,res) {
     console.log(req.body) //Los pedidos post reciben los datos del req.body
     let respuesta =  await realizarQuery(`
         Select  *  From Usuarios 
@@ -354,26 +354,62 @@ app.put('/editarpreporpar', async function(req,res) {
 
 // Deletes 
 
-app.delete('/borrarpais', function(req,res) {
+app.delete('/borrarusuario', function(req,res) {
+    try{
     console.log(req.body) 
     realizarQuery(`
-    Delete From Paises Where id_pais = ${req.body.id_pais}
+    Delete From Usuarios Where id_usuario = ${req.body.id_usuario}
     `)
-    res.send("Pais eliminado")
+    res.send("Usuario eliminado")
+    } catch{
+        res.send({error: "error del try"})
+    }
 })
 
-app.delete('/borrarempresa', function(req,res) {
+app.delete('/borrarpalabra', function(req,res) {
+    try{
     console.log(req.body) 
     realizarQuery(`
-    Delete From Empresas Where id_empresa = ${req.body.idEmpresa}
+    Delete From Palabras Where id_palabra = ${req.body.id_palabra}
     `)
-    res.send("Empresa eliminada")
+    res.send("Palabra eliminada")
+     } catch{
+        res.send({error: "error del try"})
+    }
 })
 
-app.delete('/borrarempleado', function(req,res) {
+app.delete('/borrarpartida', function(req,res) {
+    try{
     console.log(req.body) 
     realizarQuery(`
-    Delete From Paises Where id_empleado = ${req.body.id_empleado}
+    Delete From Partidas Where id_partida = ${req.body.id_partida}
     `)
-    res.send("Empleado eliminado")
+    res.send("Partida eliminada")
+     } catch{
+        res.send({error: "error del try"})
+    }
+})
+
+app.delete('/borrarpregunta', function(req,res) {
+    try{
+    console.log(req.body) 
+    realizarQuery(`
+    Delete From Preguntas Where id_pregunta = ${req.body.id_pregunta}
+    `)
+    res.send("Pregunta eliminada")
+     } catch{
+        res.send({error: "error del try"})
+    }
+})
+
+app.delete('/borrarpreporpar', function(req,res) {
+    try{
+    console.log(req.body) 
+    realizarQuery(`
+    Delete From Preguntas_por_partida Where id_por_partida = ${req.body.id_por_partida}
+    `)
+    res.send("Pregunta por partida eliminada")
+     } catch{
+        res.send({error: "error del try"})
+    }
 })
