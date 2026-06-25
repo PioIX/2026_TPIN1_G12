@@ -12,8 +12,7 @@ boton.addEventListener("click", function() {
 /* // FUNCIONES A HACER:
 pantalla 1:
  - verificar inicio de sesión
- - o verificar registro
-
+ - verificar registro
 */
 
 
@@ -51,6 +50,7 @@ async function inicioSesion() {
             if (res[i].usuario == usu) {
                 console.log("usuario encontrado :DD")
                 console.log(res[i].usuario)
+                id_user = res[i].id_usuario
 
                 if (res[i].contraseña == contra) {
                     console.log("contra del usu está bien :D")
@@ -79,13 +79,13 @@ async function inicioSesion() {
 // dudas sobre cómo incluir si es admin o no
 
 async function Registrarse() {
-    let usu = document.getElementById("usuario").value;
+    let usu = getUsuario();
     console.log(usu)
 
-    let contra = document.getElementById("contra").value;
+    let contra = getContra();
     console.log(contra)
 
-    let nom = document.getElementById("nombre").value;
+    let nom = getNombre();
     console.log(nom)
 
     let response = await fetch('http://localhost:4000/todousuarios', {
@@ -148,8 +148,51 @@ async function Registrarse() {
 
 }
 
+async function usuPost(datos) {
+    const resultado = await fetch("http://localhost:4000/usernuevo", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(datos)
+    })
+
+    console.log(resultado)
+    let res = await resultado.json()
+    console.log(res)
+}
+
+function Registrarse() {
+    datos = {
+        nombre: getNombre(),
+        rubro: getRubro(),
+        cant_empleados: getCant_empleados(),
+        id_pais: getId_pais()
+    }
+
+    let usuExiste = false
 
 
+    if (usu == "" || contra == "" || nom == "") {
+        alert("Todos los campos deben estar completos")
+    } else {
+        for (let i = 0; i < res.length; i++) {
+            if (res[i].usuario == usu) {
+                console.log("usuario existe")
+                console.log(res[i].usuario)
+                usuExiste = true
+            }
+        }
+
+        if (usuExiste) {
+            alert("Este nombre de usuario ya existe, intente con otro")
+        } else {
+
+
+            usuPost(datos)
+        }
+    }
+}
 
 
 
