@@ -92,12 +92,12 @@ app.post('/usernuevo', async function(req,res) {
     console.log(req.body) //Los pedidos post reciben los datos del req.body
     let respuesta =  await realizarQuery(`
         Select  *  From Usuarios 
-        Where id_usuario = ${req.body.id_usuario}
+        Where usuario = "${req.body.usuario}"
         `)
     if (respuesta.length == 0) {
         realizarQuery(`
-        INSERT INTO Usuarios(id_usuario, usuario, contraseña, nombre, es_admin) VALUES 
-        (${req.body.id_usuario},"${req.body.usuario}","${req.body.contraseña}","${req.body.nombre}",${req.body.es_admin})
+        INSERT INTO Usuarios(usuario, contraseña, nombre, es_admin) VALUES 
+        ("${req.body.usuario}","${req.body.contraseña}","${req.body.nombre}",${req.body.es_admin})
     `)
         res.send({mensaje: "Usuario agregado"}) 
     } else {

@@ -20,13 +20,24 @@ pantalla 1:
 
 let id_user = -1
 
+function getNombre(){
+    return document.getElementById("nombre").value;
+}  
+function getUsuario(){
+    return document.getElementById("usuario").value;
+
+}
+function getContra(){
+    return document.getElementById("contra").value;
+}
+
 // LOGIN --------------------------------------------------------------------------------------
 
 async function inicioSesion() {
-    let usu = document.getElementById("usuario").value;
+    let usu = getUsuario()
     console.log(usu)
 
-    let contra = document.getElementById("contra").value;
+    let contra = getContra()
     console.log(contra)
 
     let response = await fetch('http://localhost:4000/todousuarios', {
@@ -44,26 +55,25 @@ async function inicioSesion() {
     } else {
         for (let i = 0; i < res.length; i++) {
             if (res[i].usuario == usu) {
-                console.log("usuario encontrado :DD")
                 console.log(res[i].usuario)
                 id_user = res[i].id_usuario
 
                 if (res[i].contraseña == contra) {
-                    console.log("contra del usu está bien :D")
                     usuarioCheck = true
                     break
 
                 } else {
-                    console.log("contraseña incorrecta")
+                    alert("Contraseña incorrecta")
                     break
                 }
+            } else {
+                alert("Usuario incorrecto")
+                break
             }
         }
 
         if (usuarioCheck) {
             window.location.href = "menu.html";
-        } else {
-            alert("Usuario o contraseña incorrectos")
         }
 
     }
@@ -85,42 +95,46 @@ async function usuPost(datos) {
     console.log(res)
 }
 
-function Registrarse() {
+async function Registrarse() {
     datos = {
-        usu: getUsuario(),
-        contra: getContra(),
-        nom: getNombre(),
+        usuario: getUsuario(),
+        contraseña: getContra(),
+        nombre: getNombre(),
         es_admin: 0
     }
 
-    let usuExiste = false
+    let usu = getUsuario()
+    let contra = getContra()
 
-    if (datos.usu == "" || datos.contra == "" || datos.nom == "") {
+    let response = await fetch('http://localhost:4000/todousuarios', {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    })
+
+    let res = await response.json()
+    let usuarioCheck = false
+
+    if (usu == "" || contra == "") {
         alert("Todos los campos deben estar completos")
-        return
     } else {
         for (let i = 0; i < res.length; i++) {
-            if (res[i].usuario == datos.usu) {
-                console.log("usuario existe")
+            if (res[i].usuario != usu) {
                 console.log(res[i].usuario)
-                usuExiste = true
+                id_user = res[i].id_usuario
+                usuarioCheck = true
+
+            } else {
+                alert("Usuario ya existe")
+                break
             }
         }
-
-        if (usuExiste) {
-            alert("Este nombre de usuario ya existe, intente con otro")
-        } else {
-            await usuPost(datos)
-            window.location.href = "menu.html";
-        }
     }
+
+    if (usuarioCheck) {
+        usuPost(datos)
+    }
+
+    
 }
-
-
-
-
-
-
-
-
-
