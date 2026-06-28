@@ -63,17 +63,15 @@ async function inicioSesion() {
                     break
 
                 } else {
-                    alert("Contraseña incorrecta")
                     break
                 }
-            } else {
-                alert("Usuario incorrecto")
-                break
             }
         }
 
         if (usuarioCheck) {
             window.location.href = "menu.html";
+        } else{
+            alert("Usuario o contraseña incorrectas")
         }
 
     }
@@ -82,7 +80,7 @@ async function inicioSesion() {
 //  REGISTROO --------------------------------------------------------------------------------------
 
 async function usuPost(datos) {
-    const resultado = await fetch("http://localhost:4000/usernuevo", {
+    const resultado = await fetch("http://localhost:4000/usuarionuevo", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -92,7 +90,7 @@ async function usuPost(datos) {
 
     console.log(resultado)
     let res = await resultado.json()
-    console.log(res)
+    alert("Usuario añadido con exito")
 }
 
 async function Registrarse() {
@@ -123,18 +121,15 @@ async function Registrarse() {
             if (res[i].usuario != usu) {
                 console.log(res[i].usuario)
                 id_user = res[i].id_usuario
-                usuarioCheck = true
 
             } else {
                 alert("Usuario ya existe")
+                usuarioCheck = false
                 break
             }
         }
     }
 
-    if (usuarioCheck) {
-        usuPost(datos)
-    }
-
+    usuPost(datos)
     
 }
