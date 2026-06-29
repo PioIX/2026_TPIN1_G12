@@ -65,7 +65,7 @@ app.get('/todopartidas', async function(req,res){
     res.send(respuesta);
 })
 
-app.get('/todopreguntasporpartida', async function(req,res){
+app.get('/todopreporpar', async function(req,res){
     let respuesta;
     
     respuesta = await realizarQuery("SELECT * FROM Preguntas_por_partida");    
@@ -88,16 +88,16 @@ app.get('/usuario', async function(req,res){
 
 
 //       POSTS
-app.post('/usernuevo', async function(req,res) {
+app.post('/usuarionuevo', async function(req,res) {
     console.log(req.body) //Los pedidos post reciben los datos del req.body
     let respuesta =  await realizarQuery(`
         Select  *  From Usuarios 
-        Where id_usuario = ${req.body.id_usuario}
+        Where usuario = "${req.body.usuario}"
         `)
     if (respuesta.length == 0) {
         realizarQuery(`
-        INSERT INTO Usuarios(id_usuario, usuario, contraseña, nombre, es_admin) VALUES 
-        (${req.body.id_usuario},"${req.body.usuario}","${req.body.contraseña}","${req.body.nombre}",${req.body.es_admin})
+        INSERT INTO Usuarios(usuario, contraseña, nombre, es_admin) VALUES 
+        ("${req.body.usuario}","${req.body.contraseña}","${req.body.nombre}",${req.body.es_admin})
     `)
         res.send({mensaje: "Usuario agregado"}) 
     } else {
@@ -107,23 +107,26 @@ app.post('/usernuevo', async function(req,res) {
 })
 
 app.post('/palabranueva', async function(req,res) { 
-    console.log(req.body)
-    let respuesta =  await realizarQuery(`
-        Select  *  From Palabras 
-        Where id_palabra = ${req.body.id_palabra}
+    try{
+        console.log(req.body)
+        let respuesta =  await realizarQuery(`
+            Select  *  From Palabras 
+            Where id_palabra = ${req.body.id_palabra}
+            `)
+        let respuesta2 =  await realizarQuery(`
+            Select  *  From Preguntas 
+            Where id_pregunta = ${req.body.id_pregunta}
+            `)
+        
+        if (respuesta.length == 0 && respuesta2.length != 0 ) {
+            realizarQuery(`
+            INSERT INTO Palabras(id_palabra, palabra, puntaje, id_pregunta) VALUES
+            (${req.body.id_palabra},"${req.body.palabra}",${req.body.puntaje},${req.body.id_pregunta})
         `)
-    let respuesta2 =  await realizarQuery(`
-        Select  *  From Preguntas 
-        Where id_pregunta = ${req.body.id_pregunta}
-        `)
-    
-    if (respuesta.length == 0 && respuesta2.length != 0 ) {
-        realizarQuery(`
-        INSERT INTO Palabras(id_palabra, palabra, puntaje, id_pregunta) VALUES
-        (${req.body.id_palabra},"${req.body.palabra}",${req.body.puntaje},${req.body.id_pregunta})
-    `)
-        res.send({mensaje: "Palabra agregada"}) 
-    } else {
+            res.send({mensaje: "Palabra agregada"}) 
+        }
+    }
+    catch {
         res.send({mensaje: "Este dato ya existe o no hay FK"})
         res.send({respuesta2: respuesta2})
     }
@@ -136,14 +139,19 @@ app.post('/partidanueva', async function(req,res) {
         Select  *  From Partidas 
         Where id_partida = ${req.body.id_partida}
         `)
-    if (respuesta.length == 0) {
+    let respuesta2 =  await realizarQuery(`
+        Select  *  From Usuarios 
+        Where id_usuario = ${req.body.id_usuario}
+        `)
+
+    if (respuesta.length == 0 && respuesta2.length != 0) {
         realizarQuery(`
         INSERT INTO Partidas(id_partida, puntaje_final, id_usuario) VALUES 
         (${req.body.id_partida},${req.body.puntaje_final},${req.body.id_usuario})
     `)
         res.send({mensaje: "Partida agregada"}) 
     } else {
-        res.send({mensaje: "Este dato ya existe"})
+        res.send({mensaje: "Este dato ya existe o no hay FK"})
     }
     
 })
@@ -156,8 +164,8 @@ app.post('/preguntanueva', async function(req,res) {
         `)
     if (respuesta.length == 0) {
         realizarQuery(`
-        INSERT INTO Preguntas(id_pregunta, nombre) VALUES 
-        (${req.body.id_pregunta},"${req.body.nombre}")
+        INSERT INTO Preguntas(id_pregunta, pregunta) VALUES 
+        (${req.body.id_pregunta},"${req.body.pregunta}")
     `)
         res.send({mensaje: "Pregunta agregada"}) 
     } else {
@@ -171,15 +179,24 @@ app.post('/preporparnueva', async function(req,res) {
     let respuesta =  await realizarQuery(`
         Select  *  From Preguntas_por_partida
         Where id_por_partida = ${req.body.id_por_partida}
-        `)
-    if (respuesta.length == 0) {
+    `)
+    let respuesta2 =  await realizarQuery(`
+        Select  *  From Partidas
+        Where id_partida = ${req.body.id_partida}
+    `)
+    let respuesta3 =  await realizarQuery(`
+        Select  *  From Preguntas
+        Where id_pregunta = ${req.body.id_pregunta}
+    `)
+
+    if (respuesta.length == 0 && respuesta2.length != 0 && respuesta3.length != 0) {
         realizarQuery(`
         INSERT INTO Preguntas_por_partida(id_por_partida, id_partida, id_pregunta, puntaje_pregunta) VALUES 
         (${req.body.id_por_partida},${req.body.id_partida},${req.body.id_pregunta},${req.body.puntaje_pregunta})
     `)
         res.send({mensaje: "Pregunta por partida agregada"}) 
     } else {
-        res.send({mensaje: "Este dato ya existe"})
+        res.send({mensaje: "Este dato ya existe o falla alguna FK"})
     }
     
 })
@@ -189,59 +206,210 @@ app.post('/preporparnueva', async function(req,res) {
 
 
 //     PUTS
-app.put('/editarusuario', function(req,res) {
-    console.log(req.body) 
-    realizarQuery(`
-    Update Usuarios 
-    Set id_usuario = ${req.body.id_usuario}
-    Set usuario = "${req.body.usuario}"
-    Set contraseña = "${req.body.contraseña}"
-    Set nombre = "${req.body.nombre}"
-    Set es_admin = ${req.body.es_admin}
-    Where id_usuario = ${req.body.id_usuario}
-    `)
-    res.send("Usuario editado")
+app.put('/editarusuario', async function(req,res) {
+    try {
+        let respuesta =  await realizarQuery(`
+        Select  *  From Usuarios 
+        Where id_usuario = ${req.body.id_usuario}
+        `)
+        if (respuesta.length == 0) {
+            console.log(req.body) 
+            realizarQuery(`
+            Update Usuarios 
+            Set id_usuario = ${req.body.id_usuario},
+            usuario = "${req.body.usuario}",
+            contraseña = "${req.body.contraseña}",
+            nombre = "${req.body.nombre}",
+            es_admin = ${req.body.es_admin}
+            Where id_usuario = ${req.body.id_usuario2}
+            `)
+            res.send("Usuario editado")
+        } else {
+            res.send({mensaje: "Error"})
+        }
+    } catch{
+        res.send({error: "error del try"})
+    }
 })
 
-app.put('/editarnombreempleado', function(req,res) {
-    console.log(req.body) 
-    realizarQuery(`
-    Update Empleados 
-    Set nombre = ${req.body.nombre}
-    Where id_empleado = ${req.body.id_empleado}
-    `)
-    res.send("Empleado editado")
+app.put('/editarpalabra', async function(req,res) {
+    try {
+
+        let respuesta =  await realizarQuery(`
+            Select  *  From Palabras 
+            Where id_palabra = ${req.body.id_palabra}
+        `)
+        let respuesta2 =  await realizarQuery(`
+            Select  *  From Preguntas 
+            Where id_pregunta = ${req.body.id_pregunta}
+        `)
+
+        if (respuesta.length == 0 && respuesta2.length != 0) {
+            console.log(req.body) 
+            realizarQuery(`
+            Update Palabras 
+            Set id_palabra = ${req.body.id_palabra},
+            palabra = "${req.body.palabra}",
+            puntaje = ${req.body.palabra},
+            id_pregunta = "${req.body.id_pregunta}"
+            Where id_palabra = ${req.body.id_palabra2}
+            `)
+            res.send("Palabra editada")
+        } else {
+            res.send({mensaje: "Error"})
+        }
+    } catch{
+        res.send({error: "error del try"})
+    }
 })
 
+app.put('/editarpartida', async function(req,res) {
+    try {
 
+        let respuesta =  await realizarQuery(`
+            Select  *  From Partidas 
+            Where id_partida = ${req.body.id_partida}
+            `)
+        let respuesta2 =  await realizarQuery(`
+            Select  *  From Usuarios 
+            Where id_usuario = ${req.body.id_usuario}
+        `)
+        if (respuesta.length == 0 && respuesta2.length != 0) {
+            console.log(req.body) 
+            realizarQuery(`
+            Update Partidas 
+            Set id_partida = ${req.body.id_partida},
+            puntaje_final = ${req.body.puntaje_final},
+            id_usuario = ${req.body.id_usuario}
+            Where id_partida = ${req.body.id_partida2}
+            `)
+            res.send("Partida editada")
+        } else {
+            res.send({mensaje: "Error"})
+        }
+    } catch{
+        res.send({error: "error del try"})
+    }
+})
 
+app.put('/editarpregunta', async function(req,res) {
+    try {
+        let respuesta =  await realizarQuery(`
+        Select  *  From Preguntas 
+        Where id_pregunta = ${req.body.id_pregunta}
+        `)
+        if (respuesta.length == 0) {
+            console.log(req.body) 
+            realizarQuery(`
+            Update Preguntas 
+            Set id_pregunta = ${req.body.id_pregunta},
+            pregunta = "${req.body.pregunta}"
+            Where id_pregunta = ${req.body.id_pregunta2}
+            `)
+            res.send("Pregunta editada")
+        } else {
+            res.send({mensaje: "Error"})
+        }
+    } catch{
+        res.send({error: "error del try"})
+    }
+})
 
+app.put('/editarpreporpar', async function(req,res) {
+    try {
+        let respuesta =  await realizarQuery(`
+        Select  *  From Preguntas_por_partida
+        Where id_por_partida = ${req.body.id_por_partida}
+        `)
+        let respuesta2 =  await realizarQuery(`
+        Select  *  From Partidas
+        Where id_partida = ${req.body.id_partida}
+        `)
+        let respuesta3 =  await realizarQuery(`
+        Select  *  From Preguntas
+        Where id_pregunta = ${req.body.id_pregunta}
+        `)
+
+        if (respuesta.length == 0 && respuesta2.length != 0 && respuesta3.length != 0) {
+            console.log(req.body) 
+            realizarQuery(`
+            Update Preguntas_por_partida 
+            Set id_por_partida = ${req.body.id_por_partida},
+            id_partida = ${req.body.id_partida},
+            id_pregunta = ${req.body.id_pregunta},
+            puntaje_pregunta = ${req.body.puntaje_pregunta}
+            Where id_por_partida = ${req.body.id_por_partida2}
+            `)
+            res.send("Pregunta por partida editada")
+        } else {
+            res.send({mensaje: "Error"})
+        }
+    } catch{
+        res.send({error: "error del try"})
+    }
+})
 
 
 
 
 // Deletes 
 
-app.delete('/borrarpais', function(req,res) {
+app.delete('/borrarusuario', function(req,res) {
+    try{
     console.log(req.body) 
     realizarQuery(`
-    Delete From Paises Where id_pais = ${req.body.id_pais}
+    Delete From Usuarios Where id_usuario = ${req.body.id_usuario}
     `)
-    res.send("Pais eliminado")
+    res.send("Usuario eliminado")
+    } catch{
+        res.send({error: "error del try"})
+    }
 })
 
-app.delete('/borrarempresa', function(req,res) {
+app.delete('/borrarpalabra', function(req,res) {
+    try{
     console.log(req.body) 
     realizarQuery(`
-    Delete From Empresas Where id_empresa = ${req.body.idEmpresa}
+    Delete From Palabras Where id_palabra = ${req.body.id_palabra}
     `)
-    res.send("Empresa eliminada")
+    res.send("Palabra eliminada")
+     } catch{
+        res.send({error: "error del try"})
+    }
 })
 
-app.delete('/borrarempleado', function(req,res) {
+app.delete('/borrarpartida', function(req,res) {
+    try{
     console.log(req.body) 
     realizarQuery(`
-    Delete From Paises Where id_empleado = ${req.body.id_empleado}
+    Delete From Partidas Where id_partida = ${req.body.id_partida}
     `)
-    res.send("Empleado eliminado")
+    res.send("Partida eliminada")
+     } catch{
+        res.send({error: "error del try"})
+    }
+})
+
+app.delete('/borrarpregunta', function(req,res) {
+    try{
+    console.log(req.body) 
+    realizarQuery(`
+    Delete From Preguntas Where id_pregunta = ${req.body.id_pregunta}
+    `)
+    res.send("Pregunta eliminada")
+     } catch{
+        res.send({error: "error del try"})
+    }
+})
+
+app.delete('/borrarpreporpar', function(req,res) {
+    try{
+    console.log(req.body) 
+    realizarQuery(`
+    Delete From Preguntas_por_partida Where id_por_partida = ${req.body.id_por_partida}
+    `)
+    res.send("Pregunta por partida eliminada")
+     } catch{
+        res.send({error: "error del try"})
+    }
 })
