@@ -74,10 +74,10 @@ app.get('/todopreporpar', async function(req,res){
 
 
 //          GETS ESPECIFICOS  (Pasar el parámetro como: localhost:3000/nombreDelPedido?parametro1=valor1)
-app.get('/usuario', async function(req,res){
+app.get('/idusuario', async function(req,res){
     let respuesta;
     if (req.query.usuario != undefined) {
-        respuesta = await realizarQuery(`SELECT * FROM Usuarios WHERE Usuarios.usuario=${req.query.usuario}`)
+        respuesta = await realizarQuery(`SELECT id_usuario FROM Usuarios WHERE usuario="${req.query.usuario}"`)
     } else {
         respuesta = "Por favor especificar parámetro (usuario)"
     }    
@@ -102,11 +102,12 @@ app.post('/usuarionuevo', async function(req,res) {
         Where usuario = "${req.body.usuario}"
         `)
     if (respuesta.length == 0) {
-        realizarQuery(`
+       await realizarQuery(`
         INSERT INTO Usuarios(usuario, contraseña, nombre, es_admin) VALUES 
         ("${req.body.usuario}","${req.body.contraseña}","${req.body.nombre}",${req.body.es_admin})
     `)
-        res.send({mensaje: "Usuario agregado", ok: true}) 
+        let respuesta2 = await realizarQuery(`SELECT id_usuario FROM Usuarios WHERE usuario="${req.body.usuario}"`)
+        res.send({mensaje: "Usuario agregado", ok: true, id_user: respuesta2[0].id_usuario}) 
     } else {
         res.send({mensaje: "Este dato ya existe", ok: false})
     }
