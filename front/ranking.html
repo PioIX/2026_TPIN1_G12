@@ -7,9 +7,7 @@
     <title>100 Piononos Dicen</title>
 </head>
 
-<body>
-    <div class="pantalla-1">
-
+<body onload="getRanking()">
         <div id="ELIMINAR LUEGO">
             <a href="loginRegistro.html">Login </a>
             <a href="menu.html">Menú </a>
@@ -22,22 +20,8 @@
         <h3>puntajes</h3>
 
         <div class="tabla">
-            <table>
-                <tr>
-                    <th>ID:</th>
-                    <th>Jugador:</th>
-                    <th>Puntaje:</th>
-                </tr>
-                <tr>
-                    <td>36</td>
-                    <td>mauri</td>
-                    <td>5</td>
-                </tr>
-                <tr>
-                    <td>21</td>
-                    <td>salla</td>
-                    <td>6</td>
-                </tr>
+            <table id="tablaRanking">
+                
             </table>
         </div>
 
@@ -46,7 +30,7 @@
                 <button type="button">Regresar</button>
             </a>
         </div>
-    </div>
-</body>
 
+</body>
+<script src="logic.js"></script>
 </html>

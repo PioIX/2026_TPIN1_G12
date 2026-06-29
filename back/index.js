@@ -84,7 +84,14 @@ app.get('/usuario', async function(req,res){
     res.send(respuesta);
 })
 
-
+app.get('/ranking', async function(req,res){
+    let respuesta;
+   
+    respuesta = await realizarQuery(`SELECT Usuarios.id_usuario, usuario, puntaje_final, id_partida FROM Partidas 
+        INNER JOIN Usuarios on Usuarios.id_usuario = Partidas.id_usuario
+        ORDER BY puntaje_final DESC`)
+    res.send(respuesta);
+})
 
 
 //       POSTS
@@ -99,9 +106,9 @@ app.post('/usuarionuevo', async function(req,res) {
         INSERT INTO Usuarios(usuario, contraseña, nombre, es_admin) VALUES 
         ("${req.body.usuario}","${req.body.contraseña}","${req.body.nombre}",${req.body.es_admin})
     `)
-        res.send({mensaje: "Usuario agregado"}) 
+        res.send({mensaje: "Usuario agregado", ok: true}) 
     } else {
-        res.send({mensaje: "Este dato ya existe"})
+        res.send({mensaje: "Este dato ya existe", ok: false})
     }
     
 })
