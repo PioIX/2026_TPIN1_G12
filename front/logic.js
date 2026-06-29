@@ -56,13 +56,12 @@ async function inicioSesion() {
         for (let i = 0; i < res.length; i++) {
             if (res[i].usuario == usu) {
                 console.log(res[i].usuario)
-                
 
                 if (res[i].contraseña == contra) {
                     usuarioCheck = true
                     id_user = res[i].id_usuario
+                    localStorage.setItem("id_user", id_user)
                     break
-
                 } else {
                     break
                 }
@@ -93,6 +92,8 @@ async function usuPost(datos) {
     let res = await resultado.json()
     console.log(res)
     if (res.ok == true){
+        id_user = res.id_user
+        localStorage.setItem("id_user", id_user)  
         window.location.href = "menu.html";
     } else{
         alert("error en el registro")
@@ -147,4 +148,8 @@ async function getRanking(){
         </tr>`
     }
     document.getElementById("tablaRanking").innerHTML = elementosTabla
+}
+function cargarUser() {
+    id_user = localStorage.getItem("id_user")
+    console.log(id_user)
 }
