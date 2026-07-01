@@ -56,12 +56,12 @@ async function inicioSesion() {
         for (let i = 0; i < res.length; i++) {
             if (res[i].usuario == usu) {
                 console.log(res[i].usuario)
-                id_user = res[i].id_usuario
 
                 if (res[i].contraseña == contra) {
                     usuarioCheck = true
+                    id_user = res[i].id_usuario
+                    localStorage.setItem("id_user", id_user)
                     break
-
                 } else {
                     break
                 }
@@ -90,9 +90,15 @@ async function usuPost(datos) {
 
     console.log(resultado)
     let res = await resultado.json()
-    alert("Usuario añadido con exito")
+    console.log(res)
+    if (res.ok == true){
+        id_user = res.id_user
+        localStorage.setItem("id_user", id_user)  
+        window.location.href = "menu.html";
+    } else{
+        alert("error en el registro")
+    }
 }
-
 async function Registrarse() {
     datos = {
         usuario: getUsuario(),
@@ -100,7 +106,6 @@ async function Registrarse() {
         nombre: getNombre(),
         es_admin: 0
     }
-
     let usu = getUsuario()
     let contra = getContra()
 
@@ -117,19 +122,49 @@ async function Registrarse() {
     if (usu == "" || contra == "") {
         alert("Todos los campos deben estar completos")
     } else {
-        for (let i = 0; i < res.length; i++) {
-            if (res[i].usuario != usu) {
-                console.log(res[i].usuario)
-                id_user = res[i].id_usuario
-
-            } else {
-                alert("Usuario ya existe")
-                usuarioCheck = false
-                break
-            }
-        }
+        usuPost(datos)
     }
+}
 
-    usuPost(datos)
+//  Tabla de ranking --------------------------------------------------------------------------------------
+async function getRanking(){
+    let fetchDatos = await fetch("http://localhost:4000/ranking")
+    let resultado = await fetchDatos.json()
+    let elementosTabla = `<tr>
+            <th>Posicion</th>
+            <th>ID</th>
+            <th>Usuario del jugador</th>
+            <th>Puntaje final</th>
+            <th>Partida</th>
+        </tr>`
+    console.log(resultado)
+    for (i = 0; i < resultado.length; i++){
+        elementosTabla += `<tr>
+        <td>${i+1}</td>
+        <td>${resultado[i].id_usuario}</td>
+        <td>${resultado[i].usuario}</td>
+        <td>${resultado[i].puntaje_final}</td>
+        <td>${resultado[i].id_partida}</td>
+        </tr>`
+    }
+    document.getElementById("tablaRanking").innerHTML = elementosTabla
+}
+function cargarUser() {
+    id_user = localStorage.getItem("id_user")
+    console.log(id_user)
+    let fetchDatos = await fetch("http://localhost:4000/confirmar?id_usuario="+ id_user)
+    let resultado = await fetchDatos.json()
     
+}
+
+
+async function confirmarAdmin(){
+    let fetchDatos = await fetch("http://localhost:4000/confirmar?id_usuario="+ id_user)
+    let resultado = await fetchDatos.json()
+    let botonAdmin = `<a href="menuAdmin.html"> 
+    <button type="button">MENU DEL ADMINISTRADOR</button> 
+    </a>`
+    if (resultado[0].es_admin == 1) {
+        document.getElementById("iralmenu").innerHTML = botonAdmin
+    }
 }

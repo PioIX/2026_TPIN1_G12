@@ -7,13 +7,15 @@
     <title>100 Piononos Dicen</title>
 </head>
 
-<body>
+<body onload="cargarUser()">
     <div class="pantalla-0">
 
         <div id="ELIMINAR LUEGO">
             <a href="loginRegistro.html">Login </a>
             <a href="menu.html">Menú </a>
             <a href="menuAdmin.html">ADMIN </a>
+            <a href="modPreguntas.html">modPreguntas </a>
+            <a href="modUsuarios.html">modUsuarios </a>
             <a href="ranking.html">Ranking </a>
             <a href="juego.html">JUEGO </a>
             <a href="fin.html">Fin </a>
@@ -28,17 +30,16 @@
         </div>
 
         <div class="botoncitojeje">
-            <button onclick="logout()" title="Salir del juego"> Añadir Preguntas </button>
+            <button onclick="logout()" title="Salir del juego"> rank </button>
         </div>
 
         <div class="botoncitojeje">
-            <button onclick="logout()" title="Salir del juego"> Editar Preguntas </button>
+            <button onclick="logout()" title="Salir del juego"> mod Preguntas </button>
         </div>
 
         <div class="botoncitojeje">
-            <button onclick="logout()" title="Salir del juego"> Eliminar Preguntas </button>
+            <button onclick="logout()" title="Salir del juego"> mod usuarios </button>
         </div>
-
     </div>
 </body>
 <script src="logic.js"></script>
