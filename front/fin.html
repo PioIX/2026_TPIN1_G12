@@ -7,18 +7,18 @@
     <title>Fin del juego</title>
 </head>
 
-<<<<<<< Updated upstream:front/pantalla3.html
-<body>
-=======
+
+
 <body onload="cargarUser(), confirmarAdmin()">
->>>>>>> Stashed changes:front/fin.html
+
 
     <div id="ELIMINAR LUEGO">
-            <a href="index.html">INDEX </a>
-            <a href="pantalla1.html">P1 </a>
-            <a href="pantalla2-juego.html">P2 </a>
-            <a href="pantalla3.html">P3 </a>
-        </div>
+        <a href="loginRegistro.html">Login </a>
+        <a href="menu.html">Menú </a>
+        <a href="ranking.html">Ranking </a>
+        <a href="juego.html">JUEGO </a>
+        <a href="fin.html">Fin </a>
+    </div>
 
     <div class="pantalla-3">
         <h1>Fin del juego</h1>
@@ -26,8 +26,8 @@
         <div class="tabla">
             <table>
                 <tr>
-                    <th>ID:</th> 
-                    <th>Jugador:</th> 
+                    <th>ID:</th>
+                    <th>Jugador:</th>
                     <th>Puntaje:</th>
                 </tr>
                 <tr>
@@ -44,15 +44,13 @@
         </div>
 
         <div class="botoncitojeje">
-            
-         <button onclick="volverAJugar()" title="Volver a jugar"> Volver a jugar </button>
-            
+            <a href="menu.html">
+                <button type="button">Volver al menú</button>
+            </a>
         </div>
 
         <div class="botoncitojeje">
-            
             <button onclick="logout()" title="Salir del juego"> Salir del juego </button>
-            
         </div>
     </div>
 
@@ -60,5 +58,5 @@
     </div>
 
 </body>
-
+<script src="logic.js"></script>
 </html>

@@ -78,14 +78,21 @@ app.get('/todopreporpar', async function(req,res){
 app.get('/idusuario', async function(req,res){
     let respuesta;
     if (req.query.usuario != undefined) {
-        respuesta = await realizarQuery(`SELECT * FROM Usuarios WHERE Usuarios.usuario=${req.query.usuario}`)
+        respuesta = await realizarQuery(`SELECT id_usuario FROM Usuarios WHERE usuario="${req.query.usuario}"`)
     } else {
         respuesta = "Por favor especificar parámetro (usuario)"
     }    
     res.send(respuesta);
 })
 
-
+app.get('/ranking', async function(req,res){
+    let respuesta;
+   
+    respuesta = await realizarQuery(`SELECT Usuarios.id_usuario, usuario, puntaje_final, id_partida FROM Partidas 
+        INNER JOIN Usuarios on Usuarios.id_usuario = Partidas.id_usuario
+        ORDER BY puntaje_final DESC`)
+    res.send(respuesta);
+})
 
 app.get('/confirmar', async function(req,res){
     let respuesta;
@@ -109,16 +116,17 @@ app.post('/usuarionuevo', async function(req,res) {
     console.log(req.body) //Los pedidos post reciben los datos del req.body
     let respuesta =  await realizarQuery(`
         Select  *  From Usuarios 
-        Where id_usuario = ${req.body.id_usuario}
+        Where usuario = "${req.body.usuario}"
         `)
     if (respuesta.length == 0) {
-        realizarQuery(`
-        INSERT INTO Usuarios(id_usuario, usuario, contraseña, nombre, es_admin) VALUES 
-        (${req.body.id_usuario},"${req.body.usuario}","${req.body.contraseña}","${req.body.nombre}",${req.body.es_admin})
+       await realizarQuery(`
+        INSERT INTO Usuarios(usuario, contraseña, nombre, es_admin) VALUES 
+        ("${req.body.usuario}","${req.body.contraseña}","${req.body.nombre}",${req.body.es_admin})
     `)
-        res.send({mensaje: "Usuario agregado"}) 
+        let respuesta2 = await realizarQuery(`SELECT id_usuario FROM Usuarios WHERE usuario="${req.body.usuario}"`)
+        res.send({mensaje: "Usuario agregado", ok: true, id_user: respuesta2[0].id_usuario}) 
     } else {
-        res.send({mensaje: "Este dato ya existe"})
+        res.send({mensaje: "Este dato ya existe", ok: false})
     }
     
 })
