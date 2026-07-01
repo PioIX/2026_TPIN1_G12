@@ -73,8 +73,17 @@ app.get('/todopreporpar', async function(req,res){
 })
 
 
+<<<<<<< Updated upstream
 //          GETS ESPECIFICOS  (Pasar el parámetro como: localhost:3000/nombreDelPedido?parametro1=valor1)
 app.get('/usuario', async function(req,res){
+=======
+
+
+
+
+//          GETS ESPECIFICOS  (Pasar el parámetro como: localhost:4000/nombreDelPedido?parametro1=valor1)
+app.get('/idusuario', async function(req,res){
+>>>>>>> Stashed changes
     let respuesta;
     if (req.query.usuario != undefined) {
         respuesta = await realizarQuery(`SELECT * FROM Usuarios WHERE Usuarios.usuario=${req.query.usuario}`)
@@ -83,6 +92,22 @@ app.get('/usuario', async function(req,res){
     }    
     res.send(respuesta);
 })
+
+
+
+app.get('/confirmar', async function(req,res){
+    let respuesta;
+    if (req.query.id_usuario != undefined) {
+    respuesta = await realizarQuery(`SELECT es_admin FROM Usuarios 
+        WHERE id_usuario = ${req.query.id_usuario}`)
+    } else {
+        respuesta = "Por favor especificar parámetro id usuario"
+    }
+    res.send(respuesta);
+})
+
+
+
 
 
 
