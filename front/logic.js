@@ -16,7 +16,7 @@ pantalla 1:
 */
 
 
-// --------------------------------------------------------
+// ----------------------GETS---------------------------------
 
 let id_user = -1
 
@@ -29,6 +29,34 @@ function getUsuario(){
 }
 function getContra(){
     return document.getElementById("contra").value;
+}
+
+function getPregunta() {
+    return document.getElementById("pregunta").value;
+}
+
+function getPalabra1() {
+    return document.getElementById("pal1").value;
+}
+
+function getPalabra1() {
+    return document.getElementById("pal1").value;
+}
+
+function getPalabra2() {
+    return document.getElementById("pal2").value;
+}
+
+function getPalabra3() {
+    return document.getElementById("pal3").value;
+}
+
+function getPalabra4() {
+    return document.getElementById("pal4").value;
+}
+
+function getPalabra5() {
+    return document.getElementById("pal5").value;
 }
 
 // LOGIN --------------------------------------------------------------------------------------
@@ -149,11 +177,12 @@ async function getRanking(){
     }
     document.getElementById("tablaRanking").innerHTML = elementosTabla
 }
-function cargarUser() {
+async function cargarUser() {
     id_user = localStorage.getItem("id_user")
     console.log(id_user)
-    let fetchDatos = await fetch("http://localhost:4000/confirmar?id_usuario="+ id_user)
+    let fetchDatos = await fetch("http://localhost:4000/usuarioespecifico?id_usuario="+ id_user)
     let resultado = await fetchDatos.json()
+    document.getElementById("bienvenida").innerHTML = "Bienvenido/a " + resultado[0].nombre
     
 }
 
@@ -167,4 +196,28 @@ async function confirmarAdmin(){
     if (resultado[0].es_admin == 1) {
         document.getElementById("iralmenu").innerHTML = botonAdmin
     }
+}
+
+
+async function añadirPregunta(datos){
+    const resultado = await fetch("http://localhost:4000/preguntanueva",{
+        method:"POST",
+        headers: {
+            "Content-Type": "application/json",
+          },
+        body: JSON.stringify(datos)
+    })
+
+    console.log(resultado)
+    let respuesta = await resultado.json()
+    console.log(respuesta)
+}
+
+function preguntaDatos(){
+    datos = {pregunta: getNombre(), 
+        rubro: getRubro(), 
+        cant_empleados: getCant_empleados(), 
+        id_pais: getId_pais()
+    }
+    postEj2(datos)
 }
