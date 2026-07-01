@@ -73,17 +73,9 @@ app.get('/todopreporpar', async function(req,res){
 })
 
 
-<<<<<<< Updated upstream
-//          GETS ESPECIFICOS  (Pasar el parámetro como: localhost:3000/nombreDelPedido?parametro1=valor1)
-app.get('/usuario', async function(req,res){
-=======
-
-
-
 
 //          GETS ESPECIFICOS  (Pasar el parámetro como: localhost:4000/nombreDelPedido?parametro1=valor1)
 app.get('/idusuario', async function(req,res){
->>>>>>> Stashed changes
     let respuesta;
     if (req.query.usuario != undefined) {
         respuesta = await realizarQuery(`SELECT * FROM Usuarios WHERE Usuarios.usuario=${req.query.usuario}`)
