@@ -105,7 +105,16 @@ app.get('/confirmar', async function(req,res){
     res.send(respuesta);
 })
 
-
+app.get('/usuarioespecifico', async function(req,res){
+    let respuesta;
+    if (req.query.id_usuario != undefined) {
+    respuesta = await realizarQuery(`SELECT * FROM Usuarios 
+        WHERE id_usuario = ${req.query.id_usuario}`)
+    } else {
+        respuesta = "Por favor especificar parámetro id usuario"
+    }
+    res.send(respuesta);
+})
 
 
 

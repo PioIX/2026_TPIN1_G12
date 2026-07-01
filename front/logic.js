@@ -154,6 +154,7 @@ function cargarUser() {
     console.log(id_user)
     let fetchDatos = await fetch("http://localhost:4000/confirmar?id_usuario="+ id_user)
     let resultado = await fetchDatos.json()
+    
 }
 
 
