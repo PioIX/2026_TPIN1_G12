@@ -152,4 +152,18 @@ async function getRanking(){
 function cargarUser() {
     id_user = localStorage.getItem("id_user")
     console.log(id_user)
+    let fetchDatos = await fetch("http://localhost:4000/confirmar?id_usuario="+ id_user)
+    let resultado = await fetchDatos.json()
+}
+
+
+async function confirmarAdmin(){
+    let fetchDatos = await fetch("http://localhost:4000/confirmar?id_usuario="+ id_user)
+    let resultado = await fetchDatos.json()
+    let botonAdmin = `<a href="menuAdmin.html"> 
+    <button type="button">MENU DEL ADMINISTRADOR</button> 
+    </a>`
+    if (resultado[0].es_admin == 1) {
+        document.getElementById("iralmenu").innerHTML = botonAdmin
+    }
 }
