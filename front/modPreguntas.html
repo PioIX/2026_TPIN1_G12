@@ -22,38 +22,58 @@
     </div>
 
 
+    <!-- INPUTS PREGUNTAS NUEVAS -->
     <div>
-        <h1> Escribir pregunta </h1>
-        <H2> Input pregunta</H2>
+        <h1> Escribir pregunta nueva </h1>
+        <label for="pregunta-nueva">Pregunta:</label>
+        <input type="text" id="pregunta-nueva" name="pregunta-nueva" placeholder="¿Cuál es la bebida más consumida?"
+            required>
 
-        <h1>Respuestas</h1>
+        <h1>Respuestas nuevas</h1>
+        <label for="resp-nueva-1">1:</label>
+        <input type="text" id="resp-nueva-1" name="resp-nueva-1" placeholder="Coca" required>
 
-    </div> 
+        <label for="resp-nueva-2">2:</label>
+        <input type="text" id="resp-nueva-2" name="resp-nueva-2" placeholder="Agua" required>
+
+        <label for="resp-nueva-3">3:</label>
+        <input type="text" id="resp-nueva-3" name="resp-nueva-3" placeholder="Jugo" required>
+
+        <label for="resp-nueva-4">4:</label>
+        <input type="text" id="resp-nueva-4" name="resp-nueva-4" placeholder="Sprite" required>
+
+        <label for="resp-nueva-5">5:</label>
+        <input type="text" id="resp-nueva-5" name="resp-nueva-5" placeholder="Fanta" required>
+
+    </div>
+
+    <!-- DESPLEGABLE Y TABLE -->
+    <div>
+        <h1> Seleccionar pregunta para modificar o eliminar</h1>
+        <label for="select-preguntas">Pregunta:</label>
+        <select name="select-preguntas" id="select-preguntas"></select>
+
+
+        <h1>Pregunta seleccionada:</h1>
+
+        <table id="tabla-preguntas">
+        </table>
+
+    </div>
+
     
-    <div>
-        <h1> Seleccionar pregunta </h1>
-        <H2> Desplegable</H2>
-
-        <h1>Respuestas</h1>
-        
-    </div> 
-
     <div>
         <h1>Opciones</h1>
-        <button type="button">Regresar</button>
-        <button type="button">Regresar</button>
-        <button type="button">Regresar</button>
-        
-    </div> 
-    
+        <button type="button" onclick="hacerPost()">Añadir</button>
+        <button type="button" onclick="hacerPut()">Editar</button>
+        <button type="button" onclick="hacerDelete()">Eliminar</button>
+
+    </div>
+
     <a href="menuAdmin.html">
         <button type="button">Regresar</button>
     </a>
 </body>
-<<<<<<< Updated upstream
-
-</html> aaaaa
-=======
 <script src="logic.js"></script>
+
 </html>
->>>>>>> Stashed changes
