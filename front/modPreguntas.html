@@ -14,8 +14,7 @@
         <a href="loginRegistro.html">Login </a>
         <a href="menu.html">Menú </a>
         <a href="menuAdmin.html">ADMIN </a>
-        <a href="modPreguntas.html">modPreguntas </a>
-        <a href="menuAdmin.html">modUsuarios </a>
+        
         <a href="ranking.html">Ranking </a>
         <a href="juego.html">JUEGO </a>
         <a href="fin.html">Fin </a>
@@ -25,6 +24,9 @@
         <button type="button">Regresar</button>
     </a>
 
+    
+    <h3> Modo de uso provisional</h3>
+    <p> Editar y eliminar no funcionan, no hay confirmacion si se intenta añadir el mismo registro, la pagina se actualiza automaticamente al añadir un nuevo registro</p>
 
     <!-- INPUTS PREGUNTAS NUEVAS -->
     <div>
@@ -41,7 +43,7 @@
         <input type="text" id="pal2" name="resp-nueva-2" placeholder="Agua" required>
 
         <label for="resp-nueva-3">3:</label>
-        <input type="text" id="pal" name="resp-nueva-3" placeholder="Jugo" required>
+        <input type="text" id="pal3" name="resp-nueva-3" placeholder="Jugo" required>
 
         <label for="resp-nueva-4">4:</label>
         <input type="text" id="pal4" name="resp-nueva-4" placeholder="Sprite" required>
@@ -83,7 +85,7 @@
     
     <div>
         <h1>Opciones</h1>
-        <button type="button" onclick="preguntaDatos(), pal1Datos()">Añadir</button>
+        <button type="button" onclick="preguntaDatos()">Añadir</button>
         <button type="button" onclick="hacerPut()">Editar</button>
         <button type="button" onclick="hacerDelete()">Eliminar</button>
 

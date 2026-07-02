@@ -184,8 +184,8 @@ async function getRanking(){
 async function cargarUser() {
     id_user = localStorage.getItem("id_user")
     console.log(id_user)
-    let fetchDatos = await fetch("http://localhost:4000/usuarioespecifico?id_usuario="+ id_user)
-    let resultado = await fetchDatos.json()
+    //let fetchDatos = await fetch("http://localhost:4000/usuarioespecifico?id_usuario="+ id_user)
+    //let resultado = await fetchDatos.json()
     //document.getElementById("bienvenida").innerHTML = "Bienvenido/a " + resultado[0].nombre
     
 }
@@ -291,14 +291,35 @@ async function añadirPregunta(datos){
     console.log(respuesta)
     id_pregunta_global = respuesta.id_pregunta
     console.log(id_pregunta_global)
+    await palDatos1()
+    await palDatos2()
+    await palDatos3()
+    await palDatos4()
+    await palDatos5()
+    window.location.reload()
 }
 
 function preguntaDatos(){
     
     datos = {pregunta: getPregunta()
     }
-    añadirPregunta(datos)
+    let getpregunta = getPregunta()
+    let verpal1 = getPalabra1()
+    let verpal2 = getPalabra2()
+    let verpal3 = getPalabra3()
+    let verpal4 = getPalabra4()
+    let verpal5 = getPalabra5()
+    if (getpregunta == "" || verpal1  == "" || verpal2  == "" ||verpal3  == "" || verpal4  == "" || verpal5  == "") {
+        alert("todos los campos deben completarse")
+    } else {
+        añadirPregunta(datos)
+    }
+    
 }
+
+
+
+// ------------------------------------
 
 async function añadirPalabra1(datos){
     const resultado = await fetch("http://localhost:4000/palabranueva",{
@@ -315,16 +336,105 @@ async function añadirPalabra1(datos){
 }
 
 function palDatos1(){
-    
-    datos = {pregunta: getPalabra1(),
+    datos = {palabra: getPalabra1(),
         puntaje: 5,
         id_pregunta: id_pregunta_global
     }
     console.log(datos)
-    añadirPregunta(datos)
+    añadirPalabra1(datos)
 }
 
+async function añadirPalabra2(datos){
+    const resultado = await fetch("http://localhost:4000/palabranueva",{
+        method:"POST",
+        headers: {
+            "Content-Type": "application/json",
+          },
+        body: JSON.stringify(datos)
+    })
 
+    console.log(resultado)
+    let respuesta = await resultado.json()
+    console.log(respuesta)
+}
+
+function palDatos2(){
+    datos = {palabra: getPalabra2(),
+        puntaje: 4,
+        id_pregunta: id_pregunta_global
+    }
+    console.log(datos)
+    añadirPalabra2(datos)
+}
+
+async function añadirPalabra3(datos){
+    const resultado = await fetch("http://localhost:4000/palabranueva",{
+        method:"POST",
+        headers: {
+            "Content-Type": "application/json",
+          },
+        body: JSON.stringify(datos)
+    })
+
+    console.log(resultado)
+    let respuesta = await resultado.json()
+    console.log(respuesta)
+}
+
+function palDatos3(){
+    datos = {palabra: getPalabra3(),
+        puntaje: 3,
+        id_pregunta: id_pregunta_global
+    }
+    console.log(datos)
+    añadirPalabra3(datos)
+}
+
+async function añadirPalabra4(datos){
+    const resultado = await fetch("http://localhost:4000/palabranueva",{
+        method:"POST",
+        headers: {
+            "Content-Type": "application/json",
+          },
+        body: JSON.stringify(datos)
+    })
+
+    console.log(resultado)
+    let respuesta = await resultado.json()
+    console.log(respuesta)
+}
+
+function palDatos4(){
+    datos = {palabra: getPalabra4(),
+        puntaje: 2,
+        id_pregunta: id_pregunta_global
+    }
+    console.log(datos)
+    añadirPalabra4(datos)
+}
+
+async function añadirPalabra5(datos){
+    const resultado = await fetch("http://localhost:4000/palabranueva",{
+        method:"POST",
+        headers: {
+            "Content-Type": "application/json",
+          },
+        body: JSON.stringify(datos)
+    })
+
+    console.log(resultado)
+    let respuesta = await resultado.json()
+    console.log(respuesta)
+}
+
+function palDatos5(){
+    datos = {palabra: getPalabra5(),
+        puntaje: 1,
+        id_pregunta: id_pregunta_global
+    }
+    console.log(datos)
+    añadirPalabra5(datos)
+}
 
 
 
