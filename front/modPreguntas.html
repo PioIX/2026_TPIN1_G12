@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 
-<body onload="cargarUser()">
+<body onload="cargarUser(), selectPreguntas(), selectPalabras()">
     <h1> Modificacion Preguntas</h1>
 
     <div id="ELIMINAR LUEGO">
@@ -30,24 +30,24 @@
     <div>
         <h1> Escribir pregunta nueva </h1>
         <label for="pregunta-nueva">Pregunta:</label>
-        <input type="text" id="pregunta-nueva" name="pregunta-nueva" placeholder="¿Cuál es la bebida más consumida?"
+        <input type="text" id="preguntanueva" name="pregunta-nueva" placeholder="¿Cuál es la bebida más consumida?"
             required>
 
         <h1>Respuestas nuevas</h1>
         <label for="resp-nueva-1">1:</label>
-        <input type="text" id="resp-nueva-1" name="resp-nueva-1" placeholder="Coca" required>
+        <input type="text" id="pal1" name="resp-nueva-1" placeholder="Coca" required>
 
         <label for="resp-nueva-2">2:</label>
-        <input type="text" id="resp-nueva-2" name="resp-nueva-2" placeholder="Agua" required>
+        <input type="text" id="pal2" name="resp-nueva-2" placeholder="Agua" required>
 
         <label for="resp-nueva-3">3:</label>
-        <input type="text" id="resp-nueva-3" name="resp-nueva-3" placeholder="Jugo" required>
+        <input type="text" id="pal" name="resp-nueva-3" placeholder="Jugo" required>
 
         <label for="resp-nueva-4">4:</label>
-        <input type="text" id="resp-nueva-4" name="resp-nueva-4" placeholder="Sprite" required>
+        <input type="text" id="pal4" name="resp-nueva-4" placeholder="Sprite" required>
 
         <label for="resp-nueva-5">5:</label>
-        <input type="text" id="resp-nueva-5" name="resp-nueva-5" placeholder="Fanta" required>
+        <input type="text" id="pal5" name="resp-nueva-5" placeholder="Fanta" required>
 
     </div>
 
@@ -62,28 +62,28 @@
 
         <table id="tabla-preguntas">
         </table>
-
+        <button type="button" onclick="tablaPreguntas()">Mostrar</button>
     </div>
 
     <!-- DESPLEGABLE Y TABLE palabras-->
     <div>
         <h1> Seleccionar palabra para modificar o eliminar</h1>
-        <label for="select-palabra">Palabra:</label>
-        <select name="select-palabra" id="select-palabra"></select>
+        <label for="select-palabras">Palabra:</label>
+        <select name="select-palabras" id="select-palabras"></select>
 
 
-        <h1>Pregunta seleccionada:</h1>
+        <h1>Palabra seleccionada:</h1>
 
         <table id="tabla-palabras">
         </table>
-
+        <button type="button" onclick="tablaPalabras()">Mostrar</button>
     </div>
 
     
     
     <div>
         <h1>Opciones</h1>
-        <button type="button" onclick="hacerPost()">Añadir</button>
+        <button type="button" onclick="preguntaDatos(), pal1Datos()">Añadir</button>
         <button type="button" onclick="hacerPut()">Editar</button>
         <button type="button" onclick="hacerDelete()">Eliminar</button>
 

@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 
-<body onload="cargarUser()">
+<body onload="cargarUser(), selectUsuarios(), selectPartidas()">
     <h1> Modificacion Preguntas</h1>
 
     <div id="ELIMINAR LUEGO">
@@ -28,26 +28,32 @@
     <div class="desplegable">
 
         <h1> Seleccionar Usuarios</h1>
-        <label for="select-usuario">Usuario:</label>
-        <select name="select-usuario" id="select-usuario"></select>
+        <label for="select-usuarios">Usuario:</label>
+        <select name="select-usuarios" id="select-usuarios"></select>
 
         <h1>Usuario seleccionada:</h1>
 
-        <table id="tabla-usuarioa">
+        <table id="tabla-usuarios">
         </table>
+        <button type="button" onclick="tablaUsuarios()">Mostrar</button>
     </div>
 
     <div>
         <h1>partidas</h1>
+
+        <label for="select-partidas">Partida:</label>
+        <select name="select-partidas" id="select-partidas"></select>
+
         <table id="tabla-partidas">
         </table>
+        <button type="button" onclick="tablaPartidas()">Mostrar</button>
     </div>
 
      <div>
         <h1>Opciones</h1>
         
-        <button type="button" onclick="hacerDeleteUsuario()">Eliminar usuario</button>
-        <button type="button" onclick="hacerDeletePuntaje()">Eliminar puntaje</button>
+        <button type="button" onclick="borrarUsuario()">Eliminar usuario</button>
+        <button type="button" onclick="borrarPartida()">Eliminar puntaje</button>
 
     </div>
 

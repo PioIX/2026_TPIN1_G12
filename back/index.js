@@ -74,7 +74,7 @@ app.get('/todopreporpar', async function(req,res){
 
 
 
-//          GETS ESPECIFICOS  (Pasar el parámetro como: localhost:4000/nombreDelPedido?parametro1=valor1)
+//         PEDIDOS ESPECIFICOS  (Para get pasar el parámetro como: localhost:4000/nombreDelPedido?parametro1=valor1)
 app.get('/idusuario', async function(req,res){
     let respuesta;
     if (req.query.usuario != undefined) {
@@ -116,6 +116,29 @@ app.get('/usuarioespecifico', async function(req,res){
     res.send(respuesta);
 })
 
+app.put('/editarpuntaje', async function(req,res) {
+    try {
+
+        let respuesta =  await realizarQuery(`
+            Select  *  From Partidas 
+            Where id_partida = ${req.body.id_partida}
+            `)
+
+        if (respuesta.length != 0) {
+            console.log(req.body) 
+            realizarQuery(`
+            Update Partidas 
+            Set puntaje_final = ${req.body.puntaje_final}
+            Where id_partida = ${req.body.id_partida}
+            `)
+            res.send("Partida editada")
+        } else {
+            res.send({mensaje: "Error"})
+        }
+    } catch{
+        res.send({error: "error del try"})
+    }
+})
 
 
 
@@ -143,19 +166,16 @@ app.post('/usuarionuevo', async function(req,res) {
 app.post('/palabranueva', async function(req,res) { 
     try{
         console.log(req.body)
-        let respuesta =  await realizarQuery(`
-            Select  *  From Palabras 
-            Where id_palabra = ${req.body.id_palabra}
-            `)
+
         let respuesta2 =  await realizarQuery(`
             Select  *  From Preguntas 
             Where id_pregunta = ${req.body.id_pregunta}
             `)
         
-        if (respuesta.length == 0 && respuesta2.length != 0 ) {
-            realizarQuery(`
-            INSERT INTO Palabras(id_palabra, palabra, puntaje, id_pregunta) VALUES
-            (${req.body.id_palabra},"${req.body.palabra}",${req.body.puntaje},${req.body.id_pregunta})
+        if (respuesta2.length != 0 ) {
+            await realizarQuery(`
+            INSERT INTO Palabras(palabra, puntaje, id_pregunta) VALUES
+            ("${req.body.palabra}",${req.body.puntaje},${req.body.id_pregunta})
         `)
             res.send({mensaje: "Palabra agregada"}) 
         }
@@ -169,19 +189,16 @@ app.post('/palabranueva', async function(req,res) {
 
 app.post('/partidanueva', async function(req,res) {
     console.log(req.body) 
-    let respuesta =  await realizarQuery(`
-        Select  *  From Partidas 
-        Where id_partida = ${req.body.id_partida}
-        `)
+  
     let respuesta2 =  await realizarQuery(`
         Select  *  From Usuarios 
         Where id_usuario = ${req.body.id_usuario}
         `)
 
-    if (respuesta.length == 0 && respuesta2.length != 0) {
+    if (respuesta2.length != 0) {
         realizarQuery(`
-        INSERT INTO Partidas(id_partida, puntaje_final, id_usuario) VALUES 
-        (${req.body.id_partida},${req.body.puntaje_final},${req.body.id_usuario})
+        INSERT INTO Partidas(puntaje_final, id_usuario) VALUES 
+        (${req.body.puntaje_final},${req.body.id_usuario})
     `)
         res.send({mensaje: "Partida agregada"}) 
     } else {
@@ -194,14 +211,16 @@ app.post('/preguntanueva', async function(req,res) {
     console.log(req.body) 
     let respuesta =  await realizarQuery(`
         Select  *  From Preguntas 
-        Where id_pregunta = ${req.body.id_pregunta}
+        Where pregunta = "${req.body.pregunta}"
         `)
     if (respuesta.length == 0) {
-        realizarQuery(`
-        INSERT INTO Preguntas(id_pregunta, pregunta) VALUES 
-        (${req.body.id_pregunta},"${req.body.pregunta}")
+        await realizarQuery(`
+        INSERT INTO Preguntas(pregunta) VALUES 
+        ("${req.body.pregunta}")
     `)
-        res.send({mensaje: "Pregunta agregada"}) 
+        let respuesta2 = await realizarQuery(`SELECT id_pregunta FROM Preguntas WHERE pregunta="${req.body.pregunta}"`)
+        console.log(respuesta2)
+        res.send({mensaje: "Pregunta agregada", id_pregunta: respuesta2[0].id_pregunta}) 
     } else {
         res.send({mensaje: "Este dato ya existe"})
     }
