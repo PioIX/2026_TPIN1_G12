@@ -5,31 +5,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="css/styles.css" />
 </head>
 
-<body onload="cargarUser(), selectPreguntas(), selectPalabras()">
-    <h1> Modificacion Preguntas</h1>
 
+<body onload="cargarUser(), selectPreguntas(), selectPalabras()">
+    <div>
+        <h1 id="sans"> Modificacion Preguntas</h1>
     <div id="ELIMINAR LUEGO">
         <a href="loginRegistro.html">Login </a>
         <a href="menu.html">Menú </a>
         <a href="menuAdmin.html">ADMIN </a>
-        
+        <a href="modPreguntas.html">modPreguntas </a>
+        <a href="modUsuarios.html">ModUsuarios </a>
+    
         <a href="ranking.html">Ranking </a>
         <a href="juego.html">JUEGO </a>
         <a href="fin.html">Fin </a>
     </div>
 
+    <div class="modificacionPreguntas">
+
     <a href="menuAdmin.html">
-        <button type="button">Regresar</button>
+        <button id = "RegresarPre" type="button">Regresar</button>
     </a>
 
-    
-    <h3> Modo de uso provisional</h3>
-    <p> Editar y eliminar no funcionan, no hay confirmacion si se intenta añadir el mismo registro, la pagina se actualiza automaticamente al añadir un nuevo registro</p>
-
     <!-- INPUTS PREGUNTAS NUEVAS -->
-    <div>
+    <div class="modPreguntas">
         <h1> Escribir pregunta nueva </h1>
         <label for="pregunta-nueva">Pregunta:</label>
         <input type="text" id="preguntanueva" name="pregunta-nueva" placeholder="¿Cuál es la bebida más consumida?"
@@ -54,7 +56,7 @@
     </div>
 
     <!-- DESPLEGABLE Y TABLE preguntas -->
-    <div>
+    <div class="selecPregunta">
         <h1> Seleccionar pregunta para modificar o eliminar</h1>
         <label for="select-preguntas">Pregunta:</label>
         <select name="select-preguntas" id="select-preguntas"></select>
@@ -83,14 +85,25 @@
 
     
     
-    <div>
+    
         <h1>Opciones</h1>
+    
+    <div class="botonDatos">
         <button type="button" onclick="preguntaDatos()">Añadir</button>
-        <button type="button" onclick="hacerPut()">Editar</button>
-        <button type="button" onclick="hacerDelete()">Eliminar</button>
-
     </div>
 
+    <div class="botonPut">
+        <button type="button" onclick="hacerPut()">Editar</button>
+    </div>
+
+    <div class="botonDelete">
+        <button type="button" onclick="hacerDelete()">Eliminar</button>
+    </div>
+
+   
+</div>
+<h3> Modo de uso provisional</h3>
+    <p> Editar y eliminar no funcionan, no hay confirmacion si se intenta añadir el mismo registro, la pagina se actualiza automaticamente al añadir un nuevo registro</p>
 </body>
 <script src="logic.js"></script>
 
