@@ -186,7 +186,7 @@ async function cargarUser() {
     console.log(id_user)
     let fetchDatos = await fetch("http://localhost:4000/usuarioespecifico?id_usuario="+ id_user)
     let resultado = await fetchDatos.json()
-    document.getElementById("bienvenida").innerHTML = "Bienvenido/a " + resultado[0].nombre
+    //document.getElementById("bienvenida").innerHTML = "Bienvenido/a " + resultado[0].nombre
     
 }
 
