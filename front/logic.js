@@ -204,6 +204,19 @@ async function confirmarAdmin(){
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 // MODPREGUNTAS --------------------------------------------------------------------------------------
 
 async function tablaPreguntas(){
@@ -261,8 +274,8 @@ async function tablaPalabras(){
     document.getElementById("tabla-palabras").innerHTML = elementosTabla
 }
 
-async function selectPalabras(){
-    let fetchDatos = await fetch("http://localhost:4000/todopalabras")
+async function selectPalabra1(){
+    let fetchDatos = await fetch("http://localhost:4000/palabra1")
     let resultado = await fetchDatos.json()
     let elementosSelect = ``
     
@@ -271,8 +284,59 @@ async function selectPalabras(){
         ${resultado[i].id_palabra}///${resultado[i].palabra}///${resultado[i].puntaje}///${resultado[i].id_pregunta}
         </option>`
     }
-    document.getElementById("select-palabras").innerHTML = elementosSelect
+    document.getElementById("selectpal1").innerHTML = elementosSelect   
+}
+
+async function selectPalabra2(){
+    let fetchDatos = await fetch("http://localhost:4000/palabra2")
+    let resultado = await fetchDatos.json()
+    let elementosSelect = ``
     
+    for (i = 0; i < resultado.length; i++){
+        elementosSelect += `<option value=${resultado[i].id_palabra}>
+        ${resultado[i].id_palabra}///${resultado[i].palabra}///${resultado[i].puntaje}///${resultado[i].id_pregunta}
+        </option>`
+    }
+    document.getElementById("selectpal2").innerHTML = elementosSelect   
+}
+
+async function selectPalabra3(){
+    let fetchDatos = await fetch("http://localhost:4000/palabra3")
+    let resultado = await fetchDatos.json()
+    let elementosSelect = ``
+    
+    for (i = 0; i < resultado.length; i++){
+        elementosSelect += `<option value=${resultado[i].id_palabra}>
+        ${resultado[i].id_palabra}///${resultado[i].palabra}///${resultado[i].puntaje}///${resultado[i].id_pregunta}
+        </option>`
+    }
+    document.getElementById("selectpal3").innerHTML = elementosSelect   
+}
+
+async function selectPalabra4(){
+    let fetchDatos = await fetch("http://localhost:4000/palabra4")
+    let resultado = await fetchDatos.json()
+    let elementosSelect = ``
+    
+    for (i = 0; i < resultado.length; i++){
+        elementosSelect += `<option value=${resultado[i].id_palabra}>
+        ${resultado[i].id_palabra}///${resultado[i].palabra}///${resultado[i].puntaje}///${resultado[i].id_pregunta}
+        </option>`
+    }
+    document.getElementById("selectpal4").innerHTML = elementosSelect   
+}
+
+async function selectPalabra5(){
+    let fetchDatos = await fetch("http://localhost:4000/palabra5")
+    let resultado = await fetchDatos.json()
+    let elementosSelect = ``
+    
+    for (i = 0; i < resultado.length; i++){
+        elementosSelect += `<option value=${resultado[i].id_palabra}>
+        ${resultado[i].id_palabra}///${resultado[i].palabra}///${resultado[i].puntaje}///${resultado[i].id_pregunta}
+        </option>`
+    }
+    document.getElementById("selectpal5").innerHTML = elementosSelect   
 }
 
 // ------------------------------------
@@ -435,6 +499,132 @@ function palDatos5(){
     console.log(datos)
     añadirPalabra5(datos)
 }
+
+async function cambiarCosas(){
+    let id_pregunta = document.getElementById("select-preguntas").value
+    let id_pal1 = document.getElementById("selectpal1").value
+    let id_pal2 = document.getElementById("selectpal2").value
+    let id_pal3 = document.getElementById("selectpal3").value
+    let id_pal4 = document.getElementById("selectpal4").value
+    let id_pal5 = document.getElementById("selectpal5").value
+
+    const resultado = await fetch("http://localhost:4000/editarpregunta",{
+        method:"PUT",
+        headers: {
+            "Content-Type": "application/json",
+          },
+        body: JSON.stringify({pregunta: getPregunta(),
+            id_pregunta: id_pregunta 
+        })
+    })
+    console.log(resultado)
+    let respuesta = await resultado.json()
+    console.log(respuesta)
+
+    const resulpal1 = await fetch("http://localhost:4000/editarpalabra",{
+        method:"PUT",
+        headers: {
+            "Content-Type": "application/json",
+          },
+        body: JSON.stringify({palabra: getPalabra1(),
+            id_palabra: id_pal1 
+        })
+    })
+    console.log(resulpal1)
+    let respal1 = await resulpal1.json()
+    console.log(respal1)
+
+    const resulpal2 = await fetch("http://localhost:4000/editarpalabra",{
+        method:"PUT",
+        headers: {
+            "Content-Type": "application/json",
+          },
+        body: JSON.stringify({palabra: getPalabra2(),
+            id_palabra: id_pal2 
+        })
+    })
+    console.log(resulpal2)
+    let respal2 = await resulpal2.json()
+    console.log(respal2)
+
+    const resulpal3 = await fetch("http://localhost:4000/editarpalabra",{
+        method:"PUT",
+        headers: {
+            "Content-Type": "application/json",
+          },
+        body: JSON.stringify({palabra: getPalabra3(),
+            id_palabra: id_pal3
+        })
+    })
+    console.log(resulpal3)
+    let respal3 = await resulpal3.json()
+    console.log(respal3)
+
+    const resulpal4 = await fetch("http://localhost:4000/editarpalabra",{
+        method:"PUT",
+        headers: {
+            "Content-Type": "application/json",
+          },
+        body: JSON.stringify({palabra: getPalabra4(),
+            id_palabra: id_pal4
+        })
+    })
+    console.log(resulpal4)
+    let respal4 = await resulpal4.json()
+    console.log(respal4)
+
+    const resulpal5 = await fetch("http://localhost:4000/editarpalabra",{
+        method:"PUT",
+        headers: {
+            "Content-Type": "application/json",
+          },
+        body: JSON.stringify({palabra: getPalabra5(),
+            id_palabra: id_pal5
+        })
+    })
+    console.log(resulpal5)
+    let respal5 = await resulpal5.json()
+    console.log(respal5)
+    window.location.reload()
+}
+
+function botonCambio(){
+    let getpregunta = getPregunta()
+    let verpal1 = getPalabra1()
+    let verpal2 = getPalabra2()
+    let verpal3 = getPalabra3()
+    let verpal4 = getPalabra4()
+    let verpal5 = getPalabra5()
+    if (getpregunta == "" || verpal1  == "" || verpal2  == "" ||verpal3  == "" || verpal4  == "" || verpal5  == "") {
+        alert("todos los campos deben completarse")
+    } else {
+        cambiarCosas()
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

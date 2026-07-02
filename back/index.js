@@ -142,6 +142,49 @@ app.put('/editarpuntaje', async function(req,res) {
 
 
 
+app.get('/palabra1', async function(req,res){
+    let respuesta;
+    respuesta = await realizarQuery(`SELECT * FROM Palabras 
+        WHERE puntaje = 5`)
+    
+    res.send(respuesta);
+})
+
+app.get('/palabra2', async function(req,res){
+    let respuesta;
+    respuesta = await realizarQuery(`SELECT * FROM Palabras 
+        WHERE puntaje = 4`)
+    
+    res.send(respuesta);
+})
+
+app.get('/palabra3', async function(req,res){
+    let respuesta;
+    respuesta = await realizarQuery(`SELECT * FROM Palabras 
+        WHERE puntaje = 3`)
+    
+    res.send(respuesta);
+})
+
+app.get('/palabra4', async function(req,res){
+    let respuesta;
+    respuesta = await realizarQuery(`SELECT * FROM Palabras 
+        WHERE puntaje = 2`)
+    
+    res.send(respuesta);
+})
+
+app.get('/palabra5', async function(req,res){
+    let respuesta;
+    respuesta = await realizarQuery(`SELECT * FROM Palabras 
+        WHERE puntaje = 1`)
+    
+    res.send(respuesta);
+})
+
+
+
+
 
 //       POSTS
 app.post('/usuarionuevo', async function(req,res) {
@@ -286,34 +329,27 @@ app.put('/editarusuario', async function(req,res) {
 })
 
 app.put('/editarpalabra', async function(req,res) {
-    try {
+   // try {
 
         let respuesta =  await realizarQuery(`
             Select  *  From Palabras 
             Where id_palabra = ${req.body.id_palabra}
         `)
-        let respuesta2 =  await realizarQuery(`
-            Select  *  From Preguntas 
-            Where id_pregunta = ${req.body.id_pregunta}
-        `)
 
-        if (respuesta.length == 0 && respuesta2.length != 0) {
+        if (respuesta.length != 0) {
             console.log(req.body) 
             realizarQuery(`
             Update Palabras 
-            Set id_palabra = ${req.body.id_palabra},
-            palabra = "${req.body.palabra}",
-            puntaje = ${req.body.palabra},
-            id_pregunta = "${req.body.id_pregunta}"
-            Where id_palabra = ${req.body.id_palabra2}
+            Set palabra = "${req.body.palabra}"
+            Where id_palabra = ${req.body.id_palabra}
             `)
-            res.send("Palabra editada")
+            res.send({mensaje: "Palabra editada"})
         } else {
             res.send({mensaje: "Error"})
         }
-    } catch{
-        res.send({error: "error del try"})
-    }
+    //} catch{
+        //res.send({error: "error del try"})
+   // }
 })
 
 app.put('/editarpartida', async function(req,res) {
@@ -351,15 +387,14 @@ app.put('/editarpregunta', async function(req,res) {
         Select  *  From Preguntas 
         Where id_pregunta = ${req.body.id_pregunta}
         `)
-        if (respuesta.length == 0) {
+        if (respuesta.length != 0) {
             console.log(req.body) 
             realizarQuery(`
             Update Preguntas 
-            Set id_pregunta = ${req.body.id_pregunta},
-            pregunta = "${req.body.pregunta}"
-            Where id_pregunta = ${req.body.id_pregunta2}
+            Set pregunta = "${req.body.pregunta}"
+            Where id_pregunta = ${req.body.id_pregunta}
             `)
-            res.send("Pregunta editada")
+            res.send({mensaje: "Pregunta editada"})
         } else {
             res.send({mensaje: "Error"})
         }
