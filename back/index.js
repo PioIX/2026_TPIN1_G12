@@ -74,6 +74,11 @@ app.get('/todopreporpar', async function(req,res){
 
 
 
+
+
+
+
+
 //         PEDIDOS ESPECIFICOS  (Para get pasar el parámetro como: localhost:4000/nombreDelPedido?parametro1=valor1)
 app.get('/idusuario', async function(req,res){
     let respuesta;
@@ -182,6 +187,59 @@ app.get('/palabra5', async function(req,res){
     res.send(respuesta);
 })
 
+app.put('/daradmin', async function(req,res) {
+    try {
+        let respuesta =  await realizarQuery(`
+            Select  es_admin  From Usuarios 
+            Where id_usuario = ${req.body.id_usuario}
+            `)
+        
+        if (respuesta[0].es_admin == 0) {
+            console.log(req.body) 
+            realizarQuery(`
+            Update Usuarios 
+            Set es_admin = 1
+            Where id_usuario = ${req.body.id_usuario}
+            `)
+            res.send({mensaje: "Admin dado"})
+        } else {
+            res.send({mensaje: "Error"})
+            console.log(respuesta)
+        }
+    } catch{
+        res.send({error: "error del try"})
+    }
+})
+
+
+app.put('/quitaradmin', async function(req,res) {
+    try {
+        let respuesta =  await realizarQuery(`
+            Select  es_admin  From Usuarios 
+            Where id_usuario = ${req.body.id_usuario}
+            `)
+        
+        if (respuesta[0].es_admin == 1) {
+            console.log(req.body) 
+            realizarQuery(`
+            Update Usuarios 
+            Set es_admin = 0
+            Where id_usuario = ${req.body.id_usuario}
+            `)
+            res.send({mensaje: "Admin quitado"})
+        } else {
+            res.send({mensaje: "Error"})
+            console.log(respuesta)
+        }
+    } catch{
+        res.send({error: "error del try"})
+    }
+})
+
+
+
+
+
 
 
 
@@ -263,9 +321,9 @@ app.post('/preguntanueva', async function(req,res) {
     `)
         let respuesta2 = await realizarQuery(`SELECT id_pregunta FROM Preguntas WHERE pregunta="${req.body.pregunta}"`)
         console.log(respuesta2)
-        res.send({mensaje: "Pregunta agregada", id_pregunta: respuesta2[0].id_pregunta}) 
+        res.send({mensaje: "Pregunta agregada", id_pregunta: respuesta2[0].id_pregunta, ok: true}) 
     } else {
-        res.send({mensaje: "Este dato ya existe"})
+        res.send({mensaje: "Este dato ya existe", ok:false})
     }
     
 })
@@ -484,7 +542,7 @@ app.delete('/borrarpregunta', function(req,res) {
     realizarQuery(`
     Delete From Preguntas Where id_pregunta = ${req.body.id_pregunta}
     `)
-    res.send("Pregunta eliminada")
+    res.send({mensaje: "pregunta eliminada", ok:true})
      } catch{
         res.send({error: "error del try"})
     }
@@ -497,6 +555,19 @@ app.delete('/borrarpreporpar', function(req,res) {
     Delete From Preguntas_por_partida Where id_por_partida = ${req.body.id_por_partida}
     `)
     res.send("Pregunta por partida eliminada")
+     } catch{
+        res.send({error: "error del try"})
+    }
+})
+
+
+app.delete('/borrarpalabrasdepregunta', function(req,res) {
+    try{
+    console.log(req.body) 
+    realizarQuery(`
+    Delete From Palabras Where id_pregunta = ${req.body.id_pregunta}
+    `)
+    res.send({mensaje: "palabras eliminadas", ok:true})
      } catch{
         res.send({error: "error del try"})
     }

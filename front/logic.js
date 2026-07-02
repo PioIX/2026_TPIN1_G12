@@ -353,14 +353,18 @@ async function añadirPregunta(datos){
     console.log(resultado)
     let respuesta = await resultado.json()
     console.log(respuesta)
-    id_pregunta_global = respuesta.id_pregunta
-    console.log(id_pregunta_global)
-    await palDatos1()
-    await palDatos2()
-    await palDatos3()
-    await palDatos4()
-    await palDatos5()
-    window.location.reload()
+    if (respuesta.ok == true) {
+        id_pregunta_global = respuesta.id_pregunta
+        console.log(id_pregunta_global)
+        await palDatos1()
+        await palDatos2()
+        await palDatos3()
+        await palDatos4()
+        await palDatos5()
+        window.location.reload()
+    } else {
+        alert("pregunta ya existe")
+    }
 }
 
 function preguntaDatos(){
@@ -602,6 +606,49 @@ function botonCambio(){
     }
 }
 
+async function borrarPalabras(){
+    let id_pregunta = document.getElementById("select-preguntas").value
+    const resultado = await fetch("http://localhost:4000/borrarpalabrasdepregunta",{
+        method:"DELETE",
+        headers: {
+            "Content-Type": "application/json",
+          },
+        body: JSON.stringify({id_pregunta: id_pregunta})
+    })
+    console.log(resultado)
+    if (resultado.ok == true){
+        return true
+    }
+
+}
+
+async function borrarPregunta(){
+    let id_pregunta = document.getElementById("select-preguntas").value
+    const resultado2 = await fetch("http://localhost:4000/borrarpregunta",{
+        method:"DELETE",
+        headers: {
+            "Content-Type": "application/json",
+          },
+        body: JSON.stringify({id_pregunta: id_pregunta})
+    })
+    console.log(resultado2)
+    if (resultado2.ok == true) {
+        return true
+    }
+}
+
+async function botonBorrar(){
+    let palabras = await borrarPalabras()
+    console.log(palabras)
+    if (palabras == true) {
+        let pregunta = await borrarPregunta()
+        console.log(pregunta)
+        if (pregunta == true) {
+            window.location.reload()
+        }
+    }
+}
+
 
 
 
@@ -718,7 +765,7 @@ async function borrarUsuario(){
 }
 
 async function borrarPartida(){
-    let id_partida = document.getElementById("select-usuarios").value
+    let id_partida = document.getElementById("select-partidas").value
     const resultado = await fetch("http://localhost:4000/borrarpartida",{
         method:"DELETE",
         headers: {
@@ -728,4 +775,24 @@ async function borrarPartida(){
     })
     console.log(resultado)
     window.location.reload()
+}
+
+
+
+
+async function darAdmin() {
+    let id_usario = document.getElementById("select-usuarios").value
+
+    const resultado = await fetch("http://localhost:4000/daradmin",{
+        method:"PUT",
+        headers: {
+            "Content-Type": "application/json",
+          },
+        body: JSON.stringify({
+            id_pregunta: id_pregunta 
+        })
+    })
+    console.log(resultado)
+    let respuesta = await resultado.json()
+    console.log(respuesta)
 }
