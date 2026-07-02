@@ -5,62 +5,70 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="css/styles.css" />
 </head>
-
-<body onload="cargarUser(), selectUsuarios(), selectPartidas()">
+<body class="modUsuariosCompleta" onload="cargarUser(), selectUsuarios(), selectPartidas()">
     <h1> Modificacion Preguntas</h1>
 
     <div id="ELIMINAR LUEGO">
         <a href="loginRegistro.html">Login </a>
         <a href="menu.html">Menú </a>
         <a href="menuAdmin.html">ADMIN </a>
-        
+        <a href="modPreguntas.html">modPreguntas </a>
+        <a href="modUsuarios.html">ModUsuarios </a>
         <a href="ranking.html">Ranking </a>
         <a href="juego.html">JUEGO </a>
         <a href="fin.html">Fin </a>
     </div>
 
     <a href="menuAdmin.html">
-        <button type="button">Regresar</button>
+        <button id="regresarUsu" type="button">Regresar</button>
     </a>
 
-    <div class="desplegable">
+    <div class="modificacionUsuarios">
+     <div class="desplegableUsu">
 
         <h1> Seleccionar Usuarios</h1>
         <label for="select-usuarios">Usuario:</label>
         <select name="select-usuarios" id="select-usuarios"></select>
-
+     </div>
+     <div class="botontUsu">
         <h1>Usuario seleccionada:</h1>
 
         <table id="tabla-usuarios">
         </table>
         <button type="button" onclick="tablaUsuarios()">Mostrar</button>
-    </div>
+     </div>
 
-    <div>
-        <h1>partidas</h1>
+     <div class="desplegablePartidas">
+        <h1>Seleccionar Partida</h1>
 
         <label for="select-partidas">Partida:</label>
         <select name="select-partidas" id="select-partidas"></select>
+     </div>
 
+     <div class="botonParti">
+        <h1>Partida seleccionada:</h1>
         <table id="tabla-partidas">
         </table>
-        <button type="button" onclick="tablaPartidas()">Mostrar</button>
-    </div>
+        <button type="button" onclick="tablaPartidas()">Mostrar</button> 
+     </div>
 
-     <div>
-        <h1>Opciones</h1>
+    
         
+     <div class="botonBorrarU"> 
         <button type="button" onclick="borrarUsuario()">Eliminar usuario</button>
+     </div>
+
+     <div class="botonBorrarP">
         <button type="button" onclick="borrarPartida()">Eliminar puntaje</button>
+    </div>
+
+     
 
     </div>
 
 
-
-
-
-    <h2> ----- </h2>
 
 </body>
 <script src="logic.js"></script>
