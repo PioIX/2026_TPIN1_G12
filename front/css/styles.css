@@ -3,7 +3,7 @@ class .*/
 
 /*Login*/
 
-.loginYregistro {
+/* .loginYregistro {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     grid-template-rows: repeat(5, 1fr);
@@ -21,6 +21,7 @@ class .*/
 
 /*modPreguntas*/
 
+/*
 #sans {
     background-color: aquamarine;
 }
@@ -77,7 +78,7 @@ class .*/
 }
 
 /*modUsuarios*/
-
+/*
 #RegresarPre {
     color: blueviolet;
 }
@@ -118,4 +119,4 @@ class .*/
 .botonBorrarP {
     grid-row-start: 3;
 }
- 
+ */

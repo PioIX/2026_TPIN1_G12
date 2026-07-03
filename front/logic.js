@@ -675,8 +675,6 @@ async function botonBorrar(){
 
 
 
-
-
 // MODUSUARIOS --------------------------------------------------------------------------------------
 
 async function tablaUsuarios(){
@@ -781,7 +779,7 @@ async function borrarPartida(){
 
 
 async function darAdmin() {
-    let id_usario = document.getElementById("select-usuarios").value
+    let id_usuario = document.getElementById("select-usuarios").value
 
     const resultado = await fetch("http://localhost:4000/daradmin",{
         method:"PUT",
@@ -789,10 +787,56 @@ async function darAdmin() {
             "Content-Type": "application/json",
           },
         body: JSON.stringify({
-            id_pregunta: id_pregunta 
+            id_usuario: id_usuario 
         })
     })
     console.log(resultado)
     let respuesta = await resultado.json()
     console.log(respuesta)
+
+    if (respuesta.ok== true){
+        return true
+    } else{
+        alert("usuario ya es admin")
+    }
+}
+
+async function quitarAdmin() {
+    let id_usuario = document.getElementById("select-usuarios").value
+
+    const resultado = await fetch("http://localhost:4000/quitaradmin",{
+        method:"PUT",
+        headers: {
+            "Content-Type": "application/json",
+          },
+        body: JSON.stringify({
+            id_usuario: id_usuario 
+        })
+    })
+    console.log(resultado)
+    let respuesta = await resultado.json()
+    console.log(respuesta)
+
+    if (respuesta.ok== true){
+        return true
+    } else{
+        alert("usuario no es admin")
+    }
+}
+
+async function botonDar(){
+    let dar = await darAdmin()
+    console.log(dar)
+    if (dar == true) {
+        const tiempo = setTimeout(window.location.reload(),80000)
+    }
+}
+
+async function botonQuitar(){
+    let quit = await quitarAdmin()
+    console.log(quit)
+    if (quit == true) {
+        console.log("anda")
+        const tiempo = setTimeout(window.location.reload(),80000)
+    }
 }

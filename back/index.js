@@ -201,9 +201,9 @@ app.put('/daradmin', async function(req,res) {
             Set es_admin = 1
             Where id_usuario = ${req.body.id_usuario}
             `)
-            res.send({mensaje: "Admin dado"})
+            res.send({mensaje: "Admin dado", ok:true})
         } else {
-            res.send({mensaje: "Error"})
+            res.send({mensaje: "Error", ok:false})
             console.log(respuesta)
         }
     } catch{
@@ -226,9 +226,9 @@ app.put('/quitaradmin', async function(req,res) {
             Set es_admin = 0
             Where id_usuario = ${req.body.id_usuario}
             `)
-            res.send({mensaje: "Admin quitado"})
+            res.send({mensaje: "Admin quitado", ok:true})
         } else {
-            res.send({mensaje: "Error"})
+            res.send({mensaje: "Error", ok:false})
             console.log(respuesta)
         }
     } catch{
