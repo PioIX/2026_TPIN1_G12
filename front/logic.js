@@ -660,21 +660,6 @@ async function botonBorrar(){
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // MODUSUARIOS --------------------------------------------------------------------------------------
 
 async function tablaUsuarios(){
@@ -838,5 +823,19 @@ async function botonQuitar(){
     if (quit == true) {
         console.log("anda")
         const tiempo = setTimeout(window.location.reload(),80000)
+    }
+}
+
+
+
+// CERRAR SESION DE SAYU ROCIO BALBIN 5B INFO DIRECCION CASTRO BARROS Y TARIJA 67, DNI 48..., SI ANDA MAL CONTACTEN A: 54 9 11 1234 4312
+
+function cerrarSesion() {
+    let confirmLogOut = confirm("¿Realmente quiere cerrar sesión?")
+    if (confirmLogOut) {
+        console.log("usu eligió SI cerrar ses")
+
+        id_user = -1
+        window.location.href = "loginRegistro.html";
     }
 }
