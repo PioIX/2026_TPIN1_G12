@@ -831,6 +831,43 @@ let id_partidaActual = -1
 let preguntaActual = 0
 let listaPreguntasPartida = []
 
+function crearListaPreguntas() {
+
+    while (listaPreguntasPartida.length < 4) {
+        pregunta = Math.floor(Math.random() * 5)
+        if (listaPreguntasPartida.includes(pregunta) == false) {
+            listaPreguntasPartida.push(pregunta)
+        }
+    }
+
+    console.log("LISTA HECHA DE PREGUNTAS RANDOM: ")
+    console.log(listaPreguntasPartida)
+    localStorage.setItem("listaPreguntasPartida", listaPreguntasPartida)
+}
+
+
+
+// HAY QUE HACER ESTO
+async function postPreporpars() {
+
+    let datos = {
+        id_usuario: id_user
+    }
+
+    const resultado = await fetch("http://localhost:4000/partidanueva", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(datos)
+    })
+    console.log(resultado)
+
+    let respuesta = await resultado.json()
+    console.log(respuesta)
+
+}
+
 
 
 async function postPartida() {
@@ -850,32 +887,55 @@ async function postPartida() {
 
     let respuesta = await resultado.json()
     console.log(respuesta)
+
 }
 
-function crearListaPreguntas() {
 
-    while (listaPreguntasPartida.length < 4) {
-        pregunta = Math.floor(Math.random() * 5)
-        if (listaPreguntasPartida.includes(pregunta) == false) {
-            listaPreguntasPartida.push(pregunta)
-        }
-    }
 
-    console.log("LISTA HECHA DE PREGUNTAS RANDOM: ")
-    console.log(listaPreguntasPartida)
-    localStorage.setItem("listaPreguntasPartida", listaPreguntasPartida)
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function empezarPartida() {
-    postPartida()
     crearListaPreguntas()
+    postPartida()
     window.location.href = "juego.html";
 }
+
+
+
+
+
+
+
+
+
+
+
 
 function cargarLista(){
     listaPreguntasPartida = localStorage.getItem("listaPreguntasPartida")
     console.log(listaPreguntasPartida)
     console.log(listaPreguntasPartida[0])
 }
-
-
