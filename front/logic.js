@@ -832,7 +832,7 @@ let preguntaActual = 0
 let listaPreguntasPartida = []
 
 function empezarPartida() {
-    await postPartida();
+    //await postPartida();
     crearListaPreguntas();
 
 
@@ -843,8 +843,7 @@ function empezarPartida() {
 async function postPartida() {
 
     let datos = {
-        puntaje_final = 0,
-        id_user = id_user
+        id_usuario: id_user
     }
 
     const resultado = await fetch("http://localhost:4000/partidaNueva", {
@@ -862,7 +861,7 @@ async function postPartida() {
 
 function crearListaPreguntas() {
 
-    while (listaPreguntasPartida.length < 5) {
+    while (listaPreguntasPartida.length < 4) {
         pregunta = Math.floor(Math.random() * 5)
         if (listaPreguntasPartida.includes(pregunta) == false) {
             listaPreguntasPartida.push(pregunta)
@@ -871,8 +870,13 @@ function crearListaPreguntas() {
 
     console.log("LISTA HECHA DE PREGUNTAS RANDOM: ")
     console.log(listaPreguntasPartida)
+    localStorage.setItem("listaPreguntasPartida", listaPreguntasPartida)
 }
 
-
+function cargarLista(){
+    listaPreguntasPartida = localStorage.getItem("listaPreguntasPartida")
+    console.log(listaPreguntasPartida)
+    console.log(listaPreguntasPartida[0])
+}
 
 
