@@ -813,7 +813,7 @@ async function botonDar() {
     let dar = await darAdmin()
     console.log(dar)
     if (dar == true) {
-        const tiempo = setTimeout(window.location.reload(), 80000)
+        setTimeout(() => window.location.reload(), 500)
     }
 }
 
@@ -822,7 +822,7 @@ async function botonQuitar() {
     console.log(quit)
     if (quit == true) {
         console.log("anda")
-        const tiempo = setTimeout(window.location.reload(), 80000)
+        const tiempo = setTimeout(() => window.location.reload(), 500)
     }
 }
 
