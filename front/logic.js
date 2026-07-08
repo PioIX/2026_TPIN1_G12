@@ -831,20 +831,23 @@ let id_partidaActual = -1
 let preguntaActual = 0
 let listaPreguntasPartida = []
 
-function empezarPartida(){
-    await crearPartida();
+function empezarPartida() {
+    await postPartida();
+    crearListaPreguntas();
+
 
     window.location.href = "juego.html";
 
 }
 
-async function crearPartida() {
+async function postPartida() {
 
     let datos = {
+        puntaje_final = 0,
         id_user = id_user
     }
 
-    const resultado = await fetch("http://localhost:4000/xxxxx", {
+    const resultado = await fetch("http://localhost:4000/partidaNueva", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -855,19 +858,21 @@ async function crearPartida() {
 
     let respuesta = await resultado.json()
     console.log(respuesta)
-
-    id_partidaActua
-    console.log(id_partidaActual)
-
-
 }
 
-async function crearListaPreguntas() {
+function crearListaPreguntas() {
 
+    while (listaPreguntasPartida.length < 5) {
+        pregunta = Math.floor(Math.random() * 5)
+        if (listaPreguntasPartida.includes(pregunta) == false) {
+            listaPreguntasPartida.push(pregunta)
+        }
+    }
+
+    console.log("LISTA HECHA DE PREGUNTAS RANDOM: ")
+    console.log(listaPreguntasPartida)
 }
 
-async function mostrarPartida() {
 
-}
 
 
