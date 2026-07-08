@@ -863,14 +863,19 @@ function crearListaPreguntas() {
 
     console.log("LISTA HECHA DE PREGUNTAS RANDOM: ")
     console.log(listaPreguntasPartida)
+    localStorage.setItem("listaPreguntasPartida", listaPreguntasPartida)
 }
 
 function empezarPartida() {
     postPartida()
     crearListaPreguntas()
     window.location.href = "juego.html";
-
 }
 
+function cargarLista(){
+    listaPreguntasPartida = localStorage.getItem("listaPreguntasPartida")
+    console.log(listaPreguntasPartida)
+    console.log(listaPreguntasPartida[0])
+}
 
 
