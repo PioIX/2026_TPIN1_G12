@@ -705,7 +705,6 @@ async function selectUsuarios(){
     let fetchDatos = await fetch("http://localhost:4000/todousuarios")
     let resultado = await fetchDatos.json()
     let elementosSelect = ``
-    
     for (i = 0; i < resultado.length; i++){
         elementosSelect += `<option value=${resultado[i].id_usuario}>
         ${resultado[i].id_usuario}///${resultado[i].usuario}///${resultado[i].contraseña}///${resultado[i].nombre}///${resultado[i].es_admin}
@@ -828,7 +827,7 @@ async function botonDar(){
     let dar = await darAdmin()
     console.log(dar)
     if (dar == true) {
-        const tiempo = setTimeout(window.location.reload(),80000)
+        setTimeout(() => window.location.reload(), 500)
     }
 }
 
@@ -837,6 +836,6 @@ async function botonQuitar(){
     console.log(quit)
     if (quit == true) {
         console.log("anda")
-        const tiempo = setTimeout(window.location.reload(),80000)
+        const tiempo = setTimeout(() => window.location.reload(), 500)
     }
 }
