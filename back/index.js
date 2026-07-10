@@ -261,6 +261,8 @@ app.put('/asignarpuntaje', async function(req,res) {
     }
 })
 
+
+// pasar el parámetro como: localhost:4000/nombreDelPedido?parametro1=valor1
 app.get('/preguntajuego', async function(req,res){
     let resultado;
     if (req.query.id_partida != undefined && req.query.id_pregunta != undefined) {
@@ -278,7 +280,16 @@ app.get('/preguntajuego', async function(req,res){
 })
 
 
-
+app.get('/prueba', async function(req,res){
+    let respuesta;
+    respuesta = await realizarQuery(`SELECT id_partida 
+        FROM Partidas 
+        ORDER BY id_partida DESC
+        LIMIT 1
+        `)
+    
+    res.send(respuesta);
+})
 
 
 
@@ -344,17 +355,23 @@ app.post('/palabranueva', async function(req,res) {
 app.post('/partidanueva', async function(req,res) {
     console.log(req.body) 
   
-    let respuesta2 =  await realizarQuery(`
+    let respuesta =  await realizarQuery(`
         Select  *  From Usuarios 
         Where id_usuario = ${req.body.id_usuario}
         `)
 
-    if (respuesta2.length != 0) {
+    if (respuesta.length != 0) {
         realizarQuery(`
         INSERT INTO Partidas(puntaje_final, id_usuario) VALUES 
         (0,${req.body.id_usuario})
     `)
-        res.send({mensaje: "Partida agregada"}) 
+        let respuesta2 = await realizarQuery(`SELECT id_partida 
+        FROM Partidas 
+        ORDER BY id_partida DESC
+        LIMIT 1
+        `)
+        console.log(respuesta2)
+        res.send({mensaje: "Partida agregada", id_partida: respuesta2[0].id_partida}) 
     } else {
         res.send({mensaje: "Este dato ya existe o no hay FK"})
     }
