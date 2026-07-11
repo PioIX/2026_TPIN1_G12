@@ -918,7 +918,7 @@ async function postPreporpars() {
 async function empezarPartida() {
     postPartida()
     crearListaPreguntas()
-    const hijodepuuta = setTimeout(() => empezarPartida2(), 3000)
+    const tiempo = setTimeout(() => empezarPartida2(), 3000)
     document.getElementById("cargando").innerHTML = "Cargando..."
 }
 
@@ -931,7 +931,8 @@ function cargarLista(){
     let listaString2 = localStorage.getItem("listaPreguntasPartida")
     listaPreguntasPartida = JSON.parse(listaString2)
     console.log(listaPreguntasPartida)
-    console.log(listaPreguntasPartida[1])
+    console.log(listaPreguntasPartida[0])
+   preguntaActual = listaPreguntasPartida[0]
 }
 
 // setTimeout(() => {alert("Se terminó el tiempo");console.log("ou nou");window.location.reload();}, 500);
@@ -939,29 +940,82 @@ function cargarLista(){
 function cargarPartida(){
     let partidaString2 = localStorage.getItem("partida")
     partidaActual = JSON.parse(partidaString2)
-    console.log(partidaActual)
+    console.log("partida actual: " + partidaActual)
 }
+
+
+
+
 
 // valores de pregunta y opciones ------------------------------
 let pregunta = {
-    titulo: "¿Cuál es la bebida más consumida?",
-    opciones: ["coca", "agua", "jugo", "sprite", "fanta"]
+    titulo: "",
+    opciones: ["", "", "", "", ""]
 }
-
-let titulo = document.getElementById("pregunta_juego")
-titulo.textContent = pregunta.titulo
-titulo.value = pregunta.titulo
 
 let opciones = [
-    document.getElementById("p1_juego"),
-    document.getElementById("p2_juego"),
-    document.getElementById("p3_juego"),
+    document.getElementById("p5_juego"),
     document.getElementById("p4_juego"),
-    document.getElementById("p5_juego")
+    document.getElementById("p3_juego"),
+    document.getElementById("p2_juego"),
+    document.getElementById("p1_juego")
 ]
-for (let i = 0; i < opciones.length; i++) {
-    opciones[i].value = pregunta.opciones[i];
+
+let titulo = document.getElementById("pregunta_juego")
+
+
+
+async function getPregJuego() {
+    let fetchDatos = await fetch("http://localhost:4000/preguntajuego?id_partida=" + partidaActual + "&id_pregunta=" + preguntaActual)
+    let resultado = await fetchDatos.json()
+    pregunta.titulo = resultado.pregunta
+    titulo.textContent = pregunta.titulo
+    titulo.value = pregunta.titulo
+    console.log("getpregjuego")
 }
+
+async function getPunt1() {
+    let fetchDatos = await fetch("http://localhost:4000/palabraspreguntap1?id_pregunta=" + preguntaActual)
+    let resultado = await fetchDatos.json()
+    pregunta.opciones[0] = resultado.res
+    opciones[4].value = pregunta.opciones[0]
+    opciones[4].textContent = "1"
+}
+
+async function getPunt2() {
+    let fetchDatos = await fetch("http://localhost:4000/palabraspreguntap2?id_pregunta=" + preguntaActual)
+    let resultado = await fetchDatos.json()
+    pregunta.opciones[1] = resultado.res
+    opciones[3].value = pregunta.opciones[1]
+    opciones[3].textContent = "2"
+}
+
+async function getPunt3() {
+    let fetchDatos = await fetch("http://localhost:4000/palabraspreguntap3?id_pregunta=" + preguntaActual)
+    let resultado = await fetchDatos.json()
+    pregunta.opciones[2] = resultado.res
+    opciones[2].value = pregunta.opciones[2]
+    opciones[2].textContent = "3"
+}
+
+async function getPunt4() {
+    let fetchDatos = await fetch("http://localhost:4000/palabraspreguntap4?id_pregunta=" + preguntaActual)
+    let resultado = await fetchDatos.json()
+    pregunta.opciones[3] = resultado.res
+    opciones[1].value = pregunta.opciones[3]
+    opciones[1].textContent = "4"
+}
+
+async function getPunt5() {
+    let fetchDatos = await fetch("http://localhost:4000/palabraspreguntap5?id_pregunta=" + preguntaActual)
+    let resultado = await fetchDatos.json()
+    pregunta.opciones[4] = resultado.res
+    opciones[0].value = pregunta.opciones[4]
+    opciones[0].textContent = "5"
+}
+
+
+let contador = 0
 
 function Validar() {
     let respuesta = document.getElementById("inputRespuesta").value;
@@ -970,6 +1024,48 @@ function Validar() {
     for (let i = 0; i < opciones.length; i++) {
         if (respuesta == opciones[i].value) {
             opciones[i].textContent = opciones[i].value;
+            contador ++
+            console.log(contador)
+            if (contador == 5){
+                titulo.textContent= "ganaste esta pregunta"
+            }
         }
     }
+}
+
+let i = 0
+let cont2 = 0
+
+async function loopJuego(){
+    do {
+        await tiempo2(i)
+        i++
+   }
+   while (i<5)
+}
+
+function tiempo2(i){
+    const tiempo = setTimeout(function(){
+        sig = confirm("¿Listo para la siguiente pregunta?")
+        if (sig){
+            console.log("iteracion: "+ i)
+            preguntaActual = listaPreguntasPartida[i]
+            console.log("preg act: " + preguntaActual)
+            getPregJuego()
+            getPunt1()
+            getPunt2()
+            getPunt3()
+            getPunt4()
+            getPunt5()
+            cont2++
+            console.log(cont2)
+            if (cont2 > 4) {
+                alert("no hay más preguntas")
+                window.location.href = "fin.html"
+            } 
+        }
+        
+    }, 25500 * i)
+
+    
 }
