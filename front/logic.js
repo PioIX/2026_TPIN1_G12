@@ -934,9 +934,42 @@ function cargarLista(){
     console.log(listaPreguntasPartida[1])
 }
 
+// setTimeout(() => {alert("Se terminó el tiempo");console.log("ou nou");window.location.reload();}, 500);
+
 function cargarPartida(){
     let partidaString2 = localStorage.getItem("partida")
     partidaActual = JSON.parse(partidaString2)
     console.log(partidaActual)
 }
 
+// valores de pregunta y opciones ------------------------------
+let pregunta = {
+    titulo: "¿Cuál es la bebida más consumida?",
+    opciones: ["coca", "agua", "jugo", "sprite", "fanta"]
+}
+
+let titulo = document.getElementById("pregunta_juego")
+titulo.textContent = pregunta.titulo
+titulo.value = pregunta.titulo
+
+let opciones = [
+    document.getElementById("p1_juego"),
+    document.getElementById("p2_juego"),
+    document.getElementById("p3_juego"),
+    document.getElementById("p4_juego"),
+    document.getElementById("p5_juego")
+]
+for (let i = 0; i < opciones.length; i++) {
+    opciones[i].value = pregunta.opciones[i];
+}
+
+function Validar() {
+    let respuesta = document.getElementById("inputRespuesta").value;
+    console.log(respuesta)
+
+    for (let i = 0; i < opciones.length; i++) {
+        if (respuesta == opciones[i].value) {
+            opciones[i].textContent = opciones[i].value;
+        }
+    }
+}
