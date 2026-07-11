@@ -826,8 +826,25 @@ async function botonQuitar() {
     }
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ///////////////////////////// JUEGO: PARTIDA
-let id_partidaActual = -1
+let partidaActual = -1
 let preguntaActual = 0
 let listaPreguntasPartida = []
 
@@ -850,12 +867,20 @@ async function postPartida() {
 
     let respuesta = await resultado.json()
     console.log(respuesta)
+    partidaActual = respuesta.id_partida
+    console.log(partidaActual)
+    let partidaString = JSON.stringify(partidaActual)
+    localStorage.setItem("partida", partidaString)
+    
 }
+
+
+
 
 function crearListaPreguntas() {
 
     while (listaPreguntasPartida.length < 4) {
-        pregunta = Math.floor(Math.random() * 5)
+        pregunta = Math.floor((Math.random() * 16) + 1)
         if (listaPreguntasPartida.includes(pregunta) == false) {
             listaPreguntasPartida.push(pregunta)
         }
@@ -863,22 +888,58 @@ function crearListaPreguntas() {
 
     console.log("LISTA HECHA DE PREGUNTAS RANDOM: ")
     console.log(listaPreguntasPartida)
-    localStorage.setItem("listaPreguntasPartida", listaPreguntasPartida)
+    let listaString = JSON.stringify(listaPreguntasPartida)
+    localStorage.setItem("listaPreguntasPartida", listaString)
 }
 
-function empezarPartida() {
+async function postPreporpars() {
+    for (let i = 0; i < listaPreguntasPartida.length; i++){
+        
+        let datos = {
+            id_partida: partidaActual,
+            id_pregunta: listaPreguntasPartida[i],
+            puntaje_pregunta: 0
+        }
+
+        const resultado = await fetch("http://localhost:4000/preporparnueva", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(datos)
+        })
+        console.log(resultado)
+
+        let respuesta = await resultado.json()
+        console.log(respuesta)
+    }
+}
+
+async function empezarPartida() {
     postPartida()
     crearListaPreguntas()
-    window.location.href = "juego.html";
-    //
-    setTimeout(() => {alert("Se terminó el tiempo");console.log("ou nou");window.location.reload();}, 500);
-
+    const hijodepuuta = setTimeout(() => empezarPartida2(), 3000)
+    document.getElementById("cargando").innerHTML = "Cargando..."
 }
 
-function cargarLista() {
-    listaPreguntasPartida = localStorage.getItem("listaPreguntasPartida")
+function empezarPartida2() {
+    postPreporpars()
+    setTimeout(() => window.location.href = "juego.html", 5500)
+}
+
+function cargarLista(){
+    let listaString2 = localStorage.getItem("listaPreguntasPartida")
+    listaPreguntasPartida = JSON.parse(listaString2)
     console.log(listaPreguntasPartida)
-    console.log(listaPreguntasPartida[0])
+    console.log(listaPreguntasPartida[1])
+}
+
+// setTimeout(() => {alert("Se terminó el tiempo");console.log("ou nou");window.location.reload();}, 500);
+
+function cargarPartida(){
+    let partidaString2 = localStorage.getItem("partida")
+    partidaActual = JSON.parse(partidaString2)
+    console.log(partidaActual)
 }
 
 // valores de pregunta y opciones ------------------------------
