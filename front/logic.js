@@ -954,11 +954,11 @@ let pregunta = {
 }
 
 let opciones = [
-    document.getElementById("p5_juego"),
-    document.getElementById("p4_juego"),
-    document.getElementById("p3_juego"),
+    document.getElementById("p1_juego"),
     document.getElementById("p2_juego"),
-    document.getElementById("p1_juego")
+    document.getElementById("p3_juego"),
+    document.getElementById("p4_juego"),
+    document.getElementById("p5_juego")
 ]
 
 let titulo = document.getElementById("pregunta_juego")
@@ -978,16 +978,16 @@ async function getPunt1() {
     let fetchDatos = await fetch("http://localhost:4000/palabraspreguntap1?id_pregunta=" + preguntaActual)
     let resultado = await fetchDatos.json()
     pregunta.opciones[0] = resultado.res
-    opciones[4].value = pregunta.opciones[0]
-    opciones[4].textContent = "1"
+    opciones[0].value = pregunta.opciones[0]
+    opciones[0].textContent = "1"
 }
 
 async function getPunt2() {
     let fetchDatos = await fetch("http://localhost:4000/palabraspreguntap2?id_pregunta=" + preguntaActual)
     let resultado = await fetchDatos.json()
     pregunta.opciones[1] = resultado.res
-    opciones[3].value = pregunta.opciones[1]
-    opciones[3].textContent = "2"
+    opciones[1].value = pregunta.opciones[1]
+    opciones[1].textContent = "2"
 }
 
 async function getPunt3() {
@@ -1002,20 +1002,21 @@ async function getPunt4() {
     let fetchDatos = await fetch("http://localhost:4000/palabraspreguntap4?id_pregunta=" + preguntaActual)
     let resultado = await fetchDatos.json()
     pregunta.opciones[3] = resultado.res
-    opciones[1].value = pregunta.opciones[3]
-    opciones[1].textContent = "4"
+    opciones[3].value = pregunta.opciones[3]
+    opciones[3].textContent = "4"
 }
 
 async function getPunt5() {
     let fetchDatos = await fetch("http://localhost:4000/palabraspreguntap5?id_pregunta=" + preguntaActual)
     let resultado = await fetchDatos.json()
     pregunta.opciones[4] = resultado.res
-    opciones[0].value = pregunta.opciones[4]
-    opciones[0].textContent = "5"
+    opciones[4].value = pregunta.opciones[4]
+    opciones[4].textContent = "5"
 }
 
 
 let contador = 0
+let puntos = 0
 
 function Validar() {
     let respuesta = document.getElementById("inputRespuesta").value;
@@ -1025,6 +1026,8 @@ function Validar() {
         if (respuesta == opciones[i].value) {
             opciones[i].textContent = opciones[i].value;
             contador ++
+            puntos += i + 1
+            console.log("puntos: "+ puntos)
             console.log(contador)
             if (contador == 5){
                 titulo.textContent= "ganaste esta pregunta"
@@ -1048,6 +1051,8 @@ function tiempo2(i){
     const tiempo = setTimeout(function(){
         sig = confirm("¿Listo para la siguiente pregunta?")
         if (sig){
+            contador = 0
+            console.log("contador: "+ contador)
             console.log("iteracion: "+ i)
             preguntaActual = listaPreguntasPartida[i]
             console.log("preg act: " + preguntaActual)
@@ -1061,11 +1066,47 @@ function tiempo2(i){
             console.log(cont2)
             if (cont2 > 4) {
                 alert("no hay más preguntas")
+                localStorage.setItem("puntosDePartida", puntos)
                 window.location.href = "fin.html"
             } 
         }
         
-    }, 25500 * i)
+    }, 100500 * i)
+}
 
-    
+
+
+let puntos_partida = -1
+
+function cargarPuntos(){
+    puntos_partida = JSON.parse(localStorage.getItem("puntosDePartida"))
+    console.log(puntos_partida)
+    putPuntajePartida()
+}
+
+async function putPuntajePartida(){
+    console.log(puntos_partida)
+    console.log(partidaActual)
+    document.getElementById("tu-puntaje").innerHTML = "Tu puntaje: " + partidaActual
+
+    const resultado = await fetch("http://localhost:4000/asignarpuntaje", {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            puntaje_final: puntos_partida,
+            id_partida: partidaActual
+        })
+    })
+    console.log(resultado)
+    let respuesta = await resultado.json()
+    console.log(respuesta)
+
+    if (respuesta.ok == true) {
+        return true
+        
+    } else {
+        alert("error")
+    }
 }
