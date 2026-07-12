@@ -10,7 +10,7 @@
 
 
 
-<body onload="cargarUser(), confirmarAdmin()">
+<body onload="cargarUser(), confirmarAdmin(), cargarPartida(), cargarPuntos(), getRanking()">
 
 
     <div id="ELIMINAR LUEGO">
@@ -23,24 +23,11 @@
 
     <div class="pantalla-3">
         <h1>Fin del juego</h1>
+        <h2 id="tu-puntaje"></h2>
 
         <div class="tabla">
-            <table>
-                <tr>
-                    <th>ID:</th>
-                    <th>Jugador:</th>
-                    <th>Puntaje:</th>
-                </tr>
-                <tr>
-                    <td>36</td>
-                    <td>mauri</td>
-                    <td>5</td>
-                </tr>
-                <tr>
-                    <td>21</td>
-                    <td>salla</td>
-                    <td>6</td>
-                </tr>
+            <table id="tablaRanking">
+                
             </table>
         </div>
 

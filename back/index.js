@@ -402,13 +402,21 @@ app.post('/palabranueva', async function(req,res) {
             Select  *  From Preguntas 
             Where id_pregunta = ${req.body.id_pregunta}
             `)
+
+        let respuesta3 = await realizarQuery(`
+            Select  *  From Palabras 
+            Where puntaje = ${req.body.puntaje} AND id_pregunta = ${req.body.id_pregunta}
+            `)
+        console.log(respuesta3)
         
-        if (respuesta2.length != 0 ) {
+        if (respuesta2.length != 0 && respuesta3 == 0) {
             await realizarQuery(`
             INSERT INTO Palabras(palabra, puntaje, id_pregunta) VALUES
             ("${req.body.palabra}",${req.body.puntaje},${req.body.id_pregunta})
         `)
             res.send({mensaje: "Palabra agregada"}) 
+        } else {
+            res.send({mensaje: "Este dato ya existe"})
         }
     }
     catch {
