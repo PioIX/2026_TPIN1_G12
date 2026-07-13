@@ -1020,10 +1020,11 @@ let puntos = 0
 
 function Validar() {
     let respuesta = document.getElementById("inputRespuesta").value;
+    let res = respuesta.toLowerCase();
     console.log(respuesta)
 
     for (let i = 0; i < opciones.length; i++) {
-        if (respuesta == opciones[i].value) {
+        if (res == opciones[i].value) {
             opciones[i].textContent = opciones[i].value;
             contador ++
             puntos += i + 1
