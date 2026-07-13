@@ -202,7 +202,17 @@ async function confirmarAdmin() {
     }
 }
 
+// LOG OUT
 
+function cerrarSesion() {
+    let confirmLogOut = confirm("¿Realmente quiere cerrar sesión?")
+    if (confirmLogOut) {
+        console.log("usu eligió SI cerrar ses")
+
+        id_user = -1
+        window.location.href = "loginRegistro.html";
+    }
+}
 
 // MODPREGUNTAS --------------------------------------------------------------------------------------
 
@@ -826,28 +836,37 @@ async function botonQuitar() {
     }
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ///////////////////////////// JUEGO: PARTIDA
-let id_partidaActual = -1
+let partidaActual = -1
 let preguntaActual = 0
 let listaPreguntasPartida = []
 
-function empezarPartida() {
-    await postPartida();
-    crearListaPreguntas();
 
-
-    window.location.href = "juego.html";
-
-}
 
 async function postPartida() {
 
     let datos = {
-        puntaje_final = 0,
-        id_user = id_user
+        id_usuario: id_user
     }
 
-    const resultado = await fetch("http://localhost:4000/partidaNueva", {
+    const resultado = await fetch("http://localhost:4000/partidanueva", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -858,12 +877,20 @@ async function postPartida() {
 
     let respuesta = await resultado.json()
     console.log(respuesta)
+    partidaActual = respuesta.id_partida
+    console.log(partidaActual)
+    let partidaString = JSON.stringify(partidaActual)
+    localStorage.setItem("partida", partidaString)
+    
 }
+
+
+
 
 function crearListaPreguntas() {
 
-    while (listaPreguntasPartida.length < 5) {
-        pregunta = Math.floor(Math.random() * 5)
+    while (listaPreguntasPartida.length < 4) {
+        pregunta = Math.floor((Math.random() * 16) + 1)
         if (listaPreguntasPartida.includes(pregunta) == false) {
             listaPreguntasPartida.push(pregunta)
         }
@@ -871,8 +898,229 @@ function crearListaPreguntas() {
 
     console.log("LISTA HECHA DE PREGUNTAS RANDOM: ")
     console.log(listaPreguntasPartida)
+    let listaString = JSON.stringify(listaPreguntasPartida)
+    localStorage.setItem("listaPreguntasPartida", listaString)
+}
+
+async function postPreporpars() {
+    for (let i = 0; i < listaPreguntasPartida.length; i++){
+        
+        let datos = {
+            id_partida: partidaActual,
+            id_pregunta: listaPreguntasPartida[i],
+            puntaje_pregunta: 0
+        }
+
+        const resultado = await fetch("http://localhost:4000/preporparnueva", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(datos)
+        })
+        console.log(resultado)
+
+        let respuesta = await resultado.json()
+        console.log(respuesta)
+    }
+}
+
+async function empezarPartida() {
+    postPartida()
+    crearListaPreguntas()
+    const tiempo = setTimeout(() => empezarPartida2(), 3000)
+    document.getElementById("cargando").innerHTML = "Cargando..."
+}
+
+function empezarPartida2() {
+    postPreporpars()
+    setTimeout(() => window.location.href = "juego.html", 5500)
+}
+
+function cargarLista(){
+    let listaString2 = localStorage.getItem("listaPreguntasPartida")
+    listaPreguntasPartida = JSON.parse(listaString2)
+    console.log(listaPreguntasPartida)
+    console.log(listaPreguntasPartida[0])
+   preguntaActual = listaPreguntasPartida[0]
+}
+
+// setTimeout(() => {alert("Se terminó el tiempo");console.log("ou nou");window.location.reload();}, 500);
+
+function cargarPartida(){
+    let partidaString2 = localStorage.getItem("partida")
+    partidaActual = JSON.parse(partidaString2)
+    console.log("partida actual: " + partidaActual)
 }
 
 
 
 
+
+// valores de pregunta y opciones ------------------------------
+let pregunta = {
+    titulo: "",
+    opciones: ["", "", "", "", ""]
+}
+
+let opciones = [
+    document.getElementById("p1_juego"),
+    document.getElementById("p2_juego"),
+    document.getElementById("p3_juego"),
+    document.getElementById("p4_juego"),
+    document.getElementById("p5_juego")
+]
+
+let titulo = document.getElementById("pregunta_juego")
+
+
+
+async function getPregJuego() {
+    let fetchDatos = await fetch("http://localhost:4000/preguntajuego?id_partida=" + partidaActual + "&id_pregunta=" + preguntaActual)
+    let resultado = await fetchDatos.json()
+    pregunta.titulo = resultado.pregunta
+    titulo.textContent = pregunta.titulo
+    titulo.value = pregunta.titulo
+    console.log("getpregjuego")
+}
+
+async function getPunt1() {
+    let fetchDatos = await fetch("http://localhost:4000/palabraspreguntap1?id_pregunta=" + preguntaActual)
+    let resultado = await fetchDatos.json()
+    pregunta.opciones[0] = resultado.res
+    opciones[0].value = pregunta.opciones[0]
+    opciones[0].textContent = "1"
+}
+
+async function getPunt2() {
+    let fetchDatos = await fetch("http://localhost:4000/palabraspreguntap2?id_pregunta=" + preguntaActual)
+    let resultado = await fetchDatos.json()
+    pregunta.opciones[1] = resultado.res
+    opciones[1].value = pregunta.opciones[1]
+    opciones[1].textContent = "2"
+}
+
+async function getPunt3() {
+    let fetchDatos = await fetch("http://localhost:4000/palabraspreguntap3?id_pregunta=" + preguntaActual)
+    let resultado = await fetchDatos.json()
+    pregunta.opciones[2] = resultado.res
+    opciones[2].value = pregunta.opciones[2]
+    opciones[2].textContent = "3"
+}
+
+async function getPunt4() {
+    let fetchDatos = await fetch("http://localhost:4000/palabraspreguntap4?id_pregunta=" + preguntaActual)
+    let resultado = await fetchDatos.json()
+    pregunta.opciones[3] = resultado.res
+    opciones[3].value = pregunta.opciones[3]
+    opciones[3].textContent = "4"
+}
+
+async function getPunt5() {
+    let fetchDatos = await fetch("http://localhost:4000/palabraspreguntap5?id_pregunta=" + preguntaActual)
+    let resultado = await fetchDatos.json()
+    pregunta.opciones[4] = resultado.res
+    opciones[4].value = pregunta.opciones[4]
+    opciones[4].textContent = "5"
+}
+
+
+let contador = 0
+let puntos = 0
+
+function Validar() {
+    let respuesta = document.getElementById("inputRespuesta").value;
+    console.log(respuesta)
+
+    for (let i = 0; i < opciones.length; i++) {
+        if (respuesta == opciones[i].value) {
+            if (opciones[i].textContent == opciones[i].value) {
+                console.log("ya esta puesto")
+            } else {
+                opciones[i].textContent = opciones[i].value;
+                contador ++
+                puntos += i + 1
+                console.log("puntos: "+ puntos)
+                console.log(contador)
+                if (contador == 5){
+                    titulo.textContent= "ganaste esta pregunta"
+                }
+            }
+        }
+    }
+}
+
+let i = 0
+let cont2 = 0
+
+async function loopJuego(){
+    do {
+        await tiempo2(i)
+        i++
+   }
+   while (i<5)
+}
+
+function tiempo2(i){
+    const tiempo = setTimeout(function(){
+        sig = confirm("¿Listo para la siguiente pregunta?")
+        if (sig){
+            contador = 0
+            console.log("contador: "+ contador)
+            console.log("iteracion: "+ i)
+            preguntaActual = listaPreguntasPartida[i]
+            console.log("preg act: " + preguntaActual)
+            getPregJuego()
+            getPunt1()
+            getPunt2()
+            getPunt3()
+            getPunt4()
+            getPunt5()
+            cont2++
+            console.log(cont2)
+            if (cont2 > 4) {
+                alert("no hay más preguntas")
+                localStorage.setItem("puntosDePartida", puntos)
+                window.location.href = "fin.html"
+            } 
+        }
+        
+    }, 100500 * i)
+}
+
+
+
+let puntos_partida = -1
+
+function cargarPuntos(){
+    puntos_partida = JSON.parse(localStorage.getItem("puntosDePartida"))
+    console.log(puntos_partida)
+    putPuntajePartida()
+}
+
+async function putPuntajePartida(){
+    console.log(puntos_partida)
+    console.log(partidaActual)
+    document.getElementById("tu-puntaje").innerHTML = "Tu puntaje: " + partidaActual
+
+    const resultado = await fetch("http://localhost:4000/asignarpuntaje", {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            puntaje_final: puntos_partida,
+            id_partida: partidaActual
+        })
+    })
+    console.log(resultado)
+    let respuesta = await resultado.json()
+    console.log(respuesta)
+
+    if (respuesta.ok == true) {
+        return true
+        
+    } else {
+        alert("error")
+    }
+}
