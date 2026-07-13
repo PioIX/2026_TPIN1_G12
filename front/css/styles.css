@@ -1,122 +1,292 @@
 /*id #
 class .*/
 
+#titulo {
+    font-family: 'Courier New', Courier, monospace;
+    text-align: center;
+}
+
+#subtitulo {
+    font-family: 'Courier New', Courier, monospace;
+}
+
+#texto {
+    font-family: 'Courier New', Courier, monospace;
+}
+
+body {
+    background-image: url(../imagenes/fondo.png); 
+    background-size: cover;
+    font-family: serif; 
+    margin: 0;
+    min-height: 100vh;
+}
+
+input {
+    flex: 1;
+    background-color: #d8e5eb; 
+    border: none;
+    border-radius: 20px; 
+    padding: 1px 20px;
+    font-size: 1.1rem;
+    font-style: italic;
+    text-align: center; 
+    box-sizing: border-box; 
+    outline: none; 
+    gap: 10px;
+}
+
+button {
+    background-color: #0033a0; 
+    color: white;
+    font-weight: bold;
+    font-style: italic;
+    border: 3px solid black;
+    border-radius: 40px; 
+    padding: 15px 20px;
+    cursor: pointer;
+    font-size: 1rem;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.5); 
+}
+
 /*Login*/
 
-/* .loginYregistro {
+.tituloLogin {
+    text-align: center;
+    color: white;
+    font-size: 4rem;
+    margin-top: 50px;
+    margin-bottom: 20px;
+}
+
+
+.loginYregistro {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    max-width: 800px;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.columna {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+label, #subtitulo {
+    flex: 0 0 180px;
+    text-align: right; 
+    font-size: 1.5rem;
+    font-style: italic;
+    margin: 0;
+    color: #1a1a1a; 
+}
+
+/*menu*/
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap-reverse;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  gap: 10px;
+}
+
+.columnaMenu1 {
+  align-self: center;
+}
+
+.columnaMenu2 {
+  align-self: center;
+}
+
+.columnaMenu3 {
+  align-self: center;
+}
+
+
+/*menuAdmin*/
+
+.menuAd {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: repeat(5, 1fr);
-    gap: 8px;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 50px;
 }
     
+.tituloAd {
+    grid-column: span 2 / span 2;
+    text-align: center;
+}
 
-.inicioSesion {
+.jugarAd {
     grid-row-start: 2;
+    text-align: right;
 }
 
-.registro {
-    grid-row-start: 3;
-}
-
-/*modPreguntas*/
-
-/*
-#sans {
-    background-color: aquamarine;
-}
-
-#RegresarPre {
-    color: blueviolet;
-}
-
-.modificacionPreguntas {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: repeat(5, 1fr);
-    gap: 8px;
-}
-    
-
-.modPreguntas {
-    grid-column-start: 1;
+.modUsu {
     grid-row-start: 2;
-}
-
-.botonDatos {
-    grid-column-start: 1;
-    grid-row-start: 3;
-}
-
-.div4 {
-    grid-column-start: 2;
-    grid-row-start: 1;
-}
-
-.div5 {
-    grid-column-start: 2;
-    grid-row-start: 2;
-}
-
-.botonPut {
-    grid-column-start: 2;
-    grid-row-start: 3;
-}
-
-.div7 {
-    grid-column-start: 3;
-    grid-row-start: 1;
-}
-
-.div8 {
-    grid-column-start: 3;
-    grid-row-start: 2;
-}
-
-.botonDelete {
-    grid-row-start: 3;
-}
-
-/*modUsuarios*/
-/*
-#RegresarPre {
-    color: blueviolet;
-}
-
-.modUsuariosCompleta {
     text-align: center;
 }
 
 
-.modificacionUsuarios {
+.rankingAd {
+    grid-row-start: 3;
+    text-align: right;
+}
+
+/*modUsuarios*/
+
+.modUsuarios {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: repeat(5, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
     gap: 8px;
 }
-    
 
-.botontUsu {
-    grid-column-start: 1;
-    grid-row-start: 2;
+
+/*modPreguntas*/
+
+.modificacionPreguntas {
+    min-height: 100vh;
+    padding: 25px 35px 90px;
+    display: grid;
+    grid-template-columns: 40% 60%;
+    grid-template-rows: auto 1fr auto;
+    column-gap: 50px;
+    row-gap: 30px;
 }
 
-.botonBorrarU {
-    grid-column-start: 1;
-    grid-row-start: 3;
+.modificacionPreguntas > a {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
 }
 
-.desplegablePartidas {
-    grid-column-start: 2;
-    grid-row-start: 1;
+.modificacionPreguntas > div:nth-of-type(1) {
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+    justify-self: center;
 }
 
-.botonParti {
-    grid-column-start: 2;
-    grid-row-start: 2;
+.modificacionPreguntas > div:nth-of-type(2) {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+    width: 100%;
 }
 
-.botonBorrarP {
-    grid-row-start: 3;
+.modificacionPreguntas > div:nth-of-type(3) {
+    grid-column: 1 / 3;
+    grid-row: 3 / 4;
 }
- */
+
+.botonesParti {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(1, 1fr);
+    gap: 8px;
+}
+
+/*ranking*/
+
+.ranking {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: stretch;
+  gap: 8px;
+}
+
+.regresarRank {
+  align-self: flex-end;
+}
+
+/*juego*/
+
+#titulo {
+    position: absolute;
+    top: 20px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    z-index: 2;
+}
+
+#titulo h2 {
+    margin: 0;
+    font-size: 52px;
+    color: white;
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: bold;
+}
+
+#titulo h4 {
+    margin: 8px 0 0;
+    font-size: 18px;
+    color: white;
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: normal;
+}
+
+#opcionesJuego {
+    position: absolute;
+    top: 145px;
+    left: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    z-index: 2;
+}
+
+#opcionesJuego h6 {
+    margin: 0;
+    color: white;
+    font-size: 28px;
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: normal;
+}
+
+input#respuestas {
+    position: absolute;
+    top: 450px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 420px;
+    height: 42px;
+    border: none;
+    border-radius: 22px;
+    background: #dbeaf2;
+    text-align: center;
+    font-size: 20px;
+    font-style: italic;
+    color: #222;
+    outline: none;
+}
+
+.botonValidar {
+    position: absolute;
+    top: 520px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    z-index: 2;
+}
+
+.botonValidar button {
+    background: #8bc34a;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/*fin*/
+
