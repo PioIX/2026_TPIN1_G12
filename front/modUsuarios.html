@@ -7,77 +7,51 @@
     <title>Document</title>
     <link rel="stylesheet" type="text/css" href="css/styles.css" />
 </head>
-<body class="modUsuariosCompleta" onload="cargarUser(), selectUsuarios(), selectPartidas()">
-    <h1> Modificacion Preguntas</h1>
 
-    <div id="ELIMINAR LUEGO">
-        <a href="loginRegistro.html">Login </a>
-        <a href="menu.html">Menú </a>
-        <a href="menuAdmin.html">ADMIN </a>
-        <a href="modPreguntas.html">modPreguntas </a>
-        <a href="modUsuarios.html">ModUsuarios </a>
-        <a href="ranking.html">Ranking </a>
-        <a href="juego.html">JUEGO </a>
-        <a href="fin.html">Fin </a>
-    </div>
+<body class="modUsuariosCompleta" onload="cargarUser(), selectUsuarios(), selectPartidas()">
+    <h1 id="titulos"> Modificacion Usuarios</h1>
+
 
     <a href="menuAdmin.html">
         <button id="regresarUsu" type="button">Regresar</button>
     </a>
 
-    <div class="modificacionUsuarios">
-     <div class="desplegableUsu">
+   <div class="modUsuarios">
 
-        <h1> Seleccionar Usuarios</h1>
-        <label for="select-usuarios">Usuario:</label>
-        <select name="select-usuarios" id="select-usuarios"></select>
-     </div>
-     <div class="botontUsu">
-        <h1>Usuario seleccionada:</h1>
-
+      <div class="usuarios">
+         <h2 id="subtitulo"> Seleccionar Usuarios</h2>
+         <label id="textos" for="select-usuarios">Usuario:</label>
+         <select name="select-usuarios" id="select-usuarios"></select>
+     
+        <h2 id="subtitulo">Usuario seleccionada:</h2>
         <table id="tabla-usuarios">
         </table>
+
+      </div>
+
+      <div class="botonesUsu">
         <button type="button" onclick="tablaUsuarios()">Mostrar</button>
         <div class="botonBorrarU"> 
         <button type="button" onclick="borrarUsuario()">Eliminar usuario</button>
-     </div>
-
-     <div class="botonBorrarU"> 
         <button type="button" onclick="botonDar()">Darle Admin a este usuario</button>
-     </div>
-
-     <div class="botonBorrarU"> 
         <button type="button" onclick="botonQuitar()">Quitarle Admin a este usuario</button>
      </div>
-     </div>
 
-     <div class="desplegablePartidas">
-        <h1>Seleccionar Partida</h1>
+      <div class="partidas">
+         <h2 id="subtitulo">Seleccionar Partida</h2>
+         <label id="textos" for="select-partidas">Partida:</label>
+         <select name="select-partidas" id="select-partidas"></select>
+      
+         <h2 id="subtitulo">Partida seleccionada:</h2>
+         <table id="tabla-partidas">
+         </table> 
+      </div>
 
-        <label for="select-partidas">Partida:</label>
-        <select name="select-partidas" id="select-partidas"></select>
-     </div>
-
-     <div class="botonParti">
-        <h1>Partida seleccionada:</h1>
-        <table id="tabla-partidas">
-        </table>
-        <button type="button" onclick="tablaPartidas()">Mostrar</button> 
-     </div>
-
-    
-        
-     
-
-     <div class="botonBorrarP">
-        <button type="button" onclick="borrarPartida()">Eliminar puntaje</button>
-    </div>
-
-     
-
-    </div>
-
-
+      <div class="botonesParti">
+         <button type="button" onclick="borrarPartida()">Eliminar puntaje</button>
+         <button type="button" onclick="tablaPartidas()">Mostrar</button>
+      </div>
+   </div>
 
 </body>
 <script src="logic.js"></script>

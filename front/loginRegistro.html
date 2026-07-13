@@ -9,42 +9,41 @@
 </head>
 
 <body>
-    <div id="ELIMINAR LUEGO">
-            <a href="loginRegistro.html">Login </a>
-            <a href="menu.html">Menú </a>
+
+    <h1 id="titulos" class="tituloLogin">Bienvenido/a</h1>
+
+        <div class="loginYregistro">
+
+                <div class="columna">
+                    <input placeholder="mechigamerxxxx" id="usuario" type="text"> </input>
+                    <label id="subtitulo" for="usuario">Usuario</label>
+                </div>
+
+                
+                <div class="columna">
+                    
+                    <input placeholder="**" id="contra" type="password"> </input>
+                    <label id="subtitulo" for="contra">Contraseña</label>
+
+                </div>
+
+                <div>
+                    <button onclick="inicioSesion()" title="iniciar sesion"> Iniciar sesion </button>
+                </div>
             
-            <a href="ranking.html">Ranking </a>
-            <a href="juego.html">JUEGO </a>
-            <a href="fin.html">Fin </a>
+                <div class="columna">
+                    <h2 id="subtitulo"> Si no tenés cuenta</h2>
+                     
+                    <input placeholder="Nombre" id="nombre" type="text"> </input>
+                    <label for="cuenta"></label>
+                
+                </div>
+                
+                <div>
+                     <button onclick="Registrarse()" title="Registrarse"> Registrarse</button>
+                </div>
         </div>
 
-            <h1>Bienvenido/a</h1>
-
-            <div class="inputUsuario">
-                <input placeholder="mechigamerxxxx" id="usuario" type="text"> </input>
-                <label for="usuario">Usuario</label>
-            </div>
-
-            <div class="inputContraseña">
-                <input placeholder="******" id="contra" type="password"> </input>
-                <label for="contra">Contraseña</label>
-            </div>
-
-            <div class="botonInicio">
-                <button onclick="inicioSesion()" title="iniciar sesion"> Iniciar sesion </button>
-            </div>
-        
-
-
-            <div class="registro">
-                <input placeholder="Nombre" id="nombre" type="text"> -</input>
-                <label for="cuenta">Si no tenés cuenta:</label>
-            </div>
-
-            <div class="botonRegistro">
-                <button onclick="Registrarse()" title="Registrarse"> Registrarse</button>
-            </div>
-    
 </body>
 <script src="logic.js"></script>
 </html>
