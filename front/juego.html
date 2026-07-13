@@ -8,7 +8,7 @@
     <title>Juego </title>
 </head>
 
-<body onload="cargarUser()">
+<body onload="cargarUser(), cargarLista(), cargarPartida(), loopJuego()">
     <div class="pantalla2-juego"></div>
 
     <div id="ELIMINAR LUEGO">
@@ -20,20 +20,20 @@
     </div>
 
     <div id="titulo">
-        <h2>titulo de pregunta</h2>
+        <h2 id="pregunta_juego">titulo de pregunta</h2>
         <h4>puntaje</h4>
     </div>
 
     <div id="respuestas">
-        <h6>1</h6>
-        <h6>2</h6>
-        <h6>3</h6>
-        <h6>4</h6>
-        <h6>5</h6>
+        <h6 id="p5_juego">mayor</h6>
+        <h6 id="p4_juego">2</h6>
+        <h6 id="p3_juego">3</h6>
+        <h6 id="p2_juego">4</h6>
+        <h6 id="p1_juego">menor</h6>
     </div>
 
 
-    <input placeholder="respuesta" id="respuestas" type="text"> </input>
+    <input placeholder="respuesta" id="inputRespuesta" type="text"> </input>
 
 
     <div class="botoncitojeje">

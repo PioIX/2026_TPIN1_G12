@@ -1,36 +1,74 @@
 /*id #
 class .*/
 
+@import url();
+
+@import url();
+
+#titulo {
+    font-family: ;
+}
+
+#subtitulo {
+    font-family: ;
+}
+
 /*Login*/
 
-/* .loginYregistro {
+.bodyModPreguntas{
+    background-image: url("https://images.unsplash.com/flagged/photo-1593005510509-d05b264f1c9c?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+}
+
+.inputUsuario {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(1, 1fr);
     grid-template-rows: repeat(5, 1fr);
-    gap: 8px;
+    gap: 10px;
 }
     
 
-.inicioSesion {
+.inputContraseña {
     grid-row-start: 2;
+}
+
+.botonInicio {
+    grid-row-start: 3;
 }
 
 .registro {
+    grid-row-start: 4;
+}
+
+.botonRegistro {
+    grid-row-start: 5;
+}
+
+/*menu*/
+
+.menu {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    gap: 10px;
+}
+    
+
+.subtituloMenu {
+    grid-row-start: 2;
+}
+
+.botonJuegoMenu {
     grid-row-start: 3;
 }
 
-/*modPreguntas*/
-
-/*
-#sans {
-    background-color: aquamarine;
+.botonRankingMenu {
+    grid-row-start: 4;
 }
 
-#RegresarPre {
-    color: blueviolet;
-}
+/*ranking*/
 
-.modificacionPreguntas {
+
+.tituloRanking {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     grid-template-rows: repeat(5, 1fr);
@@ -38,47 +76,84 @@ class .*/
 }
     
 
-.modPreguntas {
-    grid-column-start: 1;
+.textoPuntaje {
     grid-row-start: 2;
 }
 
-.botonDatos {
-    grid-column-start: 1;
+.tabla {
     grid-row-start: 3;
+}
+        
+/*menuAdmin*/
+
+.parent {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    gap: 8px;
+}
+    
+
+.div2 {
+    grid-row-start: 2;
+}
+
+.div3 {
+    grid-row-start: 2;
 }
 
 .div4 {
-    grid-column-start: 2;
-    grid-row-start: 1;
+    grid-row-start: 3;
 }
 
 .div5 {
-    grid-column-start: 2;
+    grid-row-start: 3;
+}
+
+
+/*modPreguntas*/
+
+.inputPregunt {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    gap: 8px;
+}
+    
+#preguntaNuev {
+width: 120px;
+}
+
+.inputPalabra {
     grid-row-start: 2;
 }
 
-.botonPut {
+.selectPregunt {
+    grid-row-start: 3;
+}
+
+.mostrarPregunt {
+    grid-column-start: 1;
+    grid-row-start: 4;
+}
+
+.selectPalabr {
     grid-column-start: 2;
     grid-row-start: 3;
 }
 
-.div7 {
-    grid-column-start: 3;
-    grid-row-start: 1;
+.mostrarPalabr {
+    grid-row-start: 4;
 }
 
-.div8 {
-    grid-column-start: 3;
-    grid-row-start: 2;
+.opcione {
+    grid-row-start: 5;
 }
-
-.botonDelete {
-    grid-row-start: 3;
-}
+     
+        
 
 /*modUsuarios*/
-/*
+
 #RegresarPre {
     color: blueviolet;
 }
@@ -119,4 +194,7 @@ class .*/
 .botonBorrarP {
     grid-row-start: 3;
 }
- */
+ 
+/*Juego*/
+
+/*fin*/

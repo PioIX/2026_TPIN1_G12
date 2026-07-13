@@ -20,14 +20,14 @@ pantalla 1:
 
 let id_user = -1
 
-function getNombre(){
+function getNombre() {
     return document.getElementById("nombre").value;
-}  
-function getUsuario(){
+}
+function getUsuario() {
     return document.getElementById("usuario").value;
 
 }
-function getContra(){
+function getContra() {
     return document.getElementById("contra").value;
 }
 
@@ -100,7 +100,7 @@ async function inicioSesion() {
 
         if (usuarioCheck) {
             window.location.href = "menu.html";
-        } else{
+        } else {
             alert("Usuario o contraseña incorrectas")
         }
 
@@ -121,11 +121,11 @@ async function usuPost(datos) {
     console.log(resultado)
     let res = await resultado.json()
     console.log(res)
-    if (res.ok == true){
+    if (res.ok == true) {
         id_user = res.id_user
-        localStorage.setItem("id_user", id_user)  
+        localStorage.setItem("id_user", id_user)
         window.location.href = "menu.html";
-    } else{
+    } else {
         alert("error en el registro")
     }
 }
@@ -157,7 +157,7 @@ async function Registrarse() {
 }
 
 //  Tabla de ranking --------------------------------------------------------------------------------------
-async function getRanking(){
+async function getRanking() {
     let fetchDatos = await fetch("http://localhost:4000/ranking")
     let resultado = await fetchDatos.json()
     let elementosTabla = `<tr>
@@ -168,9 +168,9 @@ async function getRanking(){
             <th>Partida</th>
         </tr>`
     console.log(resultado)
-    for (i = 0; i < resultado.length; i++){
+    for (i = 0; i < resultado.length; i++) {
         elementosTabla += `<tr>
-        <td>${i+1}</td>
+        <td>${i + 1}</td>
         <td>${resultado[i].id_usuario}</td>
         <td>${resultado[i].usuario}</td>
         <td>${resultado[i].puntaje_final}</td>
@@ -187,12 +187,12 @@ async function cargarUser() {
     //let fetchDatos = await fetch("http://localhost:4000/usuarioespecifico?id_usuario="+ id_user)
     //let resultado = await fetchDatos.json()
     //document.getElementById("bienvenida").innerHTML = "Bienvenido/a " + resultado[0].nombre
-    
+
 }
 
 
-async function confirmarAdmin(){
-    let fetchDatos = await fetch("http://localhost:4000/confirmar?id_usuario="+ id_user)
+async function confirmarAdmin() {
+    let fetchDatos = await fetch("http://localhost:4000/confirmar?id_usuario=" + id_user)
     let resultado = await fetchDatos.json()
     let botonAdmin = `<a href="menuAdmin.html"> 
     <button type="button">MENU DEL ADMINISTRADOR</button> 
@@ -202,32 +202,29 @@ async function confirmarAdmin(){
     }
 }
 
+// LOG OUT
 
+function cerrarSesion() {
+    let confirmLogOut = confirm("¿Realmente quiere cerrar sesión?")
+    if (confirmLogOut) {
+        console.log("usu eligió SI cerrar ses")
 
-
-
-
-
-
-
-
-
-
-
-
-
+        id_user = -1
+        window.location.href = "loginRegistro.html";
+    }
+}
 
 // MODPREGUNTAS --------------------------------------------------------------------------------------
 
-async function tablaPreguntas(){
+async function tablaPreguntas() {
     let fetchDatos = await fetch("http://localhost:4000/todopreguntas")
     let resultado = await fetchDatos.json()
     let elementosTabla = `<tr>
             <th>ID</th>
             <th>Pregunta</th>
         </tr>`
-    
-    for (i = 0; i < resultado.length; i++){
+
+    for (i = 0; i < resultado.length; i++) {
         elementosTabla += `<tr>
         <td>${resultado[i].id_pregunta}</td>
         <td>${resultado[i].pregunta}</td>
@@ -236,23 +233,23 @@ async function tablaPreguntas(){
     document.getElementById("tabla-preguntas").innerHTML = elementosTabla
 }
 
-async function selectPreguntas(){
+async function selectPreguntas() {
     let fetchDatos = await fetch("http://localhost:4000/todopreguntas")
     let resultado = await fetchDatos.json()
     let elementosSelect = ``
-    
-    for (i = 0; i < resultado.length; i++){
+
+    for (i = 0; i < resultado.length; i++) {
         elementosSelect += `<option value=${resultado[i].id_pregunta}>
         ${resultado[i].id_pregunta}///${resultado[i].pregunta}
         </option>`
     }
     document.getElementById("select-preguntas").innerHTML = elementosSelect
-    
+
 }
 
-// ------------------------------------
+// ------------------------------------ MODS SELECT ADMIN
 
-async function tablaPalabras(){
+async function tablaPalabras() {
     let fetchDatos = await fetch("http://localhost:4000/todopalabras")
     let resultado = await fetchDatos.json()
     let elementosTabla = `<tr>
@@ -261,8 +258,8 @@ async function tablaPalabras(){
             <th>Puntaje</th>
             <th>Pertenece a pregunta</th>
         </tr>`
-    
-    for (i = 0; i < resultado.length; i++){
+
+    for (i = 0; i < resultado.length; i++) {
         elementosTabla += `<tr>
         <td>${resultado[i].id_palabra}</td>
         <td>${resultado[i].palabra}</td>
@@ -274,79 +271,79 @@ async function tablaPalabras(){
     document.getElementById("tabla-palabras").innerHTML = elementosTabla
 }
 
-async function selectPalabra1(){
+async function selectPalabra1() {
     let fetchDatos = await fetch("http://localhost:4000/palabra1")
     let resultado = await fetchDatos.json()
     let elementosSelect = ``
-    
-    for (i = 0; i < resultado.length; i++){
+
+    for (i = 0; i < resultado.length; i++) {
         elementosSelect += `<option value=${resultado[i].id_palabra}>
         ${resultado[i].id_palabra}///${resultado[i].palabra}///${resultado[i].puntaje}///${resultado[i].id_pregunta}
         </option>`
     }
-    document.getElementById("selectpal1").innerHTML = elementosSelect   
+    document.getElementById("selectpal1").innerHTML = elementosSelect
 }
 
-async function selectPalabra2(){
+async function selectPalabra2() {
     let fetchDatos = await fetch("http://localhost:4000/palabra2")
     let resultado = await fetchDatos.json()
     let elementosSelect = ``
-    
-    for (i = 0; i < resultado.length; i++){
+
+    for (i = 0; i < resultado.length; i++) {
         elementosSelect += `<option value=${resultado[i].id_palabra}>
         ${resultado[i].id_palabra}///${resultado[i].palabra}///${resultado[i].puntaje}///${resultado[i].id_pregunta}
         </option>`
     }
-    document.getElementById("selectpal2").innerHTML = elementosSelect   
+    document.getElementById("selectpal2").innerHTML = elementosSelect
 }
 
-async function selectPalabra3(){
+async function selectPalabra3() {
     let fetchDatos = await fetch("http://localhost:4000/palabra3")
     let resultado = await fetchDatos.json()
     let elementosSelect = ``
-    
-    for (i = 0; i < resultado.length; i++){
+
+    for (i = 0; i < resultado.length; i++) {
         elementosSelect += `<option value=${resultado[i].id_palabra}>
         ${resultado[i].id_palabra}///${resultado[i].palabra}///${resultado[i].puntaje}///${resultado[i].id_pregunta}
         </option>`
     }
-    document.getElementById("selectpal3").innerHTML = elementosSelect   
+    document.getElementById("selectpal3").innerHTML = elementosSelect
 }
 
-async function selectPalabra4(){
+async function selectPalabra4() {
     let fetchDatos = await fetch("http://localhost:4000/palabra4")
     let resultado = await fetchDatos.json()
     let elementosSelect = ``
-    
-    for (i = 0; i < resultado.length; i++){
+
+    for (i = 0; i < resultado.length; i++) {
         elementosSelect += `<option value=${resultado[i].id_palabra}>
         ${resultado[i].id_palabra}///${resultado[i].palabra}///${resultado[i].puntaje}///${resultado[i].id_pregunta}
         </option>`
     }
-    document.getElementById("selectpal4").innerHTML = elementosSelect   
+    document.getElementById("selectpal4").innerHTML = elementosSelect
 }
 
-async function selectPalabra5(){
+async function selectPalabra5() {
     let fetchDatos = await fetch("http://localhost:4000/palabra5")
     let resultado = await fetchDatos.json()
     let elementosSelect = ``
-    
-    for (i = 0; i < resultado.length; i++){
+
+    for (i = 0; i < resultado.length; i++) {
         elementosSelect += `<option value=${resultado[i].id_palabra}>
         ${resultado[i].id_palabra}///${resultado[i].palabra}///${resultado[i].puntaje}///${resultado[i].id_pregunta}
         </option>`
     }
-    document.getElementById("selectpal5").innerHTML = elementosSelect   
+    document.getElementById("selectpal5").innerHTML = elementosSelect
 }
 
 // ------------------------------------
 
-async function añadirPregunta(datos){
-    const resultado = await fetch("http://localhost:4000/preguntanueva",{
-        method:"POST",
+async function añadirPregunta(datos) {
+    const resultado = await fetch("http://localhost:4000/preguntanueva", {
+        method: "POST",
         headers: {
             "Content-Type": "application/json",
-          },
+        },
         body: JSON.stringify(datos)
     })
 
@@ -367,9 +364,10 @@ async function añadirPregunta(datos){
     }
 }
 
-function preguntaDatos(){
-    
-    datos = {pregunta: getPregunta()
+function preguntaDatos() {
+
+    datos = {
+        pregunta: getPregunta()
     }
     let getpregunta = getPregunta()
     let verpal1 = getPalabra1()
@@ -377,24 +375,24 @@ function preguntaDatos(){
     let verpal3 = getPalabra3()
     let verpal4 = getPalabra4()
     let verpal5 = getPalabra5()
-    if (getpregunta == "" || verpal1  == "" || verpal2  == "" ||verpal3  == "" || verpal4  == "" || verpal5  == "") {
+    if (getpregunta == "" || verpal1 == "" || verpal2 == "" || verpal3 == "" || verpal4 == "" || verpal5 == "") {
         alert("todos los campos deben completarse")
     } else {
         añadirPregunta(datos)
     }
-    
+
 }
 
 
 
 // ------------------------------------
 
-async function añadirPalabra1(datos){
-    const resultado = await fetch("http://localhost:4000/palabranueva",{
-        method:"POST",
+async function añadirPalabra1(datos) {
+    const resultado = await fetch("http://localhost:4000/palabranueva", {
+        method: "POST",
         headers: {
             "Content-Type": "application/json",
-          },
+        },
         body: JSON.stringify(datos)
     })
 
@@ -403,8 +401,9 @@ async function añadirPalabra1(datos){
     console.log(respuesta)
 }
 
-function palDatos1(){
-    datos = {palabra: getPalabra1(),
+function palDatos1() {
+    datos = {
+        palabra: getPalabra1(),
         puntaje: 5,
         id_pregunta: id_pregunta_global
     }
@@ -412,12 +411,12 @@ function palDatos1(){
     añadirPalabra1(datos)
 }
 
-async function añadirPalabra2(datos){
-    const resultado = await fetch("http://localhost:4000/palabranueva",{
-        method:"POST",
+async function añadirPalabra2(datos) {
+    const resultado = await fetch("http://localhost:4000/palabranueva", {
+        method: "POST",
         headers: {
             "Content-Type": "application/json",
-          },
+        },
         body: JSON.stringify(datos)
     })
 
@@ -426,8 +425,9 @@ async function añadirPalabra2(datos){
     console.log(respuesta)
 }
 
-function palDatos2(){
-    datos = {palabra: getPalabra2(),
+function palDatos2() {
+    datos = {
+        palabra: getPalabra2(),
         puntaje: 4,
         id_pregunta: id_pregunta_global
     }
@@ -435,12 +435,12 @@ function palDatos2(){
     añadirPalabra2(datos)
 }
 
-async function añadirPalabra3(datos){
-    const resultado = await fetch("http://localhost:4000/palabranueva",{
-        method:"POST",
+async function añadirPalabra3(datos) {
+    const resultado = await fetch("http://localhost:4000/palabranueva", {
+        method: "POST",
         headers: {
             "Content-Type": "application/json",
-          },
+        },
         body: JSON.stringify(datos)
     })
 
@@ -449,8 +449,9 @@ async function añadirPalabra3(datos){
     console.log(respuesta)
 }
 
-function palDatos3(){
-    datos = {palabra: getPalabra3(),
+function palDatos3() {
+    datos = {
+        palabra: getPalabra3(),
         puntaje: 3,
         id_pregunta: id_pregunta_global
     }
@@ -458,12 +459,12 @@ function palDatos3(){
     añadirPalabra3(datos)
 }
 
-async function añadirPalabra4(datos){
-    const resultado = await fetch("http://localhost:4000/palabranueva",{
-        method:"POST",
+async function añadirPalabra4(datos) {
+    const resultado = await fetch("http://localhost:4000/palabranueva", {
+        method: "POST",
         headers: {
             "Content-Type": "application/json",
-          },
+        },
         body: JSON.stringify(datos)
     })
 
@@ -472,8 +473,9 @@ async function añadirPalabra4(datos){
     console.log(respuesta)
 }
 
-function palDatos4(){
-    datos = {palabra: getPalabra4(),
+function palDatos4() {
+    datos = {
+        palabra: getPalabra4(),
         puntaje: 2,
         id_pregunta: id_pregunta_global
     }
@@ -481,12 +483,12 @@ function palDatos4(){
     añadirPalabra4(datos)
 }
 
-async function añadirPalabra5(datos){
-    const resultado = await fetch("http://localhost:4000/palabranueva",{
-        method:"POST",
+async function añadirPalabra5(datos) {
+    const resultado = await fetch("http://localhost:4000/palabranueva", {
+        method: "POST",
         headers: {
             "Content-Type": "application/json",
-          },
+        },
         body: JSON.stringify(datos)
     })
 
@@ -495,8 +497,9 @@ async function añadirPalabra5(datos){
     console.log(respuesta)
 }
 
-function palDatos5(){
-    datos = {palabra: getPalabra5(),
+function palDatos5() {
+    datos = {
+        palabra: getPalabra5(),
         puntaje: 1,
         id_pregunta: id_pregunta_global
     }
@@ -504,7 +507,7 @@ function palDatos5(){
     añadirPalabra5(datos)
 }
 
-async function cambiarCosas(){
+async function cambiarCosas() {
     let id_pregunta = document.getElementById("select-preguntas").value
     let id_pal1 = document.getElementById("selectpal1").value
     let id_pal2 = document.getElementById("selectpal2").value
@@ -512,51 +515,55 @@ async function cambiarCosas(){
     let id_pal4 = document.getElementById("selectpal4").value
     let id_pal5 = document.getElementById("selectpal5").value
 
-    const resultado = await fetch("http://localhost:4000/editarpregunta",{
-        method:"PUT",
+    const resultado = await fetch("http://localhost:4000/editarpregunta", {
+        method: "PUT",
         headers: {
             "Content-Type": "application/json",
-          },
-        body: JSON.stringify({pregunta: getPregunta(),
-            id_pregunta: id_pregunta 
+        },
+        body: JSON.stringify({
+            pregunta: getPregunta(),
+            id_pregunta: id_pregunta
         })
     })
     console.log(resultado)
     let respuesta = await resultado.json()
     console.log(respuesta)
 
-    const resulpal1 = await fetch("http://localhost:4000/editarpalabra",{
-        method:"PUT",
+    const resulpal1 = await fetch("http://localhost:4000/editarpalabra", {
+        method: "PUT",
         headers: {
             "Content-Type": "application/json",
-          },
-        body: JSON.stringify({palabra: getPalabra1(),
-            id_palabra: id_pal1 
+        },
+        body: JSON.stringify({
+            palabra: getPalabra1(),
+            id_palabra: id_pal1
         })
     })
     console.log(resulpal1)
     let respal1 = await resulpal1.json()
     console.log(respal1)
 
-    const resulpal2 = await fetch("http://localhost:4000/editarpalabra",{
-        method:"PUT",
+    const resulpal2 = await fetch("http://localhost:4000/editarpalabra", {
+        method: "PUT",
         headers: {
             "Content-Type": "application/json",
-          },
-        body: JSON.stringify({palabra: getPalabra2(),
-            id_palabra: id_pal2 
+        },
+        body: JSON.stringify({
+            palabra: getPalabra2(),
+            id_palabra: id_pal2
         })
     })
     console.log(resulpal2)
     let respal2 = await resulpal2.json()
     console.log(respal2)
 
-    const resulpal3 = await fetch("http://localhost:4000/editarpalabra",{
-        method:"PUT",
+    const resulpal3 = await fetch("http://localhost:4000/editarpalabra", {
+        method: "PUT",
         headers: {
             "Content-Type": "application/json",
-          },
-        body: JSON.stringify({palabra: getPalabra3(),
+        },
+        body: JSON.stringify({
+            palabra: getPalabra3(),
             id_palabra: id_pal3
         })
     })
@@ -564,12 +571,13 @@ async function cambiarCosas(){
     let respal3 = await resulpal3.json()
     console.log(respal3)
 
-    const resulpal4 = await fetch("http://localhost:4000/editarpalabra",{
-        method:"PUT",
+    const resulpal4 = await fetch("http://localhost:4000/editarpalabra", {
+        method: "PUT",
         headers: {
             "Content-Type": "application/json",
-          },
-        body: JSON.stringify({palabra: getPalabra4(),
+        },
+        body: JSON.stringify({
+            palabra: getPalabra4(),
             id_palabra: id_pal4
         })
     })
@@ -577,12 +585,13 @@ async function cambiarCosas(){
     let respal4 = await resulpal4.json()
     console.log(respal4)
 
-    const resulpal5 = await fetch("http://localhost:4000/editarpalabra",{
-        method:"PUT",
+    const resulpal5 = await fetch("http://localhost:4000/editarpalabra", {
+        method: "PUT",
         headers: {
             "Content-Type": "application/json",
-          },
-        body: JSON.stringify({palabra: getPalabra5(),
+        },
+        body: JSON.stringify({
+            palabra: getPalabra5(),
             id_palabra: id_pal5
         })
     })
@@ -592,44 +601,44 @@ async function cambiarCosas(){
     window.location.reload()
 }
 
-function botonCambio(){
+function botonCambio() {
     let getpregunta = getPregunta()
     let verpal1 = getPalabra1()
     let verpal2 = getPalabra2()
     let verpal3 = getPalabra3()
     let verpal4 = getPalabra4()
     let verpal5 = getPalabra5()
-    if (getpregunta == "" || verpal1  == "" || verpal2  == "" ||verpal3  == "" || verpal4  == "" || verpal5  == "") {
+    if (getpregunta == "" || verpal1 == "" || verpal2 == "" || verpal3 == "" || verpal4 == "" || verpal5 == "") {
         alert("todos los campos deben completarse")
     } else {
         cambiarCosas()
     }
 }
 
-async function borrarPalabras(){
+async function borrarPalabras() {
     let id_pregunta = document.getElementById("select-preguntas").value
-    const resultado = await fetch("http://localhost:4000/borrarpalabrasdepregunta",{
-        method:"DELETE",
+    const resultado = await fetch("http://localhost:4000/borrarpalabrasdepregunta", {
+        method: "DELETE",
         headers: {
             "Content-Type": "application/json",
-          },
-        body: JSON.stringify({id_pregunta: id_pregunta})
+        },
+        body: JSON.stringify({ id_pregunta: id_pregunta })
     })
     console.log(resultado)
-    if (resultado.ok == true){
+    if (resultado.ok == true) {
         return true
     }
 
 }
 
-async function borrarPregunta(){
+async function borrarPregunta() {
     let id_pregunta = document.getElementById("select-preguntas").value
-    const resultado2 = await fetch("http://localhost:4000/borrarpregunta",{
-        method:"DELETE",
+    const resultado2 = await fetch("http://localhost:4000/borrarpregunta", {
+        method: "DELETE",
         headers: {
             "Content-Type": "application/json",
-          },
-        body: JSON.stringify({id_pregunta: id_pregunta})
+        },
+        body: JSON.stringify({ id_pregunta: id_pregunta })
     })
     console.log(resultado2)
     if (resultado2.ok == true) {
@@ -637,7 +646,7 @@ async function borrarPregunta(){
     }
 }
 
-async function botonBorrar(){
+async function botonBorrar() {
     let palabras = await borrarPalabras()
     console.log(palabras)
     if (palabras == true) {
@@ -660,9 +669,10 @@ async function botonBorrar(){
 
 
 
+
 // MODUSUARIOS --------------------------------------------------------------------------------------
 
-async function tablaUsuarios(){
+async function tablaUsuarios() {
     let fetchDatos = await fetch("http://localhost:4000/todousuarios")
     let resultado = await fetchDatos.json()
     let elementosTabla = `<tr>
@@ -672,8 +682,8 @@ async function tablaUsuarios(){
             <th>Nombre</th>
             <th>¿Es administrador?</th>
         </tr>`
-    
-    for (i = 0; i < resultado.length; i++){
+
+    for (i = 0; i < resultado.length; i++) {
         elementosTabla += `<tr>
         <td>${resultado[i].id_usuario}</td>
         <td>${resultado[i].usuario}</td>
@@ -686,23 +696,23 @@ async function tablaUsuarios(){
     document.getElementById("tabla-usuarios").innerHTML = elementosTabla
 }
 
-async function selectUsuarios(){
+async function selectUsuarios() {
     let fetchDatos = await fetch("http://localhost:4000/todousuarios")
     let resultado = await fetchDatos.json()
     let elementosSelect = ``
-    
-    for (i = 0; i < resultado.length; i++){
+
+    for (i = 0; i < resultado.length; i++) {
         elementosSelect += `<option value=${resultado[i].id_usuario}>
         ${resultado[i].id_usuario}///${resultado[i].usuario}///${resultado[i].contraseña}///${resultado[i].nombre}///${resultado[i].es_admin}
         </option>`
     }
     document.getElementById("select-usuarios").innerHTML = elementosSelect
-    
+
 }
 
 // ------------------------------------
 
-async function tablaPartidas(){
+async function tablaPartidas() {
     let fetchDatos = await fetch("http://localhost:4000/todopartidas")
     let resultado = await fetchDatos.json()
     let elementosTabla = `<tr>
@@ -710,8 +720,8 @@ async function tablaPartidas(){
             <th>Puntaje final</th>
             <th>La jugó el usuario</th>
         </tr>`
-    
-    for (i = 0; i < resultado.length; i++){
+
+    for (i = 0; i < resultado.length; i++) {
         elementosTabla += `<tr>
         <td>${resultado[i].id_partida}</td>
         <td>${resultado[i].puntaje_final}</td>
@@ -722,11 +732,11 @@ async function tablaPartidas(){
     document.getElementById("tabla-partidas").innerHTML = elementosTabla
 }
 
-async function selectPartidas(){
+async function selectPartidas() {
     let fetchDatos = await fetch("http://localhost:4000/todopartidas")
     let resultado = await fetchDatos.json()
     let elementosSelect = ``
-    for (i = 0; i < resultado.length; i++){
+    for (i = 0; i < resultado.length; i++) {
         elementosSelect += `<option value=${resultado[i].id_partida}>
         ${resultado[i].id_partida}///${resultado[i].puntaje_final}///${resultado[i].id_usuario}
         </option>`
@@ -734,27 +744,27 @@ async function selectPartidas(){
     document.getElementById("select-partidas").innerHTML = elementosSelect
 }
 
-async function borrarUsuario(){
+async function borrarUsuario() {
     let id_usuario = document.getElementById("select-usuarios").value
-    const resultado = await fetch("http://localhost:4000/borrarusuario",{
-        method:"DELETE",
+    const resultado = await fetch("http://localhost:4000/borrarusuario", {
+        method: "DELETE",
         headers: {
             "Content-Type": "application/json",
-          },
-        body: JSON.stringify({id_usuario: id_usuario})
+        },
+        body: JSON.stringify({ id_usuario: id_usuario })
     })
     console.log(resultado)
     window.location.reload()
 }
 
-async function borrarPartida(){
+async function borrarPartida() {
     let id_partida = document.getElementById("select-partidas").value
-    const resultado = await fetch("http://localhost:4000/borrarpartida",{
-        method:"DELETE",
+    const resultado = await fetch("http://localhost:4000/borrarpartida", {
+        method: "DELETE",
         headers: {
             "Content-Type": "application/json",
-          },
-        body: JSON.stringify({id_partida: id_partida})
+        },
+        body: JSON.stringify({ id_partida: id_partida })
     })
     console.log(resultado)
     window.location.reload()
@@ -766,22 +776,22 @@ async function borrarPartida(){
 async function darAdmin() {
     let id_usuario = document.getElementById("select-usuarios").value
 
-    const resultado = await fetch("http://localhost:4000/daradmin",{
-        method:"PUT",
+    const resultado = await fetch("http://localhost:4000/daradmin", {
+        method: "PUT",
         headers: {
             "Content-Type": "application/json",
-          },
+        },
         body: JSON.stringify({
-            id_usuario: id_usuario 
+            id_usuario: id_usuario
         })
     })
     console.log(resultado)
     let respuesta = await resultado.json()
     console.log(respuesta)
 
-    if (respuesta.ok== true){
+    if (respuesta.ok == true) {
         return true
-    } else{
+    } else {
         alert("usuario ya es admin")
     }
 }
@@ -789,53 +799,324 @@ async function darAdmin() {
 async function quitarAdmin() {
     let id_usuario = document.getElementById("select-usuarios").value
 
-    const resultado = await fetch("http://localhost:4000/quitaradmin",{
-        method:"PUT",
+    const resultado = await fetch("http://localhost:4000/quitaradmin", {
+        method: "PUT",
         headers: {
             "Content-Type": "application/json",
-          },
+        },
         body: JSON.stringify({
-            id_usuario: id_usuario 
+            id_usuario: id_usuario
         })
     })
     console.log(resultado)
     let respuesta = await resultado.json()
     console.log(respuesta)
 
-    if (respuesta.ok== true){
+    if (respuesta.ok == true) {
         return true
-    } else{
+    } else {
         alert("usuario no es admin")
     }
 }
 
-async function botonDar(){
+async function botonDar() {
     let dar = await darAdmin()
     console.log(dar)
     if (dar == true) {
-        const tiempo = setTimeout(window.location.reload(),80000)
+        setTimeout(() => window.location.reload(), 500)
     }
 }
 
-async function botonQuitar(){
+async function botonQuitar() {
     let quit = await quitarAdmin()
     console.log(quit)
     if (quit == true) {
         console.log("anda")
-        const tiempo = setTimeout(window.location.reload(),80000)
+        const tiempo = setTimeout(() => window.location.reload(), 500)
     }
 }
 
 
 
-// CERRAR SESION DE SAYU ROCIO BALBIN 5B INFO DIRECCION CASTRO BARROS Y TARIJA 67, DNI 48..., SI ANDA MAL CONTACTEN A: 54 9 11 1234 4312
 
-function cerrarSesion() {
-    let confirmLogOut = confirm("¿Realmente quiere cerrar sesión?")
-    if (confirmLogOut) {
-        console.log("usu eligió SI cerrar ses")
 
-        id_user = -1
-        window.location.href = "loginRegistro.html";
+
+
+
+
+
+
+
+
+
+
+
+
+
+///////////////////////////// JUEGO: PARTIDA
+let partidaActual = -1
+let preguntaActual = 0
+let listaPreguntasPartida = []
+
+
+
+async function postPartida() {
+
+    let datos = {
+        id_usuario: id_user
+    }
+
+    const resultado = await fetch("http://localhost:4000/partidanueva", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(datos)
+    })
+    console.log(resultado)
+
+    let respuesta = await resultado.json()
+    console.log(respuesta)
+    partidaActual = respuesta.id_partida
+    console.log(partidaActual)
+    let partidaString = JSON.stringify(partidaActual)
+    localStorage.setItem("partida", partidaString)
+    
+}
+
+
+
+
+function crearListaPreguntas() {
+
+    while (listaPreguntasPartida.length < 4) {
+        pregunta = Math.floor((Math.random() * 16) + 1)
+        if (listaPreguntasPartida.includes(pregunta) == false) {
+            listaPreguntasPartida.push(pregunta)
+        }
+    }
+
+    console.log("LISTA HECHA DE PREGUNTAS RANDOM: ")
+    console.log(listaPreguntasPartida)
+    let listaString = JSON.stringify(listaPreguntasPartida)
+    localStorage.setItem("listaPreguntasPartida", listaString)
+}
+
+async function postPreporpars() {
+    for (let i = 0; i < listaPreguntasPartida.length; i++){
+        
+        let datos = {
+            id_partida: partidaActual,
+            id_pregunta: listaPreguntasPartida[i],
+            puntaje_pregunta: 0
+        }
+
+        const resultado = await fetch("http://localhost:4000/preporparnueva", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(datos)
+        })
+        console.log(resultado)
+
+        let respuesta = await resultado.json()
+        console.log(respuesta)
+    }
+}
+
+async function empezarPartida() {
+    postPartida()
+    crearListaPreguntas()
+    const tiempo = setTimeout(() => empezarPartida2(), 3000)
+    document.getElementById("cargando").innerHTML = "Cargando..."
+}
+
+function empezarPartida2() {
+    postPreporpars()
+    setTimeout(() => window.location.href = "juego.html", 5500)
+}
+
+function cargarLista(){
+    let listaString2 = localStorage.getItem("listaPreguntasPartida")
+    listaPreguntasPartida = JSON.parse(listaString2)
+    console.log(listaPreguntasPartida)
+    console.log(listaPreguntasPartida[0])
+   preguntaActual = listaPreguntasPartida[0]
+}
+
+// setTimeout(() => {alert("Se terminó el tiempo");console.log("ou nou");window.location.reload();}, 500);
+
+function cargarPartida(){
+    let partidaString2 = localStorage.getItem("partida")
+    partidaActual = JSON.parse(partidaString2)
+    console.log("partida actual: " + partidaActual)
+}
+
+
+
+
+
+// valores de pregunta y opciones ------------------------------
+let pregunta = {
+    titulo: "",
+    opciones: ["", "", "", "", ""]
+}
+
+let opciones = [
+    document.getElementById("p1_juego"),
+    document.getElementById("p2_juego"),
+    document.getElementById("p3_juego"),
+    document.getElementById("p4_juego"),
+    document.getElementById("p5_juego")
+]
+
+let titulo = document.getElementById("pregunta_juego")
+
+
+
+async function getPregJuego() {
+    let fetchDatos = await fetch("http://localhost:4000/preguntajuego?id_partida=" + partidaActual + "&id_pregunta=" + preguntaActual)
+    let resultado = await fetchDatos.json()
+    pregunta.titulo = resultado.pregunta
+    titulo.textContent = pregunta.titulo
+    titulo.value = pregunta.titulo
+    console.log("getpregjuego")
+}
+
+async function getPunt1() {
+    let fetchDatos = await fetch("http://localhost:4000/palabraspreguntap1?id_pregunta=" + preguntaActual)
+    let resultado = await fetchDatos.json()
+    pregunta.opciones[0] = resultado.res
+    opciones[0].value = pregunta.opciones[0]
+    opciones[0].textContent = "1"
+}
+
+async function getPunt2() {
+    let fetchDatos = await fetch("http://localhost:4000/palabraspreguntap2?id_pregunta=" + preguntaActual)
+    let resultado = await fetchDatos.json()
+    pregunta.opciones[1] = resultado.res
+    opciones[1].value = pregunta.opciones[1]
+    opciones[1].textContent = "2"
+}
+
+async function getPunt3() {
+    let fetchDatos = await fetch("http://localhost:4000/palabraspreguntap3?id_pregunta=" + preguntaActual)
+    let resultado = await fetchDatos.json()
+    pregunta.opciones[2] = resultado.res
+    opciones[2].value = pregunta.opciones[2]
+    opciones[2].textContent = "3"
+}
+
+async function getPunt4() {
+    let fetchDatos = await fetch("http://localhost:4000/palabraspreguntap4?id_pregunta=" + preguntaActual)
+    let resultado = await fetchDatos.json()
+    pregunta.opciones[3] = resultado.res
+    opciones[3].value = pregunta.opciones[3]
+    opciones[3].textContent = "4"
+}
+
+async function getPunt5() {
+    let fetchDatos = await fetch("http://localhost:4000/palabraspreguntap5?id_pregunta=" + preguntaActual)
+    let resultado = await fetchDatos.json()
+    pregunta.opciones[4] = resultado.res
+    opciones[4].value = pregunta.opciones[4]
+    opciones[4].textContent = "5"
+}
+
+
+let contador = 0
+let puntos = 0
+
+function Validar() {
+    let respuesta = document.getElementById("inputRespuesta").value;
+    console.log(respuesta)
+
+    for (let i = 0; i < opciones.length; i++) {
+        if (respuesta == opciones[i].value) {
+            opciones[i].textContent = opciones[i].value;
+            contador ++
+            puntos += i + 1
+            console.log("puntos: "+ puntos)
+            console.log(contador)
+            if (contador == 5){
+                titulo.textContent= "ganaste esta pregunta"
+            }
+        }
+    }
+}
+
+let i = 0
+let cont2 = 0
+
+async function loopJuego(){
+    do {
+        await tiempo2(i)
+        i++
+   }
+   while (i<5)
+}
+
+function tiempo2(i){
+    const tiempo = setTimeout(function(){
+        sig = confirm("¿Listo para la siguiente pregunta?")
+        if (sig){
+            contador = 0
+            console.log("contador: "+ contador)
+            console.log("iteracion: "+ i)
+            preguntaActual = listaPreguntasPartida[i]
+            console.log("preg act: " + preguntaActual)
+            getPregJuego()
+            getPunt1()
+            getPunt2()
+            getPunt3()
+            getPunt4()
+            getPunt5()
+            cont2++
+            console.log(cont2)
+            if (cont2 > 4) {
+                alert("no hay más preguntas")
+                localStorage.setItem("puntosDePartida", puntos)
+                window.location.href = "fin.html"
+            } 
+        }
+        
+    }, 100500 * i)
+}
+
+
+
+let puntos_partida = -1
+
+function cargarPuntos(){
+    puntos_partida = JSON.parse(localStorage.getItem("puntosDePartida"))
+    console.log(puntos_partida)
+    putPuntajePartida()
+}
+
+async function putPuntajePartida(){
+    console.log(puntos_partida)
+    console.log(partidaActual)
+    document.getElementById("tu-puntaje").innerHTML = "Tu puntaje: " + partidaActual
+
+    const resultado = await fetch("http://localhost:4000/asignarpuntaje", {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            puntaje_final: puntos_partida,
+            id_partida: partidaActual
+        })
+    })
+    console.log(resultado)
+    let respuesta = await resultado.json()
+    console.log(respuesta)
+
+    if (respuesta.ok == true) {
+        return true
+        
+    } else {
+        alert("error")
     }
 }
