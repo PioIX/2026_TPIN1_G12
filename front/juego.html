@@ -9,22 +9,16 @@
 </head>
 
 <body onload="cargarUser()">
-    <div class="pantalla2-juego"></div>
+    <div class="juego"></div>
 
-    <div id="ELIMINAR LUEGO">
-        <a href="loginRegistro.html">Login </a>
-        <a href="menu.html">Menú </a>
-        <a href="ranking.html">Ranking </a>
-        <a href="juego.html">JUEGO </a>
-        <a href="fin.html">Fin </a>
-    </div>
 
     <div id="titulo">
-        <h2>titulo de pregunta</h2>
-        <h4>puntaje</h4>
+        <h2 id="titulos">titulo de pregunta</h2>
     </div>
+    
+    <h4 id="textos">puntaje</h4>
 
-    <div id="respuestas">
+    <div id="opcionesJuego">
         <h6>1</h6>
         <h6>2</h6>
         <h6>3</h6>
@@ -33,10 +27,10 @@
     </div>
 
 
-    <input placeholder="respuesta" id="respuestas" type="text"> </input>
+    <input placeholder="respuesta" id="respuesta" type="text"> </input>
 
 
-    <div class="botoncitojeje">
+    <div class="botonValidar">
         <button onclick="Validar()" title="Validar"> Validar </button>
     </div>
 
