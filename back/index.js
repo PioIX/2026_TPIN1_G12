@@ -79,6 +79,17 @@ app.get('/todopreporpar', async function(req,res){
 
 
 
+
+
+
+
+
+
+
+
+
+
+
 //         PEDIDOS ESPECIFICOS  (Para get pasar el parámetro como: localhost:4000/nombreDelPedido?parametro1=valor1)
 app.get('/idusuario', async function(req,res){
     let respuesta;
@@ -236,6 +247,125 @@ app.put('/quitaradmin', async function(req,res) {
     }
 })
 
+app.put('/asignarpuntaje', async function(req,res) {
+    try {
+        console.log(req.body) 
+        realizarQuery(`
+        Update Partidas 
+        Set puntaje_final = ${req.body.puntaje_final}
+        Where id_partida = ${req.body.id_partida}
+        `)
+        res.send({mensaje: "Puntaje asignado", ok:true})
+    } catch{
+        res.send({error: "error del try"})
+    }
+})
+
+
+// pasar el parámetro como: localhost:4000/nombreDelPedido?parametro1=valor1&parametro2=valor2
+app.get('/preguntajuego', async function(req,res){
+    try {
+        let resultado;
+        if (req.query.id_partida != undefined && req.query.id_pregunta != undefined) {
+        resultado = await realizarQuery(`SELECT id_por_partida, pregunta FROM Preguntas 
+            INNER JOIN Preguntas_por_partida ON Preguntas_por_partida.id_pregunta = Preguntas.id_pregunta
+            WHERE id_partida = ${req.query.id_partida} AND Preguntas_por_partida.id_pregunta = ${req.query.id_pregunta}`)
+        } else if (req.query.id_partida == undefined){
+            resultado = "Por favor especificar parámetro id partida"
+        } else if (req.query.id_pregunta == undefined){
+            resultado = "Por favor especificar parámetro id pregunta"
+        } else {
+            resultado = "Por favor especificar parámetros"
+        }
+        res.send({res: resultado, pregunta: resultado[0].pregunta});
+    }catch{
+        res.send({error: "error del try"})
+    }
+})
+
+
+app.get('/prueba', async function(req,res){
+    let respuesta;
+    respuesta = await realizarQuery(`SELECT id_partida 
+        FROM Partidas 
+        ORDER BY id_partida DESC
+        LIMIT 1
+        `)
+    
+    res.send(respuesta);
+})
+
+app.get('/palabraspreguntap1', async function(req,res){
+    try{
+        let respuesta;
+        respuesta = await realizarQuery(`SELECT palabra 
+            FROM Palabras 
+            WHERE id_pregunta = ${req.query.id_pregunta} AND puntaje = 1
+            `)
+        
+        res.send({res: respuesta[0].palabra});
+    }catch{
+        res.send({error: "error del try"})
+    }
+})
+
+app.get('/palabraspreguntap2', async function(req,res){
+    try{
+        let respuesta;
+        respuesta = await realizarQuery(`SELECT palabra 
+            FROM Palabras 
+            WHERE id_pregunta = ${req.query.id_pregunta} AND puntaje = 2
+            `)
+        
+        res.send({res: respuesta[0].palabra});
+    } catch{
+        res.send({error: "error del try"})
+    }
+})
+
+app.get('/palabraspreguntap3', async function(req,res){
+    try{
+        let respuesta;
+        respuesta = await realizarQuery(`SELECT palabra 
+            FROM Palabras 
+            WHERE id_pregunta = ${req.query.id_pregunta} AND puntaje = 3
+            `)
+        
+        res.send({res: respuesta[0].palabra});
+    } catch{
+        res.send({error: "error del try"})
+    }
+})
+
+app.get('/palabraspreguntap4', async function(req,res){
+    try{
+        let respuesta;
+        respuesta = await realizarQuery(`SELECT palabra 
+            FROM Palabras 
+            WHERE id_pregunta = ${req.query.id_pregunta} AND puntaje = 4
+            `)
+        
+        res.send({res: respuesta[0].palabra});
+    } catch{
+        res.send({error: "error del try"})
+    }
+})
+
+app.get('/palabraspreguntap5', async function(req,res){
+    try{
+        let respuesta;
+        respuesta = await realizarQuery(`SELECT palabra 
+            FROM Palabras 
+            WHERE id_pregunta = ${req.query.id_pregunta} AND puntaje = 5
+            `)
+        
+        res.send({res: respuesta[0].palabra});
+    } catch{
+        res.send({error: "error del try"})
+    }
+})
+
+
 
 
 
@@ -272,13 +402,21 @@ app.post('/palabranueva', async function(req,res) {
             Select  *  From Preguntas 
             Where id_pregunta = ${req.body.id_pregunta}
             `)
+
+        let respuesta3 = await realizarQuery(`
+            Select  *  From Palabras 
+            Where puntaje = ${req.body.puntaje} AND id_pregunta = ${req.body.id_pregunta}
+            `)
+        console.log(respuesta3)
         
-        if (respuesta2.length != 0 ) {
+        if (respuesta2.length != 0 && respuesta3 == 0) {
             await realizarQuery(`
             INSERT INTO Palabras(palabra, puntaje, id_pregunta) VALUES
             ("${req.body.palabra}",${req.body.puntaje},${req.body.id_pregunta})
         `)
             res.send({mensaje: "Palabra agregada"}) 
+        } else {
+            res.send({mensaje: "Este dato ya existe"})
         }
     }
     catch {
@@ -291,17 +429,23 @@ app.post('/palabranueva', async function(req,res) {
 app.post('/partidanueva', async function(req,res) {
     console.log(req.body) 
   
-    let respuesta2 =  await realizarQuery(`
+    let respuesta =  await realizarQuery(`
         Select  *  From Usuarios 
         Where id_usuario = ${req.body.id_usuario}
         `)
 
-    if (respuesta2.length != 0) {
+    if (respuesta.length != 0) {
         realizarQuery(`
         INSERT INTO Partidas(puntaje_final, id_usuario) VALUES 
-        (${req.body.puntaje_final},${req.body.id_usuario})
+        (0,${req.body.id_usuario})
     `)
-        res.send({mensaje: "Partida agregada"}) 
+        let respuesta2 = await realizarQuery(`SELECT id_partida 
+        FROM Partidas 
+        ORDER BY id_partida DESC
+        LIMIT 1
+        `)
+        console.log(respuesta2)
+        res.send({mensaje: "Partida agregada", id_partida: respuesta2[0].id_partida}) 
     } else {
         res.send({mensaje: "Este dato ya existe o no hay FK"})
     }
@@ -330,10 +474,12 @@ app.post('/preguntanueva', async function(req,res) {
 
 app.post('/preporparnueva', async function(req,res) {
     console.log(req.body) 
+
     let respuesta =  await realizarQuery(`
         Select  *  From Preguntas_por_partida
-        Where id_por_partida = ${req.body.id_por_partida}
+        Where id_partida = ${req.body.id_partida} AND id_pregunta = ${req.body.id_pregunta}
     `)
+
     let respuesta2 =  await realizarQuery(`
         Select  *  From Partidas
         Where id_partida = ${req.body.id_partida}
@@ -343,10 +489,10 @@ app.post('/preporparnueva', async function(req,res) {
         Where id_pregunta = ${req.body.id_pregunta}
     `)
 
-    if (respuesta.length == 0 && respuesta2.length != 0 && respuesta3.length != 0) {
+    if (respuesta == 0 && respuesta2.length != 0 && respuesta3.length != 0) {
         realizarQuery(`
-        INSERT INTO Preguntas_por_partida(id_por_partida, id_partida, id_pregunta, puntaje_pregunta) VALUES 
-        (${req.body.id_por_partida},${req.body.id_partida},${req.body.id_pregunta},${req.body.puntaje_pregunta})
+        INSERT INTO Preguntas_por_partida(id_partida, id_pregunta, puntaje_pregunta) VALUES 
+        (${req.body.id_partida},${req.body.id_pregunta},0)
     `)
         res.send({mensaje: "Pregunta por partida agregada"}) 
     } else {

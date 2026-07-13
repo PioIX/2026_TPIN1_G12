@@ -11,20 +11,22 @@
 <body onload="cargarUser(), selectPreguntas(), selectPalabra1(), selectPalabra2(), selectPalabra3(), selectPalabra4(), selectPalabra5()">
     <h1> Modificacion Preguntas</h1>
 
-    <div class="modificacionPreguntas">
+    </div>
 
     <a href="menuAdmin.html">
         <button id = "RegresarPre" type="button">Regresar</button>
     </a>
 
     <!-- INPUTS PREGUNTAS NUEVAS -->
-    <div>
-        <h2> Escribir pregunta nueva </h2>
+    <div class="inputPregunta">
+        <h2 id="subtitulo"> Escribir pregunta nueva </h2>
         <label for="pregunta-nueva">Pregunta:</label>
-        <input type="text" id="preguntanueva" name="pregunta-nueva" placeholder="¿Cuál es la bebida más consumida?"
+        <input type="text" id="preguntaNueva" name="pregunta-nueva" placeholder="¿Cuál es la bebida más consumida?"
             required>
+    </div>
 
-        <h2>Respuestas nuevas</h2>
+    <div class="inputPalabras">
+        <h2 id="subtitulo">Respuestas nuevas</h2>
         <label for="resp-nueva-1">1:</label>
         <input type="text" id="pal1" name="resp-nueva-1" placeholder="Coca" required>
 
@@ -39,17 +41,17 @@
 
         <label for="resp-nueva-5">5:</label>
         <input type="text" id="pal5" name="resp-nueva-5" placeholder="Fanta" required>
-
     </div>
-
+    
     <!-- DESPLEGABLE Y TABLE preguntas -->
-    <div>
-        <h2> Seleccionar pregunta para modificar o eliminar</h2>
+    <div class="selectPregunta">
+        <h2 id="subtitulo"> Seleccionar pregunta para modificar o eliminar</h2>
         <label for="select-preguntas">Pregunta:</label>
         <select name="select-preguntas" id="select-preguntas"></select>
+    </div>
 
-
-        <h2>Pregunta seleccionada:</h2>
+    <div class="mostrarPregunta">
+        <h2 id="subtitulo">Pregunta seleccionada:</h2>
 
         <table id="tabla-preguntas">
         </table>
@@ -57,8 +59,8 @@
     </div>
 
     <!-- DESPLEGABLE Y TABLE palabras-->
-    <div>
-        <h2> Seleccionar palabra para modificar o eliminar</h2>
+    <div class="selectPalabra">
+        <h2 id="subtitulo"> Seleccionar palabra para modificar o eliminar</h2>
         <label for="selectpal1">Palabra 1(puntaje 5):</label>
         <select name="selectpal1" id="selectpal1"></select>
 
@@ -73,14 +75,17 @@
 
         <label for="selectpal5">Palabra 5(puntaje 1):</label>
         <select name="selectpal5" id="selectpal5"></select>
+    </div>
 
-
-        <h2>Palabra seleccionada:</h2>
+    <div class="mostrarPalabra">
+        <h2 id="subtitulo">Palabra seleccionada:</h2>
 
         <table id="tabla-palabras">
         </table>
         <button type="button" onclick="tablaPalabras()">Mostrar</button>
     </div>
+    
+    <h2 id="subtitulo">Opciones</h2>
 
         
     <div class="botonesParti">
