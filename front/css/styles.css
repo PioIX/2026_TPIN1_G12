@@ -1,21 +1,33 @@
 /*id #
 class .*/
 
-#titulo {
-    font-family: 'Courier New', Courier, monospace;
-    text-align: center;
+@font-face {
+  font-family: "garet";
+  src: url("../fonts/garet/Garet-Book.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
 
-#subtitulo {
-    font-family: 'Courier New', Courier, monospace;
+@font-face {
+  font-family: "tt_chocolates";
+  src: url("../fonts/tt_chocolates/TT\ Chocolates\ Trial\ DemiBold\ Italic.otf") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
 
-#texto {
-    font-family: 'Courier New', Courier, monospace;
+@font-face {
+  font-family: "lemon_milk";
+  src: url("../fonts/lemon_milk/LEMONMILK-Bold.otf") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
 
 body {
     background-image: url(../imagenes/fondo.png); 
+    background-repeat: no-repeat;
     background-size: cover;
     font-family: serif; 
     margin: 0;

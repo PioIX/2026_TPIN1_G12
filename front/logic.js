@@ -202,7 +202,17 @@ async function confirmarAdmin() {
     }
 }
 
+// LOG OUT
 
+function cerrarSesion() {
+    let confirmLogOut = confirm("¿Realmente quiere cerrar sesión?")
+    if (confirmLogOut) {
+        console.log("usu eligió SI cerrar ses")
+
+        id_user = -1
+        window.location.href = "loginRegistro.html";
+    }
+}
 
 // MODPREGUNTAS --------------------------------------------------------------------------------------
 
@@ -1024,13 +1034,17 @@ function Validar() {
 
     for (let i = 0; i < opciones.length; i++) {
         if (respuesta == opciones[i].value) {
-            opciones[i].textContent = opciones[i].value;
-            contador ++
-            puntos += i + 1
-            console.log("puntos: "+ puntos)
-            console.log(contador)
-            if (contador == 5){
-                titulo.textContent= "ganaste esta pregunta"
+            if (opciones[i].textContent == opciones[i].value) {
+                console.log("ya esta puesto")
+            } else {
+                opciones[i].textContent = opciones[i].value;
+                contador ++
+                puntos += i + 1
+                console.log("puntos: "+ puntos)
+                console.log(contador)
+                if (contador == 5){
+                    titulo.textContent= "ganaste esta pregunta"
+                }
             }
         }
     }

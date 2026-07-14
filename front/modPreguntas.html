@@ -9,7 +9,7 @@
 </head>
 
 <body onload="cargarUser(), selectPreguntas(), selectPalabra1(), selectPalabra2(), selectPalabra3(), selectPalabra4(), selectPalabra5()">
-    <h1> Modificacion Preguntas</h1>
+    <h1 id="titulos"> Modificacion Usuarios</h1>
 
     </div>
 
@@ -20,33 +20,33 @@
     <!-- INPUTS PREGUNTAS NUEVAS -->
     <div class="inputPregunta">
         <h2 id="subtitulo"> Escribir pregunta nueva </h2>
-        <label for="pregunta-nueva">Pregunta:</label>
+        <label id="textos" for="pregunta-nueva">Pregunta:</label>
         <input type="text" id="preguntaNueva" name="pregunta-nueva" placeholder="¿Cuál es la bebida más consumida?"
             required>
     </div>
 
     <div class="inputPalabras">
-        <h2 id="subtitulo">Respuestas nuevas</h2>
-        <label for="resp-nueva-1">1:</label>
+        <h2 id="subtitulo">Palabras nuevas</h2>
+        <label id="textos" for="resp-nueva-1">1:</label>
         <input type="text" id="pal1" name="resp-nueva-1" placeholder="Coca" required>
 
-        <label for="resp-nueva-2">2:</label>
+        <label id="textos" for="resp-nueva-2">2:</label>
         <input type="text" id="pal2" name="resp-nueva-2" placeholder="Agua" required>
 
-        <label for="resp-nueva-3">3:</label>
+        <label id="textos" for="resp-nueva-3">3:</label>
         <input type="text" id="pal3" name="resp-nueva-3" placeholder="Jugo" required>
 
-        <label for="resp-nueva-4">4:</label>
+        <label id="textos" for="resp-nueva-4">4:</label>
         <input type="text" id="pal4" name="resp-nueva-4" placeholder="Sprite" required>
 
-        <label for="resp-nueva-5">5:</label>
+        <label id="textos" for="resp-nueva-5">5:</label>
         <input type="text" id="pal5" name="resp-nueva-5" placeholder="Fanta" required>
     </div>
     
     <!-- DESPLEGABLE Y TABLE preguntas -->
     <div class="selectPregunta">
         <h2 id="subtitulo"> Seleccionar pregunta para modificar o eliminar</h2>
-        <label for="select-preguntas">Pregunta:</label>
+        <label id="textos" for="select-preguntas">Pregunta:</label>
         <select name="select-preguntas" id="select-preguntas"></select>
     </div>
 
@@ -61,19 +61,19 @@
     <!-- DESPLEGABLE Y TABLE palabras-->
     <div class="selectPalabra">
         <h2 id="subtitulo"> Seleccionar palabra para modificar o eliminar</h2>
-        <label for="selectpal1">Palabra 1(puntaje 5):</label>
+        <label id="textos" for="selectpal1">Palabra 1:</label>
         <select name="selectpal1" id="selectpal1"></select>
 
-        <label for="selectpal2">Palabra 2(puntaje 4):</label>
+        <label id="textos" for="selectpal2">2:</label>
         <select name="selectpal2" id="selectpal2"></select>
 
-        <label for="selectpal3">Palabra 3(puntaje 3):</label>
+        <label id="textos" for="selectpal3">3:</label>
         <select name="selectpal3" id="selectpal3"></select>
 
-        <label for="selectpal4">Palabra 4(puntaje 2):</label>
+        <label id="textos" for="selectpal4">4:</label>
         <select name="selectpal4" id="selectpal4"></select>
 
-        <label for="selectpal5">Palabra 5(puntaje 1):</label>
+        <label id="textos" for="selectpal5">5: </label>
         <select name="selectpal5" id="selectpal5"></select>
     </div>
 

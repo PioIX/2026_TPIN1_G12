@@ -13,36 +13,29 @@
 <body onload="cargarUser(), confirmarAdmin(), cargarPartida(), cargarPuntos(), getRanking()">
 
 
-    <div id="ELIMINAR LUEGO">
-        <a href="loginRegistro.html">Login </a>
-        <a href="menu.html">Menú </a>
-        <a href="ranking.html">Ranking </a>
-        <a href="juego.html">JUEGO </a>
-        <a href="fin.html">Fin </a>
-    </div>
-
-    <div class="pantalla-3">
-        <h1>Fin del juego</h1>
-        <h2 id="tu-puntaje"></h2>
-
-        <div class="tabla">
-            <table id="tablaRanking">
-                
-            </table>
+    <div class="fin">
+        
+        <div class="tituloFin"> 
+        <h1 id="titulos">Fin del juego</h1>
         </div>
 
-        <div class="botoncitojeje">
+        <div class="puntajeTotal">
+        <h2 id="subtitulo">Tu puntaje fue de: </h2 id="tu-puntaje">
+        </div>
+
+        <div class="tablaRankingFin">
+            <table id="tablaRanking"></table>
+        </div>
+
+        <div class="vueltaMenu">
             <a href="menu.html">
                 <button type="button">Volver al menú</button>
             </a>
         </div>
 
-        <div class="botoncitojeje">
+        <div class="adiosPapu">
             <button onclick="logout()" title="Salir del juego"> Salir del juego </button>
         </div>
-    </div>
-
-    <div id="iralmenu">
     </div>
 
 </body>
