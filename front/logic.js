@@ -1124,3 +1124,16 @@ async function putPuntajePartida(){
         alert("error")
     }
 }
+
+
+//decoracion 
+document.addEventListener('mousemove', (e) => {
+  const particula = document.createElement('div');
+  particula.className = 'particula';
+  particula.style.left = e.clientX + 'px';
+  particula.style.top = e.clientY + 'px';
+  document.body.appendChild(particula);
+
+  setTimeout(() => particula.remove(), 600);  
+});
+
