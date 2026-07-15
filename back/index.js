@@ -34,9 +34,6 @@ app.get ('/saludo', async function (req,res) {
 
 
 
-
-
-
 //         GETS GENERALES
 app.get('/todousuarios', async function(req,res){
     let respuesta;
@@ -71,18 +68,6 @@ app.get('/todopreporpar', async function(req,res){
     respuesta = await realizarQuery("SELECT * FROM Preguntas_por_partida");    
     res.send(respuesta);
 })
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
