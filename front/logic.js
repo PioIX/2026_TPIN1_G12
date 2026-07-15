@@ -1063,7 +1063,7 @@ async function loopJuego(){
 
 function tiempo2(i){
     const tiempo = setTimeout(function(){
-        sig = confirm("¿Listo para la siguiente pregunta?")
+        sig = confirm("¿Listo para la siguiente pregunta? (cancelar para salir del juego")
         if (sig){
             contador = 0
             console.log("contador: "+ contador)
@@ -1083,6 +1083,9 @@ function tiempo2(i){
                 localStorage.setItem("puntosDePartida", puntos)
                 window.location.href = "fin.html"
             } 
+        } else{
+            localStorage.setItem("puntosDePartida", puntos)
+            window.location.href = "fin.html"
         }
         
     }, 100500 * i)
